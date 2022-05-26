@@ -5,11 +5,13 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardLayoutComponent } from './layout/dashboard-layout.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { MaterialModule } from '../shared/material/material.module';
+import { PatientsComponent } from './patients/patients.component';
 
 @NgModule({
   declarations: [
     DashboardLayoutComponent,
-    DoctorsComponent
+    DoctorsComponent,
+    PatientsComponent
   ],
   imports: [
     CommonModule,
