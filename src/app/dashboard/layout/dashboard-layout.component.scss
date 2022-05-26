@@ -1,0 +1,27 @@
+@import '../../../assets/styles/colors.scss';
+
+.dashboard {
+  &-header {
+    background-color: $primary-color;
+    height: 100px;
+  }
+
+  &-layout {
+    height: calc(100vh - 100px);
+  }
+  &-menu {
+
+  }
+  &-item {
+    border: 1px dashed red;
+    list-style: none;
+  }
+
+  &-link {
+    text-decoration: none;
+    border: 1px solid orange;
+    display: flex;
+    align-items: center;
+    padding: 15px 40px 15px 5px;
+  }
+}

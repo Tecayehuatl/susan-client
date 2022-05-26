@@ -1,4 +1,46 @@
-<header>
-  <h2>This is dashboard</h2>
+<header class="dashboard-header">
+  Header
 </header>
-<router-outlet></router-outlet>
+<mat-drawer-container class="dashboard-layout" hasBackdrop="false">
+  <mat-drawer #drawer mode="side" opened="true">
+    <aside>
+      <nav class="dashboard-menu">
+        <li class="dashboard-item">
+          <a class="dashboard-link" [routerLink]="['/']">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">local_hospital</mat-icon>
+            <span>
+              Doctores
+            </span>
+          </a>
+        </li>
+        <li class="dashboard-item">
+          <a class="dashboard-link" [routerLink]="['/']">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">local_hospital</mat-icon>
+            <span>
+              Doctores
+            </span>
+          </a>
+        </li>
+        <li class="dashboard-item">
+          <a class="dashboard-link" [routerLink]="['/']">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">local_hospital</mat-icon>
+            <span>
+              Doctores
+            </span>
+          </a>
+        </li>
+      </nav>
+    </aside>
+  </mat-drawer>
+  <mat-drawer-content>
+    <section>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </section>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>
+
