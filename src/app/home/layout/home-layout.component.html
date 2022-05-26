@@ -1,24 +1,2 @@
-<header class="home-header">
-  <section class="home-logo">
-    <a [routerLink]="['/']">
-      <img class="home-logo__img" src="./../../../assets/images/biotecsa-logo.png" alt="Laboratorios Biotecsa Logo" />
-    </a>
-  </section>
-  <nav class="home-nav">
-    <ul class="home-list">
-      <li class="home-list__item">
-        <a class="home-list__link" [routerLink]="['/']">Home</a>
-      </li>
-      <li class="home-list__item">
-        <a class="home-list__link" [routerLink]="['dashboard', 'doctors']">Dashboard</a>
-      </li>
-      <li class="home-list__item">
-        <a class="home-list__link" [routerLink]="['login']">Login</a>
-      </li>
-      <li class="home-list__item">
-        <a class="home-list__link">Cerrar sesión</a>
-      </li>
-    </ul>
-  </nav>
-</header>
+<app-header></app-header>
 <router-outlet></router-outlet>

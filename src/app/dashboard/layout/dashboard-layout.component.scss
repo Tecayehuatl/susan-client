@@ -1,23 +1,30 @@
 @import '../../../assets/styles/colors.scss';
 
 .dashboard {
+
   &-header {
+    align-items: center;
     background-color: $primary-color;
+    display: flex;
     height: 100px;
+    justify-content: space-between;
   }
 
   &-layout {
     height: calc(100vh - 100px);
   }
+
   &-menu {
 
   }
+
   &-item {
     border: 1px dashed red;
     list-style: none;
   }
 
   &-link {
+    color: inherit;
     text-decoration: none;
     border: 1px solid orange;
     display: flex;

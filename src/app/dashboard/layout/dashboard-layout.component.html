@@ -1,28 +1,19 @@
-<header class="dashboard-header">
-  Header
-</header>
+
+<app-header></app-header>
 <mat-drawer-container class="dashboard-layout" hasBackdrop="false">
   <mat-drawer #drawer mode="side" opened="true">
     <aside>
       <nav class="dashboard-menu">
         <li class="dashboard-item">
-          <a class="dashboard-link" [routerLink]="['/']">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">local_hospital</mat-icon>
+          <a class="dashboard-link" [routerLink]="['patients']">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">supervised_user_circle</mat-icon>
             <span>
-              Doctores
+              Pacientes
             </span>
           </a>
         </li>
         <li class="dashboard-item">
-          <a class="dashboard-link" [routerLink]="['/']">
-            <mat-icon aria-hidden="false" aria-label="Example home icon">local_hospital</mat-icon>
-            <span>
-              Doctores
-            </span>
-          </a>
-        </li>
-        <li class="dashboard-item">
-          <a class="dashboard-link" [routerLink]="['/']">
+          <a class="dashboard-link" [routerLink]="['doctors']">
             <mat-icon aria-hidden="false" aria-label="Example home icon">local_hospital</mat-icon>
             <span>
               Doctores
