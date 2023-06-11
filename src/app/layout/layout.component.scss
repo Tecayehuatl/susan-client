@@ -1,0 +1,56 @@
+@import "colors";
+
+.sidenav {
+  background-color: $brand-main;
+  color: $white;
+  width: 240px;
+
+  &-content {
+    max-height: 100vh;
+    min-height: 100vh;
+  }
+
+  &-img {
+    box-sizing: border-box;
+    display: block;
+    margin-bottom: 40px;
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100%;
+  }
+
+  &-section {
+    height: calc(100vh - 112px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+mat-list-item {
+  height: 48px;
+}
+
+mat-nav-list {
+  .mat-list-item {
+    align-items: center;
+    display: flex;
+    height: 50px;
+  }
+}
+
+.mat-list-item {
+  &__container {
+    align-items: center;
+    display: flex;
+  }
+
+  &__text {
+    margin-left: 10px;
+  }
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
