@@ -1,2 +1,28 @@
-<h1>Dashboard layout</h1>
-<router-outlet></router-outlet>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav class="sidenav" opened mode="side">
+        <mat-list>
+            <img
+                src="../../assets/images/Logo horizontal negativo - Biotecsa.png"
+                alt="Laboratorios Biotecsa"
+            />
+        </mat-list>
+        <mat-nav-list>
+            <a
+                class="mat-list-item"
+                mat-list-item
+                [routerLink]="item.url"
+                *ngFor="let item of menu"
+            >
+                <span class="mat-list-item__container">
+                    <mat-icon>{{ item.icon }}</mat-icon>
+                    <span>
+                        {{ item.title }}
+                    </span>
+                </span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
