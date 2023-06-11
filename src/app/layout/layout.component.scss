@@ -1,11 +1,22 @@
 @import "colors";
 
 .sidenav {
+  background-color: $brand-main;
+  color: $white;
   width: 240px;
 
   &-content {
-    min-height: 100vh;
     max-height: 100vh;
+    min-height: 100vh;
+  }
+
+  &-img {
+    box-sizing: border-box;
+    display: block;
+    margin-bottom: 40px;
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100%;
   }
 }
 
@@ -15,14 +26,19 @@ mat-list-item {
 
 mat-nav-list {
   .mat-list-item {
-    height: 50px;
-    // color: $brand-main;
-    display: flex;
     align-items: center;
+    display: flex;
+    height: 50px;
   }
 }
 
-.mat-list-item__container {
-  display: flex;
-  align-items: center;
+.mat-list-item {
+  &__container {
+    align-items: center;
+    display: flex;
+  }
+
+  &__text {
+    margin-left: 10px;
+  }
 }
