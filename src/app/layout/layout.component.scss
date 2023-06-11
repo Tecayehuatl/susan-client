@@ -18,6 +18,13 @@
     padding-right: 16px;
     width: 100%;
   }
+
+  &-section {
+    height: calc(100vh - 112px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
 
 mat-list-item {

@@ -7,21 +7,31 @@
                 alt="Laboratorios Biotecsa"
             />
         </mat-list>
-        <mat-nav-list>
-            <a
-                mat-list-item
-                class="mat-list-item"
-                [routerLink]="item.url"
-                *ngFor="let item of menu"
-            >
-                <span class="mat-list-item__container">
-                    <mat-icon>{{ item.icon }}</mat-icon>
-                    <span class="mat-list-item__text">
-                        {{ item.title }}
+        <section class="sidenav-section">
+            <mat-nav-list>
+                <a
+                    mat-list-item
+                    class="mat-list-item"
+                    [routerLink]="item.url"
+                    *ngFor="let item of menu"
+                >
+                    <span class="mat-list-item__container">
+                        <mat-icon>{{ item.icon }}</mat-icon>
+                        <span class="mat-list-item__text">
+                            {{ item.title }}
+                        </span>
                     </span>
-                </span>
-            </a>
-        </mat-nav-list>
+                </a>
+            </mat-nav-list>
+            <mat-nav-list>
+                <a mat-list-item class="mat-list-item">
+                    <span class="mat-list-item__container">
+                        <mat-icon>logout</mat-icon>
+                        <span class="mat-list-item__text">Cerrar sesión</span>
+                    </span>
+                </a>
+            </mat-nav-list>
+        </section>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content">
         <mat-toolbar class="toolbar">
