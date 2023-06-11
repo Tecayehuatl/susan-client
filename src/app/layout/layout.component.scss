@@ -1,0 +1,28 @@
+@import "colors";
+
+.sidenav {
+  width: 240px;
+
+  &-content {
+    min-height: 100vh;
+    max-height: 100vh;
+  }
+}
+
+mat-list-item {
+  height: 48px;
+}
+
+mat-nav-list {
+  .mat-list-item {
+    height: 50px;
+    // color: $brand-main;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.mat-list-item__container {
+  display: flex;
+  align-items: center;
+}
