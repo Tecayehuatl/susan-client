@@ -9,8 +9,8 @@
         </mat-list>
         <mat-nav-list>
             <a
-                class="mat-list-item"
                 mat-list-item
+                class="mat-list-item"
                 [routerLink]="item.url"
                 *ngFor="let item of menu"
             >
@@ -24,6 +24,19 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content">
+        <mat-toolbar class="toolbar">
+            <span>Laboratorios Biotecsa</span>
+            <button
+                mat-icon-button
+                aria-label="User menu with menu icon"
+                [matMenuTriggerFor]="topMenu"
+            >
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #topMenu="matMenu">
+                <button mat-menu-item>Salir</button>
+            </mat-menu>
+        </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
