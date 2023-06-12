@@ -2,3 +2,71 @@ $brand-main: #00958C;
 $brand-secondary: #E35A6B;
 $brand-third: #373634;
 $white: #ffffff;
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-brand-main: (
+    50 : #e0f2f1,
+    100 : #b3dfdd,
+    200 : #80cac6,
+    300 : #4db5af,
+    400 : #26a59d,
+    500 : #00958c,
+    600 : #008d84,
+    700 : #008279,
+    800 : #00786f,
+    900 : #00675c,
+    A100 : #96fff2,
+    A200 : #63ffeb,
+    A400 : #30ffe5,
+    A700 : #17ffe2,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-brand-secondary: (
+    50 : #fcebed,
+    100 : #f7ced3,
+    200 : #f1adb5,
+    300 : #eb8c97,
+    400 : #e77381,
+    500 : #e35a6b,
+    600 : #e05263,
+    700 : #dc4858,
+    800 : #d83f4e,
+    900 : #d02e3c,
+    A100 : #ffffff,
+    A200 : #ffe0e2,
+    A400 : #ffadb3,
+    A700 : #ff939b,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);

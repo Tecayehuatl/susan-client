@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './shared/material/material.module';
+import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './layout/layout.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
@@ -13,7 +13,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        MaterialModule,
+        SharedModule,
         AppRoutingModule,
         LayoutModule,
         DashboardModule,

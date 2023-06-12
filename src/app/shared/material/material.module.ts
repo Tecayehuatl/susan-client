@@ -6,7 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
@@ -19,7 +22,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         MatInputModule,
         MatListModule,
         MatMenuModule,
+        MatPaginatorModule,
         MatSidenavModule,
+        MatSortModule,
+        MatTableModule,
         MatToolbarModule,
     ],
 })
