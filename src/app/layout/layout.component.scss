@@ -54,3 +54,8 @@ mat-nav-list {
   display: flex;
   justify-content: space-between;
 }
+
+.main {
+  padding: 10px;
+  height: calc(100vh - 84px);
+}
