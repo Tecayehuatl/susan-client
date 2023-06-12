@@ -1,3 +1,21 @@
 @import "colors";
 
-.container-actions { }
+.container-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+
+}
+
+.table-error-message {
+  font-weight: bold;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}

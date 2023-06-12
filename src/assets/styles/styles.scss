@@ -50,3 +50,17 @@ $susan-client-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: "LEMON MILK Pro"; }
+h1 {
+  font-size: 26px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+// Override the default
+mat-divider {
+  margin: 15px 0 !important;
+}

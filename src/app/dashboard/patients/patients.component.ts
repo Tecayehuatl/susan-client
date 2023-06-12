@@ -9,7 +9,14 @@ import { MatTableDataSource } from '@angular/material/table';
     styleUrls: ['./patients.component.scss'],
 })
 export class PatientsComponent implements AfterViewInit {
-    displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
+    displayedColumns: string[] = [
+        'id',
+        'name',
+        'creationDate',
+        'UpdatedDate',
+        'paymentStatus',
+        'viewDetail',
+    ];
     dataSource: MatTableDataSource<UserData>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -84,14 +91,16 @@ function createNewUser(id: number): UserData {
     return {
         id: id.toString(),
         name: name,
-        progress: Math.round(Math.random() * 100).toString(),
-        fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
+        creationDate: 'Sep 11 2023',
+        updatedDate: 'Sep 12 2023',
+        paymentStatus: 'PAID',
     };
 }
 
 export interface UserData {
     id: string;
     name: string;
-    progress: string;
-    fruit: string;
+    creationDate: string;
+    updatedDate: string;
+    paymentStatus: string;
 }
