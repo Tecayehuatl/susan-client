@@ -2,7 +2,11 @@
     <h1>Pacientes</h1>
     <mat-divider class="divider"></mat-divider>
     <div class="container-actions">
-        <button mat-flat-button color="primary">
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="openCreateEditPatientDialog()"
+        >
             <mat-icon>person_add</mat-icon>
             Registrar pacientes
         </button>

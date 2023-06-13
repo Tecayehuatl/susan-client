@@ -1,1 +1,99 @@
-<p>create-edit-patient works!</p>
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>AGREGAR NUEVO PACIENTE</h2>
+    <mat-divider></mat-divider>
+    <form class="grid-container" autocomplete="disabled">
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Nombre(s)</mat-label>
+                <input
+                    matInput
+                    placeholder="Nombre(s)"
+                    tabindex="1"
+                    autocomplete="disabled"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Apellido Materno</mat-label>
+                <input
+                    matInput
+                    placeholder="Apellido Materno"
+                    tabindex="3"
+                    autocomplete="disabled"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input
+                    matInput
+                    placeholder="Fecha de nacimiento"
+                    tabindex="5"
+                    autocomplete="disabled"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 2</mat-label>
+                <input
+                    matInput
+                    placeholder="Teléfono 2"
+                    tabindex="7"
+                    autocomplete="disabled"
+                />
+            </mat-form-field>
+        </section>
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Apellido Paterno</mat-label>
+                <input
+                    matInput
+                    placeholder="Apellido Paterno"
+                    tabindex="2"
+                    autocomplete="disabled"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Sexo</mat-label>
+                <mat-select tabindex="4">
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{ food.viewValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 1</mat-label>
+                <input
+                    matInput
+                    placeholder="Teléfono 1"
+                    tabindex="6"
+                    autocomplete="disabled"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Correo electrónico</mat-label>
+                <input
+                    matInput
+                    placeholder="Correo electrónico"
+                    tabindex="8"
+                    autocomplete="disabled"
+                />
+            </mat-form-field>
+        </section>
+    </form>
+    <section class="grid-actions">
+        <button
+            class="grid-actions__button"
+            mat-stroked-button
+            color="primary"
+            mat-dialog-close
+        >
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button class="grid-actions__button" mat-flat-button color="primary">
+            <mat-icon>person_add</mat-icon>
+            Registrar paciente
+        </button>
+    </section>
+</section>
