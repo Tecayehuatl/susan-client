@@ -1,0 +1,70 @@
+@import 'colors';
+
+.patient {
+    &-container {
+        display: flex;
+        justify-content: space-between;
+        min-height: calc(100vh - 200px);
+
+        &-orders {
+            background-color: $white;
+            box-sizing: border-box;
+            border: 1px solid $black-40;
+            border-radius: 8px;
+            padding: 10px;
+            min-height: 500px;
+        }
+    }
+
+    &-detail {
+        background-color: $white;
+        border: 1px solid $black-40;
+        border-radius: 8px;
+        box-sizing: border-box;
+        max-width: 320px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    &-orders {
+        margin-left: 15px;
+        padding: 10px;
+        width: 100%;
+    }
+
+    &-text-wrapper {
+        margin-bottom: 20px;
+
+        &--flex {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &-text {
+        font-weight: bold;
+        margin-top: 5px;
+        margin-bottom: 5px;
+
+        &--value {
+            color: rgba$brand-third;
+            font-weight: normal;
+        }
+    }
+
+    &-name {
+        color: $brand-main;
+    }
+}
+.container {
+    &-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+}
+
+.subtitle {
+    display: flex;
+    color: $brand-secondary;
+}

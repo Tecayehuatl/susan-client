@@ -1,7 +1,17 @@
 $brand-main: #00958C;
 $brand-secondary: #E35A6B;
 $brand-third: #373634;
+
 $white: #ffffff;
+$brand-third: #373634;
+$gray-soft: #f6f5f5;
+
+$black-10: rgba($brand-third, 0.1);
+$black-20: rgba($brand-third, 0.2);
+$black-30: rgba($brand-third, 0.3);
+$black-40: rgba($brand-third, 0.4);
+$black-50: rgba($brand-third, 0.5);
+$black-80: rgba($brand-third, 0.8);
 
 /* For use in src/lib/core/theming/_palette.scss */
 $md-brand-main: (
