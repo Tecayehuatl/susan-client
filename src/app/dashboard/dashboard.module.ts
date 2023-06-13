@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CreateEditPatientComponent } from './patients/create-edit-patient/create-edit-patient.component';
 import { PatientDetailComponent } from './patients/patient-detail/patient-detail.component';
 import { OrdersComponent } from './orders/orders.component';
+import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 
 @NgModule({
     declarations: [
@@ -13,6 +14,7 @@ import { OrdersComponent } from './orders/orders.component';
         PatientsComponent,
         PatientDetailComponent,
         OrdersComponent,
+        OrderDetailComponent,
     ],
     imports: [DashboardRoutingModule, SharedModule],
 })
