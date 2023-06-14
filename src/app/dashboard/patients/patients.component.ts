@@ -66,17 +66,6 @@ export class PatientsComponent implements AfterViewInit {
     }
 }
 
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-    'blueberry',
-    'lychee',
-    'kiwi',
-    'mango',
-    'peach',
-    'lime',
-    'pomegranate',
-    'pineapple',
-];
 const NAMES: string[] = [
     'Maia',
     'Asher',
