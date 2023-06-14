@@ -1,9 +1,15 @@
 @import 'colors';
 
-.order-detail {
-    &-name {
-        color: $brand-main;
+.title {
+
+  &-link {
+    color: $brand-third;
+    text-decoration-color: inherit;
+
+    &--brand {
+      color: $brand-main;
     }
+  }
 }
 
 .subtitle {

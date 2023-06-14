@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-order-detail',
@@ -9,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
     styleUrls: ['./order-detail.component.scss'],
 })
 export class OrderDetailComponent implements AfterViewInit {
+    orderId!: string;
     displayedColumns: string[] = [
         'id',
         'creationDate',
@@ -22,7 +24,8 @@ export class OrderDetailComponent implements AfterViewInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor() {
+    constructor(private route: ActivatedRoute) {
+        this.orderId = this.route.snapshot.params['patientId'];
         // Create 100 users
         const users = Array.from({ length: 100 }, (_, k) =>
             createNewUser(k + 1)

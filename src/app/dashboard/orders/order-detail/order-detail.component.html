@@ -1,7 +1,10 @@
 <section class="order-detail">
-    <h1>
-        PACIENTES / DETALLE DE LA ORDEN DE /
-        <span class="order-detail-name">ENRIQUE DELGADO TECAYEHUATL</span>
+    <h1 class="title">
+        <a class="title-link" routerLink="/dashboard/patients">PACIENTES</a> /
+        <a class="title-link title-link--brand" [routerLink]="['/dashboard', 'patients', orderId]">
+          ENRIQUE DELGADO TECAYEHUATL
+        </a> /
+        DETALLE
     </h1>
     <mat-divider class="divider"></mat-divider>
     <mat-card class="card-detail">
