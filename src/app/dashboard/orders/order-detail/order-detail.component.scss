@@ -58,13 +58,12 @@
 
   &__item {
     &--studies {
-      flex: 0 0 900px;
-      width: 100%;
+      width: 70%;
     }
 
     &--summary {
       padding-left: 10px;
-      width: 100%;
+      width: 30%;
     }
   }
 }
