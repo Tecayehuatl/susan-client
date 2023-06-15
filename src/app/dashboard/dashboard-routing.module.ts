@@ -4,6 +4,7 @@ import { LayoutComponent } from '../layout/layout.component';
 import { PatientsComponent } from './patients/patients.component';
 import { PatientDetailComponent } from './patients/patient-detail/patient-detail.component';
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
+import { BranchOfficesComponent } from './branch-offices/branch-offices.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
             {
                 path: 'patients/:patientId/:orderId',
                 component: OrderDetailComponent,
+            },
+            {
+                path: 'branch-offices',
+                component: BranchOfficesComponent,
             },
         ],
     },

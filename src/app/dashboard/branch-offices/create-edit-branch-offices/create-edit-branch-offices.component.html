@@ -1,0 +1,83 @@
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>AGREGAR NUEVA SUCURSAL</h2>
+    <mat-divider></mat-divider>
+    <form class="grid-container" autocomplete="disabled">
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Nombre de la sucursal</mat-label>
+                <input matInput placeholder="Nombre de la sucursal" tabindex="1" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 1</mat-label>
+                <input matInput placeholder="Teléfono 1" tabindex="3" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Calle</mat-label>
+                <input matInput placeholder="Calle" tabindex="5" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Número interior</mat-label>
+                <input matInput placeholder="Número interior" tabindex="7" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Municipio</mat-label>
+                <input matInput placeholder="Municipio" tabindex="9" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Código postal</mat-label>
+                <input matInput placeholder="Código postal" tabindex="11" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Horario</mat-label>
+                <input matInput placeholder="Horario" tabindex="13" autocomplete="disabled" />
+            </mat-form-field>
+        </section>
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Correo de la sucursal</mat-label>
+                <input matInput placeholder="Correo de la sucursal" tabindex="2" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 2</mat-label>
+                <input matInput placeholder="Teléfono 2" tabindex="4" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Número exterior</mat-label>
+                <input matInput placeholder="Número exterior" tabindex="6" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Colonia</mat-label>
+                <input matInput placeholder="Colonia" tabindex="8" autocomplete="disabled" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>País</mat-label>
+                <mat-select tabindex="10" disabled="true">
+                    <mat-option *ngFor="let country of countries" autocomplete="disabled" [value]="country.value">
+                        {{ country.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Estado</mat-label>
+                <mat-select tabindex="12">
+                    <mat-option *ngFor="let state of states" autocomplete="disabled" [value]="state.name">
+                        {{ state.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+    </form>
+    <section class="grid-actions">
+        <button class="grid-actions__button" mat-stroked-button color="primary" mat-dialog-close>
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button class="grid-actions__button" mat-flat-button color="primary">
+            <mat-icon>person_add</mat-icon>
+            CREAR SUCURSAL
+        </button>
+    </section>
+</section>
