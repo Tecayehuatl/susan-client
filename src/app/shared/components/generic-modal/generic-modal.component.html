@@ -1,0 +1,23 @@
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>{{ data.title }}</h2>
+    <mat-divider></mat-divider>
+    <article mat-dialog-content>
+        {{ data.content }}
+    </article>
+    <article mat-dialog-actions align="end">
+        <button class="grid-actions__button" mat-stroked-button color="primary" mat-dialog-close>
+            <mat-icon>cancel</mat-icon>
+            {{ data.actions.secondary }}
+        </button>
+        <button
+            class="grid-actions__button"
+            mat-flat-button color="accent"
+            (click)="closeModal()"
+        >
+            {{ data.actions.main }}
+        </button>
+    </article>
+</section>

@@ -79,12 +79,14 @@
                     </td>
                 </ng-container>
                 <!-- Delete Detail -->
-                <ng-container matColumnDef="viewDetail">
+                <ng-container matColumnDef="delete">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
                         Eliminar
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        <mat-icon>delete</mat-icon> Eliminar
+                        <a (click)="openDeleteDialog(row)">
+                            <mat-icon>delete</mat-icon> Eliminar
+                        </a>
                     </td>
                 </ng-container>
 

@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CreateEditBranchOfficesComponent } from './create-edit-branch-offices/create-edit-branch-offices.component';
+import { GenericModalComponent } from 'src/app/shared/components/generic-modal/generic-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-branch-offices',
@@ -18,6 +20,7 @@ export class BranchOfficesComponent implements AfterViewInit {
         'phone2',
         'address',
         'schedule',
+        'delete',
     ];
     dataSource: MatTableDataSource<any>;
     mode!: 'create' | 'edit';
@@ -25,7 +28,7 @@ export class BranchOfficesComponent implements AfterViewInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor(private dialog: MatDialog) {
+    constructor(private dialog: MatDialog, private _snackBar: MatSnackBar) {
         // Create 100 users
         const users = Array.from({ length: 100 }, (_, k) =>
             createNewUser(k + 1)
@@ -62,6 +65,35 @@ export class BranchOfficesComponent implements AfterViewInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    openDeleteDialog(item: any) {
+        console.log('item', item);
+
+        const dialogRef = this.dialog.open(GenericModalComponent, {
+            minWidth: '800px',
+            data: {
+                mode: this.mode,
+                title: `¿SEGURO QUE DESEA ELIMINAR LAL SUCURSAL "${item.branchOfficeName}"?`,
+                actions: {
+                    main: 'ELIMINAR SUCURSAL',
+                    secondary: 'CANCELAR',
+                },
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Sucursal: ${item.branchOfficeName} borrada`);
+            this._snackBar.open(
+                `Sucursal: ${item.branchOfficeName} borrada`,
+                'CERRAR',
+                {
+
+                    // horizontalPosition: 'center',
+                    // verticalPosition: 'top',
+                }
+            );
         });
     }
 }
