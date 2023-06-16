@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     styleUrls: ['./branch-offices.component.scss'],
 })
 export class BranchOfficesComponent implements AfterViewInit {
+    title = 'SUCURSALES';
     displayedColumns: string[] = [
         'branchOfficeName',
         'email',
@@ -23,7 +24,6 @@ export class BranchOfficesComponent implements AfterViewInit {
         'delete',
     ];
     dataSource: MatTableDataSource<any>;
-    mode!: 'create' | 'edit';
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -52,14 +52,12 @@ export class BranchOfficesComponent implements AfterViewInit {
         }
     }
 
-    openCreateEditPatientDialog(): void {
-        this.mode = 'create';
-
+    openCreateEditPatientDialog(itemData?: any): void {
         const dialogRef = this.dialog.open(CreateEditBranchOfficesComponent, {
             width: '1100px',
             minHeight: '500px',
             data: {
-                mode: this.mode,
+                itemData,
             },
         });
 
@@ -68,13 +66,12 @@ export class BranchOfficesComponent implements AfterViewInit {
         });
     }
 
-    openDeleteDialog(item: any) {
-        console.log('item', item);
+    openDeleteDialog(item: any, event: any) {
+        event.stopPropagation();
 
         const dialogRef = this.dialog.open(GenericModalComponent, {
             minWidth: '800px',
             data: {
-                mode: this.mode,
                 title: `¿SEGURO QUE DESEA ELIMINAR LAL SUCURSAL "${item.branchOfficeName}"?`,
                 actions: {
                     main: 'ELIMINAR SUCURSAL',
@@ -89,7 +86,6 @@ export class BranchOfficesComponent implements AfterViewInit {
                 `Sucursal: ${item.branchOfficeName} borrada`,
                 'CERRAR',
                 {
-
                     // horizontalPosition: 'center',
                     // verticalPosition: 'top',
                 }
@@ -134,7 +130,8 @@ function createNewUser(id: number): any {
         email: 'biotecsalab@hotmail.com',
         phone1: '22-23-23-32-33',
         phone2: '22-23-23-32-33',
-        address: 'BERRIOZABAL 1027 SAN MIGUEL XOXTLA 72620',
+        street: 'BERRIOZABAL 1027 SAN MIGUEL XOXTLA 72620',
         schedule: 'L-S 9:00AM - 06:00PM',
+        ext_num: '1027',
     };
 }

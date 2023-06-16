@@ -19,10 +19,9 @@ export class GenericModalComponent {
 
 export interface DialogData {
     title: string;
-    mode: string;
     actions: {
         main: string;
         secondary: string;
-    },
+    };
     content: string;
 }
