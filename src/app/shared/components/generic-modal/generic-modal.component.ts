@@ -13,7 +13,7 @@ export class GenericModalComponent {
     ) {}
 
     closeModal(): void {
-        this.dialogRef.close();
+        this.dialogRef.close(true);
     }
 }
 

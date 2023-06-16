@@ -31,7 +31,28 @@ export class CreateEditBranchOfficesComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {}
 
-    setData() {
+    createForm() {
+        // TODO: Find a better way to get the raw phone values for phone1 and phone 2 & zipcode,
+        // TODO: not a string(current behavior), ngx-mask is having issues with the input type number
+        this.branchOfficeForm = this.fb.group({
+            branchOfficeName: ['', Validators.required],
+            phone1: [null],
+            street: ['', Validators.required],
+            int_num: '',
+            town: ['', Validators.required],
+            zipcode: [null, Validators.required],
+            state: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            phone2: [null],
+            ext_num: ['', Validators.required],
+            city: ['', Validators.required],
+            schedule: ['', Validators.required],
+            colony: '',
+            country: [{ value: '', disabled: true }, Validators.required],
+        });
+    }
+
+    setData(): void {
         if (this.data.itemData) {
             this.mode = 'edit';
             const data = this.data.itemData;
@@ -52,28 +73,9 @@ export class CreateEditBranchOfficesComponent implements OnInit, AfterViewInit {
                 colony: data.colony,
                 country: data.country,
             });
-
-            this.branchOfficeForm.updateValueAndValidity();
         }
-    }
 
-    createForm() {
-        this.branchOfficeForm = this.fb.group({
-            branchOfficeName: ['', Validators.required],
-            phone1: null,
-            street: ['', Validators.required],
-            int_num: '',
-            town: ['', Validators.required],
-            zipcode: [null, Validators.required],
-            state: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            phone2: '',
-            ext_num: ['', Validators.required],
-            city: ['', Validators.required],
-            schedule: ['', Validators.required],
-            colony: '',
-            country: ['', Validators.required],
-        });
+        this.branchOfficeForm.get('country')?.patchValue('MX');
     }
 }
 

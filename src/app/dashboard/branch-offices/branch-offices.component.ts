@@ -30,9 +30,7 @@ export class BranchOfficesComponent implements AfterViewInit {
 
     constructor(private dialog: MatDialog, private _snackBar: MatSnackBar) {
         // Create 100 users
-        const users = Array.from({ length: 100 }, (_, k) =>
-            createNewUser(k + 1)
-        );
+        const users = Array.from({ length: 4 }, (_, k) => createNewUser(k + 1));
 
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(users);
@@ -66,7 +64,7 @@ export class BranchOfficesComponent implements AfterViewInit {
         });
     }
 
-    openDeleteDialog(item: any, event: any) {
+    openDeleteDialog(item: any, event: Event, index: number) {
         event.stopPropagation();
 
         const dialogRef = this.dialog.open(GenericModalComponent, {
@@ -81,57 +79,43 @@ export class BranchOfficesComponent implements AfterViewInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Sucursal: ${item.branchOfficeName} borrada`);
-            this._snackBar.open(
-                `Sucursal: ${item.branchOfficeName} borrada`,
-                'CERRAR',
-                {
-                    // horizontalPosition: 'center',
-                    // verticalPosition: 'top',
-                }
-            );
+            if (result === true) {
+                this.removeAt(index);
+
+                this._snackBar.open(
+                    `Sucursal: ${item.branchOfficeName} borrada`,
+                    'CERRAR'
+                );
+            }
         });
+    }
+
+    removeAt(index: number) {
+        const data = this.dataSource.data;
+        data.splice(
+            this.paginator.pageIndex * this.paginator.pageSize + index,
+            1
+        );
+        this.dataSource.data = data;
     }
 }
 
-const NAMES: string[] = [
-    'Maia',
-    'Asher',
-    'Olivia',
-    'Atticus',
-    'Amelia',
-    'Jack',
-    'Charlotte',
-    'Theodore',
-    'Isla',
-    'Oliver',
-    'Isabella',
-    'Jasper',
-    'Cora',
-    'Levi',
-    'Violet',
-    'Arthur',
-    'Mia',
-    'Thomas',
-    'Elizabeth',
-];
-
 /** Builds and returns a new User. */
 function createNewUser(id: number): any {
-    const name =
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-        ' ' +
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-        '.';
-
     return {
-        id: id.toString(),
-        branchOfficeName: name,
+        branchOfficeName: 'Test',
+        phone1: 2223233233,
+        street: 'BERRIOZABAL',
+        int_num: null,
+        town: 'SAN MIGUEL XOXTLA',
+        zipcode: 72620,
+        state: 'PUEBLA',
         email: 'biotecsalab@hotmail.com',
-        phone1: '22-23-23-32-33',
-        phone2: '22-23-23-32-33',
-        street: 'BERRIOZABAL 1027 SAN MIGUEL XOXTLA 72620',
-        schedule: 'L-S 9:00AM - 06:00PM',
+        phone2: 2223233233,
         ext_num: '1027',
+        city: 'PUEBLA',
+        schedule: 'L-S 9:00AM - 06:00PM',
+        colony: 'SAN MIGUEL XOXTLA',
+        country: 'MX',
     };
 }
