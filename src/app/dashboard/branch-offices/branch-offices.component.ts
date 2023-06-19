@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CreateEditBranchOfficesComponent } from './create-edit-branch-offices/create-edit-branch-offices.component';
 import { GenericModalComponent } from 'src/app/shared/components/generic-modal/generic-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BranchOfficesService } from 'src/app/services/branch-offices.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-branch-offices',
@@ -15,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class BranchOfficesComponent implements AfterViewInit {
     title = 'SUCURSALES';
     displayedColumns: string[] = [
-        'branchOfficeName',
+        'name',
         'email',
         'phone1',
         'phone2',
@@ -23,25 +25,27 @@ export class BranchOfficesComponent implements AfterViewInit {
         'schedule',
         'delete',
     ];
-    dataSource: MatTableDataSource<any>;
+    dataSource!: MatTableDataSource<BranchOffice>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor(private dialog: MatDialog, private _snackBar: MatSnackBar) {
-        // Create 100 users
-        const users = Array.from({ length: 4 }, (_, k) => createNewUser(k + 1));
-
-        // Assign the data to the data source for the table to render
-        this.dataSource = new MatTableDataSource(users);
-    }
+    constructor(
+        private dialog: MatDialog,
+        private _snackBar: MatSnackBar,
+        private branchOfficesService: BranchOfficesService
+    ) {}
 
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.branchOfficesService.getBranchOffices().subscribe((data) => {
+            // Assign the data to the data source for the table to render
+            this.dataSource = new MatTableDataSource(data as BranchOffice[]);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        });
     }
 
-    applyFilter(event: Event) {
+    applyFilter(event: Event): void {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -50,27 +54,58 @@ export class BranchOfficesComponent implements AfterViewInit {
         }
     }
 
-    openCreateEditPatientDialog(itemData?: any): void {
+    openCreateEditPatientDialog(itemData?: BranchOffice, index?: any): void {
         const dialogRef = this.dialog.open(CreateEditBranchOfficesComponent, {
             width: '1100px',
             minHeight: '500px',
-            data: {
-                itemData,
-            },
+            data: { itemData },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`);
+        dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
+            if (formValues && mode === 'create') {
+                this.createBranchOffice(formValues).subscribe((response) => {
+                    // Updating the local datasource
+                    const newDataSource = this.dataSource.data;
+                    this.dataSource.data = [response, ...newDataSource];
+                    this._snackBar.open(
+                        `SUCURSAL: ${response.name} CREADA`,
+                        'CERRAR'
+                    );
+                });
+            } else if (formValues && mode === 'edit') {
+                const newFormValues = {
+                    ...formValues,
+                    branch_office_id: itemData?.branch_office_id,
+                };
+                this.updateBranchOffice(newFormValues).subscribe((response) => {
+                    // Updating the local datasource
+                    const data = this.dataSource.data;
+                    const newDataSource = data.map(
+                        (branchOffice: BranchOffice, i) => {
+                            if (i === index) {
+                                return response;
+                            }
+                            return branchOffice;
+                        }
+                    );
+
+                    this.dataSource.data = newDataSource;
+                    this._snackBar.open(
+                        `SUCURSAL: ${response.name} ACTUALIZADA`,
+                        'CERRAR'
+                    );
+                });
+            }
         });
     }
 
-    openDeleteDialog(item: any, event: Event, index: number) {
+    openDeleteDialog(item: BranchOffice, event: Event, index: number): void {
         event.stopPropagation();
 
         const dialogRef = this.dialog.open(GenericModalComponent, {
             minWidth: '800px',
             data: {
-                title: `¿SEGURO QUE DESEA ELIMINAR LAL SUCURSAL "${item.branchOfficeName}"?`,
+                title: `¿SEGURO QUE DESEA ELIMINAR LAL SUCURSAL "${item.name}"?`,
                 actions: {
                     main: 'ELIMINAR SUCURSAL',
                     secondary: 'CANCELAR',
@@ -80,17 +115,28 @@ export class BranchOfficesComponent implements AfterViewInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result === true) {
-                this.removeAt(index);
-
-                this._snackBar.open(
-                    `Sucursal: ${item.branchOfficeName} borrada`,
-                    'CERRAR'
-                );
+                this.branchOfficesService
+                    .deleteBranchOffice(item.branch_office_id)
+                    .subscribe(() => {
+                        this.removeAt(index);
+                        this._snackBar.open(
+                            `Sucursal: ${item.name} borrada`,
+                            'CERRAR'
+                        );
+                    });
             }
         });
     }
 
-    removeAt(index: number) {
+    createBranchOffice(branchOffice: BranchOffice): Observable<BranchOffice> {
+        return this.branchOfficesService.createBranchOffice(branchOffice);
+    }
+
+    updateBranchOffice(branchOffice: BranchOffice): Observable<BranchOffice> {
+        return this.branchOfficesService.updateBranchOffice(branchOffice);
+    }
+
+    removeAt(index: number): void {
         const data = this.dataSource.data;
         data.splice(
             this.paginator.pageIndex * this.paginator.pageSize + index,
@@ -100,22 +146,20 @@ export class BranchOfficesComponent implements AfterViewInit {
     }
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): any {
-    return {
-        branchOfficeName: 'Test',
-        phone1: 2223233233,
-        street: 'BERRIOZABAL',
-        int_num: null,
-        town: 'SAN MIGUEL XOXTLA',
-        zipcode: 72620,
-        state: 'PUEBLA',
-        email: 'biotecsalab@hotmail.com',
-        phone2: 2223233233,
-        ext_num: '1027',
-        city: 'PUEBLA',
-        schedule: 'L-S 9:00AM - 06:00PM',
-        colony: 'SAN MIGUEL XOXTLA',
-        country: 'MX',
-    };
+export interface BranchOffice {
+    branch_office_id: string;
+    name: string;
+    phone1: string;
+    street: string;
+    int_num: string;
+    town: string;
+    zipcode: string;
+    state: string;
+    email: string;
+    phone2: string;
+    ext_num: string;
+    city: string;
+    schedule: string;
+    colony: string;
+    country: string;
 }

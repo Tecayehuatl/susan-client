@@ -78,3 +78,7 @@ mat-divider {
   --mdc-snackbar-container-color: var(--brand-main);
   --mdc-snackbar-supporting-text-color: var(--white);
 }
+
+.uppercase {
+    text-transform: uppercase !important;
+}

@@ -1,15 +1,17 @@
-import { AfterViewInit, Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { states } from 'src/app/shared/states';
+import { towns } from 'src/app/shared/towns';
 
 @Component({
     selector: 'app-create-edit-branch-offices',
     templateUrl: './create-edit-branch-offices.component.html',
     styleUrls: ['./create-edit-branch-offices.component.scss'],
 })
-export class CreateEditBranchOfficesComponent implements OnInit, AfterViewInit {
+export class CreateEditBranchOfficesComponent implements OnInit {
     states: any[];
+    towns!: string[];
     countries: any[];
     mode!: 'create' | 'edit';
     title!: string;
@@ -20,8 +22,8 @@ export class CreateEditBranchOfficesComponent implements OnInit, AfterViewInit {
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private fb: FormBuilder
     ) {
-        this.states = states;
         this.countries = [{ value: 'MX', name: 'MÉXICO' }];
+        this.states = states;
     }
 
     ngOnInit() {
@@ -29,13 +31,9 @@ export class CreateEditBranchOfficesComponent implements OnInit, AfterViewInit {
         this.setData();
     }
 
-    ngAfterViewInit(): void {}
-
-    createForm() {
-        // TODO: Find a better way to get the raw phone values for phone1 and phone 2 & zipcode,
-        // TODO: not a string(current behavior), ngx-mask is having issues with the input type number
+    createForm(): void {
         this.branchOfficeForm = this.fb.group({
-            branchOfficeName: ['', Validators.required],
+            name: ['', Validators.required],
             phone1: [null],
             street: ['', Validators.required],
             int_num: '',
@@ -48,21 +46,22 @@ export class CreateEditBranchOfficesComponent implements OnInit, AfterViewInit {
             city: ['', Validators.required],
             schedule: ['', Validators.required],
             colony: '',
-            country: [{ value: '', disabled: true }, Validators.required],
+            // This value is assigned by default, we are only supporting México
+            country: [{ value: 'MX', disabled: true }, Validators.required],
         });
     }
 
     setData(): void {
+        // Edit mode
         if (this.data.itemData) {
             this.mode = 'edit';
             const data = this.data.itemData;
 
             this.branchOfficeForm.patchValue({
-                branchOfficeName: data.branchOfficeName,
+                name: data.name,
                 phone1: data.phone1,
                 street: data.street,
                 int_num: data.int_num,
-                town: data.town,
                 zipcode: data.zipcode,
                 state: data.state,
                 email: data.email,
@@ -71,11 +70,40 @@ export class CreateEditBranchOfficesComponent implements OnInit, AfterViewInit {
                 city: data.city,
                 schedule: data.schedule,
                 colony: data.colony,
-                country: data.country,
             });
-        }
 
-        this.branchOfficeForm.get('country')?.patchValue('MX');
+            this.loadTowns(data.state);
+            this.setTown(data.town?.toUpperCase());
+        } else {
+            this.mode = 'create';
+            this.loadTowns();
+        }
+    }
+
+    loadTowns(state?: string): void {
+        // Sets ALL towns if a state is coming from the database
+        if (state) {
+            this.towns = towns[state as keyof typeof towns];
+        } else {
+            // Going to load towns every time the user changes the state value or if is a creation record
+            this.branchOfficeForm
+                .get('state')
+                ?.valueChanges.subscribe((stateValue: string) => {
+                    this.towns = towns[stateValue as keyof typeof towns];
+                });
+        }
+    }
+
+    setTown(town: string): void {
+        this.branchOfficeForm.get('town')?.patchValue(town);
+    }
+
+    createUpdateItem(): void {
+        const formValues = {
+            ...this.branchOfficeForm.value,
+            country: this.branchOfficeForm.get('country')?.value,
+        };
+        this.dialogRef.close({ formValues, mode: this.mode });
     }
 }
 

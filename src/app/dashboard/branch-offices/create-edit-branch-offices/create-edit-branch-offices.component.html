@@ -4,12 +4,16 @@
     </div>
     <h2>{{ mode === 'edit' ? 'EDITAR' : 'DETALLE DE' }} SUCURSAL</h2>
     <mat-divider></mat-divider>
-    <form class="grid-container" autocomplete="disabled" [formGroup]="branchOfficeForm">
+    <form
+        class="grid-container"
+        autocomplete="disabled"
+        [formGroup]="branchOfficeForm"
+    >
         <section class="grid-item">
             <mat-form-field>
                 <mat-label>Nombre de la sucursal</mat-label>
-                <input matInput placeholder="Nombre de la sucursal" tabindex="1" autocomplete="disabled"
-                    formControlName="branchOfficeName" />
+                <input class="uppercase" matInput placeholder="Nombre de la sucursal" tabindex="1" autocomplete="disabled"
+                    formControlName="name" />
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Teléfono 1</mat-label>
@@ -18,7 +22,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Calle</mat-label>
-                <input matInput placeholder="Calle" tabindex="5" autocomplete="disabled" formControlName="street" />
+                <input class="uppercase" matInput placeholder="Calle" tabindex="5" autocomplete="disabled" formControlName="street" />
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Número interior</mat-label>
@@ -26,18 +30,22 @@
                     formControlName="int_num" />
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Municipio</mat-label>
-                <input matInput placeholder="Municipio" tabindex="9" autocomplete="disabled" formControlName="town" />
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Ciudad</mat-label>
-                <input matInput placeholder="Ciudad" tabindex="11" autocomplete="disabled" formControlName="city" />
-            </mat-form-field>
-            <mat-form-field>
                 <mat-label>Estado</mat-label>
-                <mat-select tabindex="13" formControlName="state">
-                    <mat-option *ngFor="let state of states" autocomplete="disabled" [value]="state.name">
+                <mat-select tabindex="9" formControlName="state">
+                    <mat-option *ngFor="let state of states" autocomplete="disabled" [value]="state.value">
                         {{ state.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Colonia</mat-label>
+                <input class="uppercase" matInput placeholder="Colonia" tabindex="11" autocomplete="disabled" formControlName="colony" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>País</mat-label>
+                <mat-select tabindex="13" formControlName="country">
+                    <mat-option *ngFor="let country of countries" autocomplete="disabled" [value]="country.value">
+                        {{ country.name }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -60,24 +68,27 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Código postal</mat-label>
-                <input matInput placeholder="Código postal" tabindex="8" autocomplete="disabled"
+                <input matInput placeholder="Código postal" tabindex="8" autocomplete="disabled" mask="00000"
                     formControlName="zipcode" />
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Colonia</mat-label>
-                <input matInput placeholder="Colonia" tabindex="10" autocomplete="disabled" formControlName="colony" />
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>País</mat-label>
-                <mat-select tabindex="12" formControlName="country">
-                    <mat-option *ngFor="let country of countries" autocomplete="disabled" [value]="country.value">
-                        {{ country.name }}
+                <mat-select tabindex="10" formControlName="town">
+                    <mat-option
+                        *ngFor="let town of towns; let i = index"
+                        autocomplete="disabled"
+                        [value]="town"
+                    >
+                        {{ town | uppercase }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
+                <mat-label>Ciudad</mat-label>
+                <input class="uppercase" matInput placeholder="Ciudad" tabindex="12" autocomplete="disabled" formControlName="city" />
+            </mat-form-field>
+            <mat-form-field>
                 <mat-label>Horario</mat-label>
-                <input matInput placeholder="Horario" tabindex="14" autocomplete="disabled"
+                <input class="uppercase" matInput placeholder="Horario" tabindex="14" autocomplete="disabled"
                     formControlName="schedule" />
             </mat-form-field>
         </section>
@@ -87,9 +98,15 @@
             <mat-icon>cancel</mat-icon>
             Cancelar
         </button>
-        <button class="grid-actions__button" mat-flat-button color="primary" [disabled]="branchOfficeForm.invalid">
+        <button
+            class="grid-actions__button"
+            mat-flat-button
+            color="primary"
+            [disabled]="branchOfficeForm.invalid"
+            (click)="createUpdateItem()"
+        >
             <mat-icon>person_add</mat-icon>
-            CREAR SUCURSAL
+            {{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} SUCURSAL
         </button>
     </section>
 </section>
