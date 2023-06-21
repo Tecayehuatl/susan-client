@@ -9,6 +9,8 @@ import { OrdersComponent } from './orders/orders.component';
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 import { BranchOfficesComponent } from './branch-offices/branch-offices.component';
 import { CreateEditBranchOfficesComponent } from './branch-offices/create-edit-branch-offices/create-edit-branch-offices.component';
+import { DoctorsComponent } from './doctors/doctors.component';
+import { CreateEditDoctorsComponent } from './doctors/create-edit-doctors/create-edit-doctors.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +21,8 @@ import { CreateEditBranchOfficesComponent } from './branch-offices/create-edit-b
         OrderDetailComponent,
         BranchOfficesComponent,
         CreateEditBranchOfficesComponent,
+        DoctorsComponent,
+        CreateEditDoctorsComponent,
     ],
     imports: [DashboardRoutingModule, SharedModule],
 })
