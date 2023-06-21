@@ -6,6 +6,7 @@ import { PatientDetailComponent } from './patients/patient-detail/patient-detail
 import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 import { BranchOfficesComponent } from './branch-offices/branch-offices.component';
 import { DoctorsComponent } from './doctors/doctors.component';
+import { StudiesComponent } from './studies/studies.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,10 @@ const routes: Routes = [
             {
                 path: 'doctors',
                 component: DoctorsComponent,
+            },
+            {
+                path: 'studies',
+                component: StudiesComponent,
             },
         ],
     },
