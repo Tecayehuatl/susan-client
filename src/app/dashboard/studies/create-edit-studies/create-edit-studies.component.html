@@ -1,1 +1,135 @@
-<p>create-edit-studies works!</p>
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>{{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} ESTUDIO</h2>
+    <mat-divider></mat-divider>
+    <form
+        class="grid-container"
+        autocomplete="disabled"
+        [formGroup]="studyForm"
+    >
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Nombre del estudio</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Nombre del estudio"
+                    tabindex="1"
+                    autocomplete="disabled"
+                    formControlName="name"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Precio</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Precio"
+                    tabindex="3"
+                    autocomplete="disabled"
+                    formControlName="price"
+                    prefix="$ "
+                    mask="separator.2"
+                    thousandSeparator=","
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Precio total</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Precio total"
+                    tabindex="5"
+                    autocomplete="disabled"
+                    prefix="$ "
+                    mask="separator.2"
+                    thousandSeparator=","
+                    formControlName="grandTotal"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Condiciones</mat-label>
+                <textarea
+                    class="uppercase"
+                    matInput
+                    placeholder="Condiciones"
+                    tabindex="7"
+                    autocomplete="disabled"
+                    formControlName="conditions"
+                ></textarea>
+            </mat-form-field>
+        </section>
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Alias</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Alias"
+                    tabindex="2"
+                    autocomplete="disabled"
+                    formControlName="alias"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>% de descuento</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="% de descuento"
+                    tabindex="4"
+                    autocomplete="disabled"
+                    formControlName="discountPercentage"
+                    suffix=" %"
+                    mask="separator.2"
+                    thousandSeparator=","
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Días de entrega</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Días de entrega"
+                    tabindex="6"
+                    autocomplete="disabled"
+                    formControlName="deliveryDays"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Notas</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Notas"
+                    tabindex="8"
+                    autocomplete="disabled"
+                    formControlName="notes"
+                />
+            </mat-form-field>
+        </section>
+    </form>
+    <section class="grid-actions">
+        <button
+            class="grid-actions__button"
+            mat-stroked-button
+            color="primary"
+            mat-dialog-close
+        >
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button
+            class="grid-actions__button"
+            mat-flat-button
+            color="primary"
+            [disabled]="studyForm.invalid"
+            (click)="createUpdateItem()"
+        >
+            <mat-icon>person_add</mat-icon>
+            {{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} DOCTOR
+        </button>
+    </section>
+</section>
