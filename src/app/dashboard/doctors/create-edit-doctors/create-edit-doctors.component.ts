@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Doctor } from '../doctors.component';
+import { DoctorsService } from 'src/app/services/doctors.service';
 
 @Component({
     selector: 'app-create-edit-doctors',
@@ -15,7 +17,8 @@ export class CreateEditDoctorsComponent implements OnInit {
     constructor(
         public dialogRef: MatDialogRef<CreateEditDoctorsComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private doctorsService: DoctorsService
     ) {}
 
     ngOnInit() {
@@ -31,7 +34,7 @@ export class CreateEditDoctorsComponent implements OnInit {
             phone1: '',
             phone2: [''],
             cedula: ['', [Validators.maxLength(15)]],
-            email: ['', [Validators.email]],
+            email: [''],
         });
     }
 
@@ -50,7 +53,6 @@ export class CreateEditDoctorsComponent implements OnInit {
                 cedula: data.cedula,
                 email: data.email,
             });
-
         } else {
             this.mode = 'create';
         }
@@ -60,7 +62,30 @@ export class CreateEditDoctorsComponent implements OnInit {
         const formValues = {
             ...this.doctorsForm.value,
         };
-        this.dialogRef.close({ formValues, mode: this.mode });
+
+        if (formValues && this.mode === 'create') {
+            this.doctorsService
+                .createDoctor(formValues)
+                .subscribe((response: Doctor) => {
+                    this.dialogRef.close({
+                        formValues: response,
+                        mode: this.mode,
+                    });
+                });
+        } else if (formValues && this.mode === 'edit') {
+            const newFormValues = {
+                ...formValues,
+                doctor_id: this.data.itemData?.doctor_id,
+            };
+            this.doctorsService
+                .updateDoctor(newFormValues)
+                .subscribe((response: Doctor) => {
+                    this.dialogRef.close({
+                        formValues: response,
+                        mode: this.mode,
+                    });
+                });
+        }
     }
 }
 

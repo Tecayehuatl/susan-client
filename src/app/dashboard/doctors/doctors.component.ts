@@ -65,36 +65,27 @@ export class DoctorsComponent implements AfterViewInit {
 
         dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
             if (formValues && mode === 'create') {
-                this.createDoctor(formValues).subscribe((response) => {
-                    // Updating the local datasource
-                    const newDataSource = this.dataSource.data;
-                    this.dataSource.data = [response, ...newDataSource];
-                    this._snackBar.open(
-                        `DOCTOR: ${response.first_name} CREADA`,
-                        'CERRAR'
-                    );
-                });
+                // Updating the local datasource
+                const newDataSource = this.dataSource.data;
+                this.dataSource.data = [formValues, ...newDataSource];
+                this._snackBar.open(
+                    `DOCTOR: ${formValues.first_name} CREADA`,
+                    'CERRAR'
+                );
             } else if (formValues && mode === 'edit') {
-                const newFormValues = {
-                    ...formValues,
-                    doctor_id: itemData?.doctor_id,
-                };
-                this.updateDoctor(newFormValues).subscribe((response) => {
-                    // Updating the local datasource
-                    const data = this.dataSource.data;
-                    const newDataSource = data.map((doctor: Doctor, i) => {
-                        if (i === index) {
-                            return response;
-                        }
-                        return doctor;
-                    });
-
-                    this.dataSource.data = newDataSource;
-                    this._snackBar.open(
-                        `DOCTOR: ${response.first_name} ACTUALIZADO`,
-                        'CERRAR'
-                    );
+                // Updating the local datasource
+                const data = this.dataSource.data;
+                const newDataSource = data.map((doctor: Doctor, i) => {
+                    if (i === index) {
+                        return formValues;
+                    }
+                    return doctor;
                 });
+                this.dataSource.data = newDataSource;
+                this._snackBar.open(
+                    `DOCTOR: ${formValues.first_name} ACTUALIZADO`,
+                    'CERRAR'
+                );
             }
         });
     }
@@ -126,14 +117,6 @@ export class DoctorsComponent implements AfterViewInit {
                     });
             }
         });
-    }
-
-    createDoctor(doctor: Doctor): Observable<Doctor> {
-        return this.doctorsService.createDoctor(doctor);
-    }
-
-    updateDoctor(doctor: Doctor): Observable<Doctor> {
-        return this.doctorsService.updateDoctor(doctor);
     }
 
     removeAt(index: number): void {
