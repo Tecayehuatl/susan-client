@@ -30,7 +30,7 @@
                         Sucursal
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.name }}
+                        {{ row.name | uppercase }}
                     </td>
                 </ng-container>
                 <!-- Email Column -->
@@ -39,7 +39,7 @@
                         Correo electrónico
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.email }}
+                        {{ row.email | uppercase }}
                     </td>
                 </ng-container>
                 <!-- Phone 1 Column -->
@@ -66,8 +66,8 @@
                         Dirección
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.street }} {{ row.ext_num }}, {{ row.town }}
-                        {{ row.zipcode }}
+                        {{ row.street | uppercase }} {{ row.ext_num }},
+                        {{ row.town | uppercase }} {{ row.zipcode }}
                     </td>
                 </ng-container>
                 <!-- Schedule status -->
@@ -76,7 +76,7 @@
                         Horario
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.schedule }}
+                        {{ row.schedule | uppercase }}
                     </td>
                 </ng-container>
                 <!-- Delete Detail -->
