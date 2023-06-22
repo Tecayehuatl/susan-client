@@ -7,7 +7,6 @@ import { CreateEditBranchOfficesComponent } from './create-edit-branch-offices/c
 import { GenericModalComponent } from 'src/app/shared/components/generic-modal/generic-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BranchOfficesService } from 'src/app/services/branch-offices.service';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-branch-offices',
@@ -33,7 +32,7 @@ export class BranchOfficesComponent implements AfterViewInit {
     constructor(
         private dialog: MatDialog,
         private _snackBar: MatSnackBar,
-        private branchOfficesService: BranchOfficesService
+        private branchOfficesService: BranchOfficesService,
     ) {}
 
     ngAfterViewInit() {
@@ -61,40 +60,32 @@ export class BranchOfficesComponent implements AfterViewInit {
             data: { itemData },
         });
 
-        dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
-            if (formValues && mode === 'create') {
-                this.createBranchOffice(formValues).subscribe((response) => {
-                    // Updating the local datasource
-                    const newDataSource = this.dataSource.data;
-                    this.dataSource.data = [response, ...newDataSource];
-                    this._snackBar.open(
-                        `SUCURSAL: ${response.name} CREADA`,
-                        'CERRAR'
-                    );
-                });
-            } else if (formValues && mode === 'edit') {
-                const newFormValues = {
-                    ...formValues,
-                    branch_office_id: itemData?.branch_office_id,
-                };
-                this.updateBranchOffice(newFormValues).subscribe((response) => {
-                    // Updating the local datasource
-                    const data = this.dataSource.data;
-                    const newDataSource = data.map(
-                        (branchOffice: BranchOffice, i) => {
-                            if (i === index) {
-                                return response;
-                            }
-                            return branchOffice;
+        dialogRef.afterClosed().subscribe(({ responseForm, mode }) => {
+            if (responseForm && mode === 'create') {
+                // Updating the local datasource
+                const newDataSource = this.dataSource.data;
+                this.dataSource.data = [responseForm, ...newDataSource];
+                this._snackBar.open(
+                    `SUCURSAL: ${responseForm.name} CREADA`,
+                    'CERRAR'
+                );
+            } else if (responseForm && mode === 'edit') {
+                // Updating the local datasource
+                const data = this.dataSource.data;
+                const newDataSource = data.map(
+                    (branchOffice: BranchOffice, i) => {
+                        if (i === index) {
+                            return responseForm;
                         }
-                    );
+                        return branchOffice;
+                    }
+                );
 
-                    this.dataSource.data = newDataSource;
-                    this._snackBar.open(
-                        `SUCURSAL: ${response.name} ACTUALIZADA`,
-                        'CERRAR'
-                    );
-                });
+                this.dataSource.data = newDataSource;
+                this._snackBar.open(
+                    `SUCURSAL: ${responseForm.name} ACTUALIZADA`,
+                    'CERRAR'
+                );
             }
         });
     }
@@ -126,14 +117,6 @@ export class BranchOfficesComponent implements AfterViewInit {
                     });
             }
         });
-    }
-
-    createBranchOffice(branchOffice: BranchOffice): Observable<BranchOffice> {
-        return this.branchOfficesService.createBranchOffice(branchOffice);
-    }
-
-    updateBranchOffice(branchOffice: BranchOffice): Observable<BranchOffice> {
-        return this.branchOfficesService.updateBranchOffice(branchOffice);
     }
 
     removeAt(index: number): void {

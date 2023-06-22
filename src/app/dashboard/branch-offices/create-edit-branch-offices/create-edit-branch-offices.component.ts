@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { states } from 'src/app/shared/states';
 import { towns } from 'src/app/shared/towns';
+import { BranchOffice } from '../branch-offices.component';
+import { BranchOfficesService } from 'src/app/services/branch-offices.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
     selector: 'app-create-edit-branch-offices',
@@ -20,7 +24,9 @@ export class CreateEditBranchOfficesComponent implements OnInit {
     constructor(
         public dialogRef: MatDialogRef<CreateEditBranchOfficesComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private branchOfficesService: BranchOfficesService,
+        private _snackBar: MatSnackBar
     ) {
         this.countries = [{ value: 'MX', name: 'MÉXICO' }];
         this.states = states;
@@ -34,7 +40,7 @@ export class CreateEditBranchOfficesComponent implements OnInit {
     createForm(): void {
         this.branchOfficeForm = this.fb.group({
             name: ['', Validators.required],
-            phone1: [null],
+            phone1: [null, Validators.required],
             street: ['', Validators.required],
             int_num: '',
             town: ['', Validators.required],
@@ -99,11 +105,46 @@ export class CreateEditBranchOfficesComponent implements OnInit {
     }
 
     createUpdateItem(): void {
-        const formValues = {
+        const formValues: BranchOffice = {
             ...this.branchOfficeForm.value,
             country: this.branchOfficeForm.get('country')?.value,
         };
-        this.dialogRef.close({ formValues, mode: this.mode });
+
+        if (formValues && this.mode === 'create') {
+            this.branchOfficesService
+                .createBranchOffice(formValues)
+                .subscribe((response: BranchOffice) => {
+                    this.dialogRef.close({
+                        responseForm: response,
+                        mode: this.mode,
+                    });
+                });
+        } else if (formValues && this.mode === 'edit') {
+            const newFormValues: BranchOffice = {
+                ...formValues,
+                // Id required for edit one item
+                branch_office_id: this.data.itemData?.branch_office_id,
+            };
+            this.branchOfficesService
+                .updateBranchOffice(newFormValues)
+                .pipe(
+                    catchError((error: any) => {
+                        this.showError(error.message || error.statusText);
+                        const _error = error.message || error.statusText;
+                        return throwError(() => _error);
+                    })
+                )
+                .subscribe((response: BranchOffice) => {
+                    this.dialogRef.close({
+                        responseForm: response,
+                        mode: this.mode,
+                    });
+                });
+        }
+    }
+
+    showError(error: string): void {
+        this._snackBar.open(`ERROR: ${error}`, 'CERRAR');
     }
 }
 
