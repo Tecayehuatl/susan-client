@@ -42,7 +42,7 @@ import { InterceptorService } from './services/interceptor.service';
         {
             provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
             useValue: {
-                duration: 3500,
+                duration: 5000,
                 horizontalPosition: 'right',
                 verticalPosition: 'top',
             },
