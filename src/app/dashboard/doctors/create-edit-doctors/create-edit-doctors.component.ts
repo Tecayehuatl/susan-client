@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     templateUrl: './create-edit-doctors.component.html',
     styleUrls: ['./create-edit-doctors.component.scss'],
 })
-export class CreateEditDoctorsComponent {
+export class CreateEditDoctorsComponent implements OnInit {
     mode!: 'create' | 'edit';
     title!: string;
     doctorsForm!: FormGroup;

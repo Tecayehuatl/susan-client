@@ -25,6 +25,7 @@ export class DoctorsComponent implements AfterViewInit {
         'phone2',
         'cedula',
         'email',
+        'delete',
     ];
     dataSource!: MatTableDataSource<Doctor>;
 
