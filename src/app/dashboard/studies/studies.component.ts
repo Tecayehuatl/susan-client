@@ -4,7 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
 import { StudiesService } from 'src/app/services/studies.service';
 import { CreateEditStudiesComponent } from './create-edit-studies/create-edit-studies.component';
 import { GenericModalComponent } from 'src/app/shared/components/generic-modal/generic-modal.component';
