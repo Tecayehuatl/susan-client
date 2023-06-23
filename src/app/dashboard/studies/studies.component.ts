@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,7 +14,7 @@ import { GenericModalComponent } from 'src/app/shared/components/generic-modal/g
     templateUrl: './studies.component.html',
     styleUrls: ['./studies.component.scss'],
 })
-export class StudiesComponent {
+export class StudiesComponent implements AfterViewInit {
     title = 'ESTUDIOS';
     displayedColumns: string[] = [
         'study_id',
@@ -66,36 +66,28 @@ export class StudiesComponent {
 
         dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
             if (formValues && mode === 'create') {
-                this.createStudy(formValues).subscribe((response) => {
-                    // Updating the local datasource
-                    const newDataSource = this.dataSource.data;
-                    this.dataSource.data = [response, ...newDataSource];
-                    this._snackBar.open(
-                        `ESTUDIO: ${response.name} CREADO`,
-                        'CERRAR'
-                    );
-                });
+                // Updating the local datasource
+                const newDataSource = this.dataSource.data;
+                this.dataSource.data = [formValues, ...newDataSource];
+                this._snackBar.open(
+                    `ESTUDIO: ${formValues.name} CREADO`,
+                    'CERRAR'
+                );
             } else if (formValues && mode === 'edit') {
-                const newFormValues = {
-                    ...formValues,
-                    study_id: itemData?.study_id,
-                };
-                this.updateStudy(newFormValues).subscribe((response) => {
-                    // Updating the local datasource
-                    const data = this.dataSource.data;
-                    const newDataSource = data.map((study: Study, i) => {
-                        if (i === index) {
-                            return response;
-                        }
-                        return study;
-                    });
-
-                    this.dataSource.data = newDataSource;
-                    this._snackBar.open(
-                        `ESTUDIO: ${response.name} ACTUALIZADO`,
-                        'CERRAR'
-                    );
+                // Updating the local datasource
+                const data = this.dataSource.data;
+                const newDataSource = data.map((study: Study, i) => {
+                    if (i === index) {
+                        return formValues;
+                    }
+                    return study;
                 });
+
+                this.dataSource.data = newDataSource;
+                this._snackBar.open(
+                    `ESTUDIO: ${formValues.name} ACTUALIZADO`,
+                    'CERRAR'
+                );
             }
         });
     }
@@ -125,14 +117,6 @@ export class StudiesComponent {
                 });
             }
         });
-    }
-
-    createStudy(study: Study): Observable<Study> {
-        return this.studiesService.createStudy(study);
-    }
-
-    updateStudy(study: Study): Observable<Study> {
-        return this.studiesService.updateStudy(study);
     }
 
     removeAt(index: number): void {

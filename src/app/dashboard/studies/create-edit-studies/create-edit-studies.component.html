@@ -95,6 +95,8 @@
                     tabindex="6"
                     autocomplete="disabled"
                     formControlName="deliveryDays"
+                    suffix=" Día(s)"
+                    mask="separator"
                 />
             </mat-form-field>
             <mat-form-field>
@@ -128,7 +130,7 @@
             (click)="createUpdateItem()"
         >
             <mat-icon>person_add</mat-icon>
-            {{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} DOCTOR
+            {{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} ESTUDIO
         </button>
     </section>
 </section>

@@ -6,7 +6,9 @@ import {
     Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { StudiesService } from 'src/app/services/studies.service';
 import { getGrandTotal } from 'src/app/shared/utils/utils';
+import { Study } from '../studies.component';
 
 @Component({
     selector: 'app-create-edit-studies',
@@ -33,7 +35,8 @@ export class CreateEditStudiesComponent implements OnInit {
     constructor(
         public dialogRef: MatDialogRef<CreateEditStudiesComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private studiesService: StudiesService
     ) {}
 
     ngOnInit() {
@@ -44,11 +47,11 @@ export class CreateEditStudiesComponent implements OnInit {
     createForm(): void {
         this.studyForm = this.fb.group({
             name: ['', Validators.required],
-            alias: ['', Validators.required],
+            alias: [''],
             price: ['', Validators.required],
             discountPercentage: [0],
             grandTotal: [{ value: '', disabled: true }, Validators.required],
-            deliveryDays: ['', Validators.required],
+            deliveryDays: [null, Validators.required],
             conditions: ['', Validators.required],
             notes: [''],
         });
@@ -83,8 +86,7 @@ export class CreateEditStudiesComponent implements OnInit {
                 grandTotal: grandTotalValue,
                 discountPercentage: data.discountPercentage,
                 deliveryDays: data.deliveryDays,
-                // Temporal data.recommendations, remove when latest changes arrive
-                conditions: data.recommendations || data.conditions,
+                conditions: data.conditions,
                 notes: data.notes,
             });
         } else {
@@ -95,8 +97,34 @@ export class CreateEditStudiesComponent implements OnInit {
     createUpdateItem(): void {
         const formValues = {
             ...this.studyForm.value,
+            // TODO: No debería mandar esta propiedad pues se calcula en el backend
+            // grandTotal: this.grandTotalControl.value,
+            // deliveryDays: +this.studyForm.get('deliveryDays')?.value,
         };
-        this.dialogRef.close({ formValues, mode: this.mode });
+
+        if (formValues && this.mode === 'create') {
+            this.studiesService
+                .createStudy(formValues)
+                .subscribe((response: Study) => {
+                    this.dialogRef.close({
+                        formValues: response,
+                        mode: this.mode,
+                    });
+                });
+        } else if (formValues && this.mode === 'edit') {
+            const newFormValues = {
+                ...formValues,
+                study_id: this.data.itemData?.study_id,
+            };
+            this.studiesService
+                .updateStudy(newFormValues)
+                .subscribe((response: Study) => {
+                    this.dialogRef.close({
+                        formValues: response,
+                        mode: this.mode,
+                    });
+                });
+        }
     }
 }
 
