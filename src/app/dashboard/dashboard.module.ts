@@ -13,6 +13,8 @@ import { DoctorsComponent } from './doctors/doctors.component';
 import { CreateEditDoctorsComponent } from './doctors/create-edit-doctors/create-edit-doctors.component';
 import { StudiesComponent } from './studies/studies.component';
 import { CreateEditStudiesComponent } from './studies/create-edit-studies/create-edit-studies.component';
+import { UsersComponent } from './users/users.component';
+import { CreateEditUsersComponent } from './users/create-edit-users/create-edit-users.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +29,8 @@ import { CreateEditStudiesComponent } from './studies/create-edit-studies/create
         CreateEditDoctorsComponent,
         StudiesComponent,
         CreateEditStudiesComponent,
+        UsersComponent,
+        CreateEditUsersComponent,
     ],
     imports: [DashboardRoutingModule, SharedModule],
 })
