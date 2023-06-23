@@ -1,0 +1,43 @@
+<section class="login">
+    <section class="login-left">
+        <img
+            class="login-image"
+            src="../../assets/images/biotecsa-logo-white.png" alt="Biotecsa logo - login"
+        />
+    </section>
+    <form class="login-right" [formGroup]="loginForm">
+        <section class="login-form">
+            <mat-form-field>
+                <mat-label>Nombre del usuario</mat-label>
+                <input
+                    matInput
+                    placeholder="Nombre del usuario"
+                    tabindex="1"
+                    autocomplete="disabled"
+                    formControlName="email"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Contraseña</mat-label>
+                <input
+                    matInput
+                    placeholder="Contraseña"
+                    tabindex="1"
+                    autocomplete="disabled"
+                    formControlName="password"
+                />
+            </mat-form-field>
+            <div class="login-action">
+                <button
+                    mat-flat-button
+                    color="primary"
+                    [disabled]="!loginForm.valid"
+                    (click)="onSubmit()"
+                >
+                    Iniciar sesión
+                </button>
+            </div>
+            <div class="mt-2" *ngIf="error">* Error: {{ error | json }}</div>
+        </section>
+    </form>
+</section>

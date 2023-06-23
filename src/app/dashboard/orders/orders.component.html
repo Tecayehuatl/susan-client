@@ -1,0 +1,77 @@
+<section>
+    <h3>
+        {{ title }}
+    </h3>
+    <section class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.id }}
+                </td>
+            </ng-container>
+            <!-- Creation date Column -->
+            <ng-container matColumnDef="creationDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Fecha de creación
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <a [routerLink]="['/dashboard', 'patients', 1, 666]">
+                        {{ row.creationDate }}
+                    </a>
+                </td>
+            </ng-container>
+            <!-- General status Column -->
+            <ng-container matColumnDef="generalStatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Estatus general
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.generalStatus }}
+                </td>
+            </ng-container>
+            <!-- Payment status Column -->
+            <ng-container matColumnDef="paymentStatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Estatus de pago
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.paymentStatus }}
+                </td>
+            </ng-container>
+            <!-- Deliver status column -->
+            <ng-container matColumnDef="deliverStatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Estatus de pago
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.deliverStatus }}
+                </td>
+            </ng-container>
+            <!-- Grand total column-->
+            <ng-container matColumnDef="grandTotal">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.grandTotal }}
+                </td>
+            </ng-container>
+            <!-- Total column-->
+            <ng-container matColumnDef="viewDetail">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Ver detalle
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <a href="">Ver detalle</a>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            aria-label="Cotizaciones por página"
+        ></mat-paginator>
+    </section>
+</section>

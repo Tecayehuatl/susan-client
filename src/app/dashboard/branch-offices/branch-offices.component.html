@@ -1,0 +1,123 @@
+<section>
+    <h1>{{ title }}</h1>
+    <mat-divider class="divider"></mat-divider>
+    <div class="container-actions">
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="openCreateEditPatientDialog()"
+        >
+            <mat-icon>person_add</mat-icon>
+            REGISTRAR {{ title }}
+        </button>
+    </div>
+    <section>
+        <mat-form-field>
+            <mat-label>Búsqueda de sucursal</mat-label>
+            <input
+                matInput
+                (keyup)="applyFilter($event)"
+                placeholder="Buscar sucursal por ID, Nombre, correo electrónico o teléfono"
+                #input
+            />
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <!-- Branch name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Sucursal
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.name | uppercase }}
+                    </td>
+                </ng-container>
+                <!-- Email Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Correo electrónico
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.email | uppercase }}
+                    </td>
+                </ng-container>
+                <!-- Phone 1 Column -->
+                <ng-container matColumnDef="phone1">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Teléfono 1
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.phone1 | mask : '(000) 000-0000' }}
+                    </td>
+                </ng-container>
+                <!-- Phone 2 Column -->
+                <ng-container matColumnDef="phone2">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Teléfono 2
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.phone2 | mask : '(000) 000-0000' }}
+                    </td>
+                </ng-container>
+                <!-- Address Column -->
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Dirección
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.street | uppercase }} {{ row.ext_num }},
+                        {{ row.town | uppercase }} {{ row.zipcode }}
+                    </td>
+                </ng-container>
+                <!-- Schedule status -->
+                <ng-container matColumnDef="schedule">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Horario
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.schedule | uppercase }}
+                    </td>
+                </ng-container>
+                <!-- Delete Detail -->
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Eliminar
+                    </th>
+                    <td mat-cell *matCellDef="let row; let i = index">
+                        <a
+                            class="cell-flex"
+                            (click)="openDeleteDialog(row, $event, i)"
+                        >
+                            <mat-icon>delete</mat-icon>
+                            <span>Eliminar</span>
+                        </a>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                    mat-row
+                    *matRowDef="
+                        let row;
+                        columns: displayedColumns;
+                        let i = index
+                    "
+                    (click)="openCreateEditPatientDialog(row, i)"
+                ></tr>
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">
+                        <div class="table-error-message">
+                            Sin resultados :( para: "{{ input.value }}"
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <mat-paginator
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page of users"
+            ></mat-paginator>
+        </div>
+    </section>
+</section>

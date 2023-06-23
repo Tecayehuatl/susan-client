@@ -1,0 +1,149 @@
+<section>
+    <h1>{{ title }}</h1>
+    <mat-divider class="divider"></mat-divider>
+    <div class="container-actions">
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="openCreateEditStudyDialog()"
+        >
+            <mat-icon>person_add</mat-icon>
+            REGISTRAR {{ title }}
+        </button>
+    </div>
+    <section>
+        <mat-form-field>
+            <mat-label>Búsqueda de doctores</mat-label>
+            <input
+                matInput
+                (keyup)="applyFilter($event)"
+                placeholder="Buscar doctores por ID, Nombre, correo electrónico o teléfono"
+                #input
+            />
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <!-- ID Column -->
+                <ng-container matColumnDef="study_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        ID
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.study_id }}
+                    </td>
+                </ng-container>
+                <!-- Study name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Nombre del estudio
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.name }}
+                    </td>
+                </ng-container>
+                <!-- Alias Column -->
+                <ng-container matColumnDef="alias">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Alias
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.alias }}
+                    </td>
+                </ng-container>
+                <!-- Price name Column -->
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Precio
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.price }}
+                    </td>
+                </ng-container>
+                <!-- Total price Column -->
+                <ng-container matColumnDef="grandTotal">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Precio total
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.grandTotal }}
+                    </td>
+                </ng-container>
+                <!-- Discount percentage Column -->
+                <ng-container matColumnDef="discountPercentage">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        % Descuento
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.discountPercentage }}
+                    </td>
+                </ng-container>
+                <!-- Delivery days Column -->
+                <ng-container matColumnDef="deliveryDays">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Días de entrega
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.deliveryDays }}
+                    </td>
+                </ng-container>
+                <!-- Conditions Column -->
+                <ng-container matColumnDef="conditions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Condiciones
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.conditions }}
+                    </td>
+                </ng-container>
+                <!-- Notes Column -->
+                <ng-container matColumnDef="notes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Notas
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.notes }}
+                    </td>
+                </ng-container>
+                <!-- Delete Detail -->
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Eliminar
+                    </th>
+                    <td mat-cell *matCellDef="let row; let i = index">
+                        <a
+                            class="cell-flex"
+                            (click)="openDeleteDialog(row, $event, i)"
+                        >
+                            <mat-icon>delete</mat-icon>
+                            <span>Eliminar</span>
+                        </a>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                    mat-row
+                    *matRowDef="
+                        let row;
+                        columns: displayedColumns;
+                        let i = index
+                    "
+                    (click)="openCreateEditStudyDialog(row, i)"
+                ></tr>
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">
+                        <div class="table-error-message">
+                            Sin resultados :( para: "{{ input.value }}"
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <mat-paginator
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page of users"
+            ></mat-paginator>
+        </div>
+    </section>
+</section>

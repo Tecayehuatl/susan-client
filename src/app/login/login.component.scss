@@ -1,0 +1,44 @@
+.login {
+    display: flex;
+    height: 100vh;
+
+    &-left {
+        background-color: var(--brand-main);
+        width: 40%;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+    }
+
+    &-right {
+        padding: 10px;
+        width: 60%;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+
+    }
+
+    &-image {
+        width: 400px;
+    }
+
+    &-form {
+        width: 500px;
+    }
+
+    &-action {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            width: 100%;
+        }
+    }
+
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+}

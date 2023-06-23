@@ -1,7 +1,9 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { CreateEditPatientComponent } from './create-edit-patient/create-edit-patient.component';
 
 @Component({
     selector: 'app-patients',
@@ -18,11 +20,12 @@ export class PatientsComponent implements AfterViewInit {
         'viewDetail',
     ];
     dataSource: MatTableDataSource<UserData>;
+    mode!: 'create' | 'edit';
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor() {
+    constructor(private dialog: MatDialog) {
         // Create 100 users
         const users = Array.from({ length: 100 }, (_, k) =>
             createNewUser(k + 1)
@@ -45,19 +48,24 @@ export class PatientsComponent implements AfterViewInit {
             this.dataSource.paginator.firstPage();
         }
     }
+
+    openCreateEditPatientDialog(): void {
+        this.mode = 'create';
+
+        const dialogRef = this.dialog.open(CreateEditPatientComponent, {
+            width: '1100px',
+            minHeight: '500px',
+            data: {
+                mode: this.mode,
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 }
 
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-    'blueberry',
-    'lychee',
-    'kiwi',
-    'mango',
-    'peach',
-    'lime',
-    'pomegranate',
-    'pineapple',
-];
 const NAMES: string[] = [
     'Maia',
     'Asher',

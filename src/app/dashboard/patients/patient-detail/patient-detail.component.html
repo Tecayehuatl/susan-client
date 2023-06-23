@@ -1,0 +1,89 @@
+<section>
+    <h1>
+        <a class="title-link" routerLink="/dashboard/patients">PACIENTES</a> /
+        <span class="title-link title-link--brand">ENRIQUE DELGADO TECAYEHUATL</span>
+    </h1>
+    <mat-divider class="divider"></mat-divider>
+    <section class="patient-container">
+        <!-- Patient detail -->
+        <section class="patient-detail">
+            <h3 class="subtitle">
+                <mat-icon>person</mat-icon>
+                <span>DATOS DEL PACIENTE</span>
+            </h3>
+            <div class="patient-text-wrapper">
+                <p class="patient-text">ID DEL PACIENTE</p>
+                <p class="patient-text patient-text--value">
+                    1234-1234-1234-1234
+                </p>
+            </div>
+            <div class="patient-text-wrapper">
+                <p class="patient-text">NOMBRE COMPLETO</p>
+                <p class="patient-text patient-text--value">
+                    ENRIQUE DELGADO TECAYEHUATL
+                </p>
+            </div>
+            <div class="patient-text-wrapper patient-text-wrapper--flex">
+                <div>
+                    <p class="patient-text">EDAD</p>
+                    <p class="patient-text patient-text--value">30 AÑOS</p>
+                </div>
+                <div>
+                    <p class="patient-text">FECHA DE NACIMIENTO</p>
+                    <p class="patient-text patient-text--value">
+                        14 AGOSTO 1992
+                    </p>
+                </div>
+            </div>
+            <div class="patient-text-wrapper">
+                <p class="patient-text">CORREO</p>
+                <p class="patient-text patient-text--value">
+                    enrique.delgado@live.com
+                </p>
+            </div>
+            <div class="patient-text-wrapper patient-text-wrapper--flex">
+                <div>
+                    <p class="patient-text">TELEFONO 1</p>
+                    <p class="patient-text patient-text--value">
+                        22-23-98-89-11
+                    </p>
+                </div>
+                <div>
+                    <p class="patient-text">TELEFONO 2</p>
+                    <p class="patient-text patient-text--value">-</p>
+                </div>
+            </div>
+            <div class="patient-text-wrapper">
+                <p class="patient-text">FECHA DE CREACIÓN</p>
+                <p class="patient-text patient-text--value">06 ENERO 2022</p>
+            </div>
+            <div class="patient-text-wrapper">
+                <p class="patient-text">FECHA DE ÚLTIMA MODIFICACIÓN</p>
+                <p class="patient-text patient-text--value">06 ENERO 2022</p>
+            </div>
+        </section>
+        <!-- Right side -->
+        <section class="patient-orders">
+            <section class="container-actions">
+                <button mat-flat-button color="primary">
+                    <mat-icon>add</mat-icon>
+                    AGREGAR ORDEN Y COTIZACIÓN
+                </button>
+            </section>
+            <section class="patient-container-orders">
+                <mat-tab-group>
+                    <mat-tab label="ORDENES">
+                        <section class="mat-tab-container">
+                            <app-orders title="Ordenes"></app-orders>
+                        </section>
+                    </mat-tab>
+                    <mat-tab label="COTIZACIONES">
+                        <section class="mat-tab-container">
+                            <app-orders title="Cotizaciones"></app-orders>
+                        </section>
+                    </mat-tab>
+                </mat-tab-group>
+            </section>
+        </section>
+    </section>
+</section>

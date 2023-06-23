@@ -24,7 +24,11 @@
                 </a>
             </mat-nav-list>
             <mat-nav-list>
-                <a mat-list-item class="mat-list-item">
+                <a
+                    mat-list-item
+                    class="mat-list-item"
+                    (click)="authService.logout()"
+                >
                     <span class="mat-list-item__container">
                         <mat-icon>logout</mat-icon>
                         <span class="mat-list-item__text">Cerrar sesión</span>
@@ -44,7 +48,7 @@
                 <mat-icon>menu</mat-icon>
             </button>
             <mat-menu #topMenu="matMenu">
-                <button mat-menu-item>Salir</button>
+                <button mat-menu-item (click)="authService.logout()">Salir</button>
             </mat-menu>
         </mat-toolbar>
         <main class="main">

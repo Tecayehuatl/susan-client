@@ -47,6 +47,13 @@ $susan-client-theme: mat.define-light-theme((
 @include mat.all-component-themes($susan-client-theme);
 
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --brand-main: #00958C;
+  --brand-secondary: #E35A6B;
+  --brand-third: #373634;
+  --white: #ffffff;
+  --gray-soft: #f6f5f5;
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: "LEMON MILK Pro"; }
@@ -63,4 +70,15 @@ h2 {
 // Override the default
 mat-divider {
   margin: 15px 0 !important;
+}
+
+// TODO: Improve the way we are applyin the styles
+.mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: var(--brand-third);
+  --mdc-snackbar-container-color: var(--brand-main);
+  --mdc-snackbar-supporting-text-color: var(--white);
+}
+
+.uppercase {
+    text-transform: uppercase !important;
 }

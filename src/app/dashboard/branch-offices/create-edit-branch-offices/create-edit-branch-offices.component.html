@@ -1,0 +1,112 @@
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>{{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} SUCURSAL</h2>
+    <mat-divider></mat-divider>
+    <form
+        class="grid-container"
+        autocomplete="disabled"
+        [formGroup]="branchOfficeForm"
+    >
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Nombre de la sucursal</mat-label>
+                <input class="uppercase" matInput placeholder="Nombre de la sucursal" tabindex="1" autocomplete="disabled"
+                    formControlName="name" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 1</mat-label>
+                <input matInput placeholder="Teléfono 1" tabindex="3" autocomplete="disabled" mask="(000) 000 00 00"
+                    formControlName="phone1" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Calle</mat-label>
+                <input class="uppercase" matInput placeholder="Calle" tabindex="5" autocomplete="disabled" formControlName="street" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Número interior</mat-label>
+                <input matInput placeholder="Número interior" tabindex="7" autocomplete="disabled"
+                    formControlName="int_num" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Estado</mat-label>
+                <mat-select tabindex="9" formControlName="state">
+                    <mat-option *ngFor="let state of states" autocomplete="disabled" [value]="state.value">
+                        {{ state.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Colonia</mat-label>
+                <input class="uppercase" matInput placeholder="Colonia" tabindex="11" autocomplete="disabled" formControlName="colony" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>País</mat-label>
+                <mat-select tabindex="13" formControlName="country">
+                    <mat-option *ngFor="let country of countries" autocomplete="disabled" [value]="country.value">
+                        {{ country.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Correo</mat-label>
+                <input type="email" matInput placeholder="Ejemplo: contacto@biotecsa.com" tabindex="2"
+                    autocomplete="disabled" formControlName="email" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 2</mat-label>
+                <input matInput placeholder="Teléfono 2" tabindex="4" autocomplete="disabled" mask="(000) 000 00 00"
+                    formControlName="phone2" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Número exterior</mat-label>
+                <input matInput placeholder="Número exterior" tabindex="6" autocomplete="disabled"
+                    formControlName="ext_num" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Código postal</mat-label>
+                <input matInput placeholder="Código postal" tabindex="8" autocomplete="disabled" mask="00000"
+                    formControlName="zipcode" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select tabindex="10" formControlName="town">
+                    <mat-option
+                        *ngFor="let town of towns; let i = index"
+                        autocomplete="disabled"
+                        [value]="town"
+                    >
+                        {{ town | uppercase }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Ciudad</mat-label>
+                <input class="uppercase" matInput placeholder="Ciudad" tabindex="12" autocomplete="disabled" formControlName="city" />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Horario</mat-label>
+                <input class="uppercase" matInput placeholder="Horario" tabindex="14" autocomplete="disabled"
+                    formControlName="schedule" />
+            </mat-form-field>
+        </section>
+    </form>
+    <section class="grid-actions">
+        <button class="grid-actions__button" mat-stroked-button color="primary" mat-dialog-close>
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button
+            class="grid-actions__button"
+            mat-flat-button
+            color="primary"
+            [disabled]="branchOfficeForm.invalid"
+            (click)="createUpdateItem()"
+        >
+            <mat-icon>person_add</mat-icon>
+            {{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} SUCURSAL
+        </button>
+    </section>
+</section>

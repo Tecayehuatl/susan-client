@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-layout',
@@ -43,6 +44,7 @@ export class LayoutComponent {
             icon: 'supervisor_account',
         },
     ];
+    constructor(public authService: AuthService) {}
 }
 
 interface MenuItem {

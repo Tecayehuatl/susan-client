@@ -1,0 +1,117 @@
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>{{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} DOCTOR</h2>
+    <mat-divider></mat-divider>
+    <form
+        class="grid-container"
+        autocomplete="disabled"
+        [formGroup]="doctorsForm"
+    >
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Nombre"
+                    tabindex="1"
+                    autocomplete="disabled"
+                    formControlName="first_name"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Apellido materno</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Apellido materno"
+                    tabindex="3"
+                    autocomplete="disabled"
+                    formControlName="last_name"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 2</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Teléfono 2"
+                    tabindex="5"
+                    autocomplete="disabled"
+                    formControlName="phone2"
+                    mask="(000) 000 00 00"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Email"
+                    tabindex="7"
+                    autocomplete="disabled"
+                    formControlName="email"
+                />
+            </mat-form-field>
+        </section>
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Apellido paterno</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Apellido paterno"
+                    tabindex="2"
+                    autocomplete="disabled"
+                    formControlName="middle_name"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 1</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Teléfono 1"
+                    tabindex="4"
+                    autocomplete="disabled"
+                    formControlName="phone1"
+                    mask="(000) 000 00 00"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Cédula profesional</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Cédula profesional"
+                    tabindex="6"
+                    autocomplete="disabled"
+                    formControlName="cedula"
+                />
+            </mat-form-field>
+        </section>
+    </form>
+    <section class="grid-actions">
+        <button
+            class="grid-actions__button"
+            mat-stroked-button
+            color="primary"
+            mat-dialog-close
+        >
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button
+            class="grid-actions__button"
+            mat-flat-button
+            color="primary"
+            [disabled]="doctorsForm.invalid"
+            (click)="createUpdateItem()"
+        >
+            <mat-icon>person_add</mat-icon>
+            {{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} DOCTOR
+        </button>
+    </section>
+</section>
