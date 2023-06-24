@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +13,11 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor.service';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
+registerLocaleData(localeEs, 'es-MX');
 @NgModule({
     declarations: [AppComponent, LoginComponent],
     imports: [
@@ -47,6 +51,8 @@ import { InterceptorService } from './services/interceptor.service';
                 verticalPosition: 'top',
             },
         },
+        { provide: MAT_DATE_LOCALE, useValue: 'es-MX' },
+        { provide: LOCALE_ID, useValue: 'es-Mx' },
     ],
     bootstrap: [AppComponent],
 })

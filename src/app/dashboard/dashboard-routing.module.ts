@@ -7,6 +7,8 @@ import { OrderDetailComponent } from './orders/order-detail/order-detail.compone
 import { BranchOfficesComponent } from './branch-offices/branch-offices.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { StudiesComponent } from './studies/studies.component';
+import { UsersComponent } from './users/users.component';
+import { addEditClietResolver } from '../services/branch-offices.service';
 
 const routes: Routes = [
     {
@@ -36,6 +38,11 @@ const routes: Routes = [
             {
                 path: 'studies',
                 component: StudiesComponent,
+            },
+            {
+                path: 'users',
+                component: UsersComponent,
+                resolve: { branchOffices: addEditClietResolver },
             },
         ],
     },

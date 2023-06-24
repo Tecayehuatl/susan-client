@@ -1,1 +1,147 @@
-<p>create-edit-users works!</p>
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>{{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} USUARIO</h2>
+    <mat-divider></mat-divider>
+    <pre>
+        {{ userForm.value | json }}
+    </pre>
+    <form class="grid-container" autocomplete="disabled" [formGroup]="userForm">
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Nombre"
+                    tabindex="1"
+                    autocomplete="disabled"
+                    formControlName="first_name"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Apellido materno</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Apellido materno"
+                    tabindex="3"
+                    autocomplete="disabled"
+                    formControlName="last_name"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 1</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Teléfono 1"
+                    tabindex="5"
+                    autocomplete="disabled"
+                    formControlName="phone1"
+                    mask="(000) 000 00 00"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input
+                    matInput
+                    placeholder="Email"
+                    tabindex="7"
+                    autocomplete="disabled"
+                    formControlName="email"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Sucursal</mat-label>
+                <mat-select tabindex="9" formControlName="branch_office_id">
+                    <mat-option
+                        autocomplete="disabled"
+                        *ngFor="let branch of data.branchOffices"
+                        [value]="branch.branch_office_id"
+                    >
+                        {{ branch.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Apellido paterno</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Apellido paterno"
+                    tabindex="2"
+                    autocomplete="disabled"
+                    formControlName="middle_name"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input
+                    matInput
+                    [min]="minDate"
+                    [max]="maxDate"
+                    [matDatepicker]="picker"
+                    tabindex="4"
+                    formControlName="date_birth"
+                />
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="multi-year" disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Teléfono 2</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Teléfono 2"
+                    tabindex="6"
+                    autocomplete="disabled"
+                    formControlName="phone2"
+                    mask="(000) 000 00 00"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Contraseña</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Contraseña"
+                    tabindex="8"
+                    autocomplete="disabled"
+                    formControlName="password"
+                />
+            </mat-form-field>
+            <mat-slide-toggle tabindex="10" formControlName="is_active">
+                {{ userForm.get('is_active')?.value === true ? 'ACTIVO' : 'DESACTIVADO' }}
+            </mat-slide-toggle>
+        </section>
+    </form>
+    <section class="grid-actions">
+        <button
+            class="grid-actions__button"
+            mat-stroked-button
+            color="primary"
+            mat-dialog-close
+        >
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button
+            class="grid-actions__button"
+            mat-flat-button
+            color="primary"
+            [disabled]="userForm.invalid"
+            (click)="createUpdateItem()"
+        >
+            <mat-icon>person_add</mat-icon>
+            {{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} USUARIO
+        </button>
+    </section>
+</section>
