@@ -97,9 +97,6 @@ export class CreateEditStudiesComponent implements OnInit {
     createUpdateItem(): void {
         const formValues = {
             ...this.studyForm.value,
-            // TODO: No debería mandar esta propiedad pues se calcula en el backend
-            // grandTotal: this.grandTotalControl.value,
-            // deliveryDays: +this.studyForm.get('deliveryDays')?.value,
         };
 
         if (formValues && this.mode === 'create') {
