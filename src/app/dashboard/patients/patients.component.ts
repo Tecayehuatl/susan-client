@@ -4,6 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CreateEditPatientComponent } from './create-edit-patient/create-edit-patient.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PatientsService } from 'src/app/services/patients.service';
+import { GenericModalComponent } from 'src/app/shared/components/generic-modal/generic-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-patients',
@@ -11,36 +15,39 @@ import { CreateEditPatientComponent } from './create-edit-patient/create-edit-pa
     styleUrls: ['./patients.component.scss'],
 })
 export class PatientsComponent implements AfterViewInit {
+    title = 'PACIENTES';
     displayedColumns: string[] = [
-        'id',
-        'name',
-        'creationDate',
-        'UpdatedDate',
-        'paymentStatus',
-        'viewDetail',
+        'patient_id',
+        'fullName',
+        'date_birth',
+        'age',
+        'phone1',
+        'phone2',
+        'email',
+        'delete',
     ];
-    dataSource: MatTableDataSource<UserData>;
-    mode!: 'create' | 'edit';
+    dataSource!: MatTableDataSource<Patient>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor(private dialog: MatDialog) {
-        // Create 100 users
-        const users = Array.from({ length: 100 }, (_, k) =>
-            createNewUser(k + 1)
-        );
-
-        // Assign the data to the data source for the table to render
-        this.dataSource = new MatTableDataSource(users);
-    }
+    constructor(
+        private dialog: MatDialog,
+        private _snackBar: MatSnackBar,
+        private patientsService: PatientsService,
+        private router: Router
+    ) {}
 
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.patientsService.getPatients().subscribe((data) => {
+            // Assign the data to the data source for the table to render
+            this.dataSource = new MatTableDataSource(data as Patient[]);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        });
     }
 
-    applyFilter(event: Event) {
+    applyFilter(event: Event): void {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -49,66 +56,98 @@ export class PatientsComponent implements AfterViewInit {
         }
     }
 
-    openCreateEditPatientDialog(): void {
-        this.mode = 'create';
+    openCreateEditPatientDialog(
+        itemData?: Patient,
+        index?: any,
+        type?: string
+    ): void {
+        if (type === 'single') {
+            this.router.navigateByUrl(
+                `/dashboard/patients/${itemData?.patient_id}`
+            );
+            return;
+        }
 
         const dialogRef = this.dialog.open(CreateEditPatientComponent, {
             width: '1100px',
             minHeight: '500px',
+            data: { itemData },
+        });
+
+        dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
+            if (formValues && mode === 'create') {
+                // Updating the local datasource
+                const newDataSource = this.dataSource.data;
+                this.dataSource.data = [formValues, ...newDataSource];
+                this._snackBar.open(
+                    `PACIENTE: ${formValues.first_name} CREADA`,
+                    'CERRAR'
+                );
+            } else if (formValues && mode === 'edit') {
+                // Updating the local datasource
+                const data = this.dataSource.data;
+                const newDataSource = data.map((patient: Patient, i) => {
+                    if (i === index) {
+                        return formValues;
+                    }
+                    return patient;
+                });
+                this.dataSource.data = newDataSource;
+                this._snackBar.open(
+                    `PACIENTE: ${formValues.first_name} ACTUALIZADO`,
+                    'CERRAR'
+                );
+            }
+        });
+    }
+
+    openDeleteDialog(item: Patient, event: Event, index: number): void {
+        event.stopPropagation();
+
+        const dialogRef = this.dialog.open(GenericModalComponent, {
+            minWidth: '800px',
             data: {
-                mode: this.mode,
+                title: `¿SEGURO QUE DESEA ELIMINAR AL PACIENTE "${item.first_name}"?`,
+                actions: {
+                    main: 'ELIMINAR PACIENTE',
+                    secondary: 'CANCELAR',
+                },
             },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`);
+            if (result === true) {
+                this.patientsService
+                    .deletePatient(item.patient_id)
+                    .subscribe(() => {
+                        this.removeAt(index);
+                        this._snackBar.open(
+                            `Paciente: ${item.first_name} borrado`,
+                            'CERRAR'
+                        );
+                    });
+            }
         });
+    }
+
+    removeAt(index: number): void {
+        const data = this.dataSource.data;
+        data.splice(
+            this.paginator.pageIndex * this.paginator.pageSize + index,
+            1
+        );
+        this.dataSource.data = data;
     }
 }
 
-const NAMES: string[] = [
-    'Maia',
-    'Asher',
-    'Olivia',
-    'Atticus',
-    'Amelia',
-    'Jack',
-    'Charlotte',
-    'Theodore',
-    'Isla',
-    'Oliver',
-    'Isabella',
-    'Jasper',
-    'Cora',
-    'Levi',
-    'Violet',
-    'Arthur',
-    'Mia',
-    'Thomas',
-    'Elizabeth',
-];
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-    const name =
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-        ' ' +
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-        '.';
-
-    return {
-        id: id.toString(),
-        name: name,
-        creationDate: 'Sep 11 2023',
-        updatedDate: 'Sep 12 2023',
-        paymentStatus: 'PAID',
-    };
-}
-
-export interface UserData {
-    id: string;
-    name: string;
-    creationDate: string;
-    updatedDate: string;
-    paymentStatus: string;
+export interface Patient {
+    patient_id: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    date_birth: string;
+    phone1: string;
+    phone2: string;
+    email: string;
+    gender: string;
 }
