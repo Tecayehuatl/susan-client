@@ -24,6 +24,15 @@
         </mat-form-field>
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" matSort>
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        ID
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.branch_office_id }}
+                    </td>
+                </ng-container>
                 <!-- Branch name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -48,7 +57,11 @@
                         Teléfono 1
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.phone1 | mask : '(000) 000-0000' }}
+                        {{
+                            row.phone1
+                                ? (row.phone1 | mask : '(000) 000-0000')
+                                : '-'
+                        }}
                     </td>
                 </ng-container>
                 <!-- Phone 2 Column -->
@@ -57,7 +70,11 @@
                         Teléfono 2
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.phone2 | mask : '(000) 000-0000' }}
+                        {{
+                            row.phone2
+                                ? (row.phone2 | mask : '(000) 000-0000')
+                                : '-'
+                        }}
                     </td>
                 </ng-container>
                 <!-- Address Column -->

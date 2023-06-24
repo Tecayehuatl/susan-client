@@ -16,6 +16,7 @@ import { BranchOfficesService } from 'src/app/services/branch-offices.service';
 export class BranchOfficesComponent implements AfterViewInit {
     title = 'SUCURSALES';
     displayedColumns: string[] = [
+        'id',
         'name',
         'email',
         'phone1',
