@@ -38,7 +38,7 @@ export class BranchOfficesService {
     }
 }
 
-export const addEditClietResolver: ResolveFn<any> = (
+export const getBranchOfficesResolver: ResolveFn<any> = (
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
 ) => {
