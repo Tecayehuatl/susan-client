@@ -9,6 +9,7 @@ import { DoctorsComponent } from './doctors/doctors.component';
 import { StudiesComponent } from './studies/studies.component';
 import { UsersComponent } from './users/users.component';
 import { addEditClietResolver } from '../services/branch-offices.service';
+import { getPatientDetailResolver } from '../services/patients.service';
 
 const routes: Routes = [
     {
@@ -21,6 +22,7 @@ const routes: Routes = [
             },
             {
                 path: 'patients/:patientId',
+                resolve: [getPatientDetailResolver],
                 component: PatientDetailComponent,
             },
             {
