@@ -3,45 +3,45 @@
     position: relative;
 
     &-close {
-      cursor: pointer;
-      color: var(--brand-main);
-      position: absolute;
-      right: 15px;
-      top: 15px;
+        cursor: pointer;
+        color: var(--brand-main);
+        position: absolute;
+        right: 15px;
+        top: 15px;
 
-      mat-icon {
-        font-size: 24px;
-      }
+        mat-icon {
+            font-size: 24px;
+        }
     }
-  }
+}
 
-  .grid {
+.grid {
     &-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
 
     &-item {
-      padding: 15px;
+        padding: 15px;
     }
 
     &-actions {
-      display: flex;
-      justify-content: flex-end;
-      padding: 15px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 15px;
 
-      &__button {
-        margin-left: 15px;
-        width: 100%;
-        max-width: 200px;
+        &__button {
+            margin-left: 15px;
+            width: 100%;
+            max-width: 200px;
 
-        &:first-child {
-          margin: 0;
+            &:first-child {
+                margin: 0;
+            }
         }
-      }
     }
-  }
+}
 
-  mat-form-field {
+mat-form-field {
     width: 100%;
-  }
+}
