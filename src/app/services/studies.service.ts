@@ -10,8 +10,8 @@ import { Study } from '../dashboard/studies/studies.component';
 export class StudiesService {
     constructor(private http: HttpClient) {}
 
-    getStudies() {
-        return this.http.get(`${environment.baseUrl}/studies`);
+    getStudies(): Observable<Study[]>{
+        return this.http.get<Study[]>(`${environment.baseUrl}/studies`);
     }
 
     createStudy(study: Study): Observable<Study> {
