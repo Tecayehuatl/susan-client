@@ -4,9 +4,6 @@
     </div>
     <h2>{{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} USUARIO</h2>
     <mat-divider></mat-divider>
-    <pre>
-        {{ userForm.value | json }}
-    </pre>
     <form class="grid-container" autocomplete="disabled" [formGroup]="userForm">
         <section class="grid-item">
             <mat-form-field>
