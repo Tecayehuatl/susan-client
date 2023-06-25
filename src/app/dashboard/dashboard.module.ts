@@ -15,6 +15,7 @@ import { StudiesComponent } from './studies/studies.component';
 import { CreateEditStudiesComponent } from './studies/create-edit-studies/create-edit-studies.component';
 import { UsersComponent } from './users/users.component';
 import { CreateEditUsersComponent } from './users/create-edit-users/create-edit-users.component';
+import { CreateOrderQuoteComponent } from './orders/create-order-quote/create-order-quote.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { CreateEditUsersComponent } from './users/create-edit-users/create-edit-
         CreateEditStudiesComponent,
         UsersComponent,
         CreateEditUsersComponent,
+        CreateOrderQuoteComponent,
     ],
     imports: [DashboardRoutingModule, SharedModule],
 })
