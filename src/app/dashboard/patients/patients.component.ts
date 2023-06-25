@@ -24,6 +24,7 @@ export class PatientsComponent implements AfterViewInit {
         'phone1',
         'phone2',
         'email',
+        'edit',
         'delete',
     ];
     dataSource!: MatTableDataSource<Patient>;
@@ -59,15 +60,18 @@ export class PatientsComponent implements AfterViewInit {
     openCreateEditPatientDialog(
         itemData?: Patient,
         index?: any,
-        type?: string
+        type?: string,
+        event?: Event
     ): void {
+        event?.stopPropagation();
+        // This will only navigate to the patient details
         if (type === 'single') {
             this.router.navigateByUrl(
                 `/dashboard/patients/${itemData?.patient_id}`
             );
             return;
         }
-
+        // The rest of the code is for create or edit a patient
         const dialogRef = this.dialog.open(CreateEditPatientComponent, {
             width: '1100px',
             minHeight: '500px',
