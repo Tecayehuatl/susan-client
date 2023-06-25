@@ -2,6 +2,8 @@ import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Patient } from '../patients/patients.component';
 
 @Component({
     selector: 'app-orders',
@@ -23,7 +25,7 @@ export class OrdersComponent implements AfterViewInit {
         'grandTotal',
     ];
 
-    constructor() {
+    constructor(private route: ActivatedRoute, private router: Router) {
         // Create 100 users
         const users = Array.from({ length: 100 }, (_, k) =>
             createNewUser(k + 1)
@@ -36,6 +38,13 @@ export class OrdersComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+    }
+
+    navigateToOrderQuote(itemData?: Patient): void {
+        const patiendId = this.route.snapshot.params['patientId'];
+        this.router.navigateByUrl(
+            `/dashboard/patients/${patiendId}/${itemData?.patient_id}`
+        );
     }
 }
 
@@ -81,7 +90,7 @@ function createNewUser(id: number) {
         '.';
 
     return {
-        id: id.toString(),
+        patient_id: id.toString(),
         creationDate: 'Sep 11 2023',
         generalStatus: 'EN CURSO',
         paymentStatus: 'PENDIENTE',

@@ -1,0 +1,42 @@
+table {
+    width: 100%;
+}
+
+.mat-cell {
+    .table-error-message {
+        color: var(--brand-secondary);
+        font-size: 20px;
+        font-weight: bold;
+        padding: 15px;
+    }
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.mat-mdc-row {
+    .mat-mdc-cell {
+        cursor: pointer;
+    }
+
+    &:hover {
+        .mat-mdc-cell {
+            color: var(--white);
+            border-color: transparent;
+            background-color: var(--brand-main);
+        }
+
+        .cell-flex {
+            color: var(--white);
+        }
+    }
+}
+
+// Only for different actions like delete action
+.cell-flex {
+    color: var(--brand-secondary);
+    display: flex;
+    align-items: center;
+}
