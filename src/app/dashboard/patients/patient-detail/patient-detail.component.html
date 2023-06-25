@@ -65,7 +65,11 @@
         <!-- Right side -->
         <section class="patient-orders">
             <section class="container-actions">
-                <button mat-flat-button color="primary">
+                <button
+                    mat-flat-button
+                    color="primary"
+                    (click)="openCreateOrderQuote()"
+                >
                     <mat-icon>add</mat-icon>
                     AGREGAR ORDEN Y COTIZACIÓN
                 </button>
