@@ -16,6 +16,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 registerLocaleData(localeEs, 'es-MX');
 @NgModule({
@@ -53,6 +54,10 @@ registerLocaleData(localeEs, 'es-MX');
         },
         { provide: MAT_DATE_LOCALE, useValue: 'es-MX' },
         { provide: LOCALE_ID, useValue: 'es-Mx' },
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { displayDefaultIndicatorType: false, showError: true },
+        },
     ],
     bootstrap: [AppComponent],
 })
