@@ -1,0 +1,33 @@
+.summary {
+    padding: 15px;
+}
+
+.title {
+    color: var(--brand-third);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.item {
+    font-weight: bold;
+    text-align: right;
+    width: auto;
+
+    &--right {
+        font-weight: normal;
+        padding-left: 15px;
+        text-align: left;
+        width: 100px;
+    }
+
+    &--grand {
+        color: var(--brand-main);
+        font-size: 16px;
+        font-weight: bold;
+    }
+}

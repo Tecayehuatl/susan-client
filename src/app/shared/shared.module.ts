@@ -5,13 +5,15 @@ import { RouterModule } from '@angular/router';
 import { GenericModalComponent } from './components/generic-modal/generic-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
+import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 
-const imports = [GenericModalComponent];
+const imports = [GenericModalComponent, OrderSummaryComponent];
 
 @NgModule({
     declarations: [...imports],
     imports: [MaterialModule, NgxMaskModule.forRoot()],
     exports: [
+        ...imports,
         CommonModule,
         MaterialModule,
         RouterModule,
