@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -36,6 +37,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         MatMenuModule,
         MatNativeDateModule,
         MatPaginatorModule,
+        MatRadioModule,
         MatSelectModule,
         MatSidenavModule,
         MatSlideToggleModule,

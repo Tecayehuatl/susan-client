@@ -39,6 +39,11 @@ export class LayoutComponent {
             icon: 'apartment',
         },
         {
+            title: 'Descuentos',
+            url: 'discounts',
+            icon: 'redeem',
+        },
+        {
             title: 'Usuarios',
             url: 'users',
             icon: 'supervisor_account',
