@@ -1,1 +1,269 @@
-<p>create-order-quote works!</p>
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>CREAR ORDEN ORDEN O COTIZACIÓN</h2>
+    <mat-divider></mat-divider>
+    <main>
+        <mat-stepper [linear]="false" #stepper>
+            <!-- Override the icons -->
+            <ng-template matStepperIcon="orderType">
+                <mat-icon>list_alt</mat-icon>
+            </ng-template>
+            <ng-template matStepperIcon="studies">
+                <mat-icon>science</mat-icon>
+            </ng-template>
+            <ng-template matStepperIcon="payments">
+                <mat-icon>paid</mat-icon>
+            </ng-template>
+            <!-- 1.- Elejir orden -->
+            <mat-step
+                [stepControl]="firstFormGroup"
+                label="Tipo de orden"
+                state="orderType"
+            >
+                <form mat-dialog-content [formGroup]="firstFormGroup">
+                    <h3>Seleccione si desea crear una orden o una cotizción</h3>
+                    <mat-radio-group
+                        aria-label="Select an option"
+                        formControlName="firstCtrl"
+                    >
+                        <div>
+                            <mat-radio-button value="1">Orden</mat-radio-button>
+                        </div>
+                        <div>
+                            <mat-radio-button value="2">
+                                Cotización
+                            </mat-radio-button>
+                        </div>
+                    </mat-radio-group>
+                    <!-- <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+                    </mat-form-field> -->
+                </form>
+                <div mat-dialog-actions class="grid-actions">
+                    <button
+                        class="grid-actions__button"
+                        color="primary"
+                        mat-flat-button
+                        matStepperNext
+                    >
+                        SIGUIENTE
+                    </button>
+                </div>
+            </mat-step>
+            <!-- 2.- Tabla de estudios -->
+            <mat-step
+                [stepControl]="secondFormGroup"
+                label="Agregar estudios"
+                state="studies"
+            >
+                <form mat-dialog-content [formGroup]="secondFormGroup">
+                    <!-- <mat-dialog-content>This will delete all elements that are currently on this page and cannot be undone.</mat-dialog-content> -->
+                    <!-- <mat-form-field>
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                    </mat-form-field> -->
+                    <section>
+                        <mat-form-field>
+                            <mat-label>Búsqueda de estudios</mat-label>
+                            <input
+                                matInput
+                                (keyup)="applyFilter($event)"
+                                placeholder="Buscar estudios por ID, Nombre, correo electrónico o teléfono"
+                                #input
+                            />
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                        <div class="table-container mat-elevation-z8">
+                            <h3>Estudios agregados:</h3>
+                            <hr />
+                            <table mat-table [dataSource]="dataSource" matSort>
+                                <!-- ID Column -->
+                                <ng-container matColumnDef="study_id">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        ID
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row.study_id }}
+                                    </td>
+                                </ng-container>
+                                <!-- Study name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        Nombre del estudio
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row.name }}
+                                    </td>
+                                </ng-container>
+                                <!-- Alias Column -->
+                                <ng-container matColumnDef="alias">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        Alias
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row.alias }}
+                                    </td>
+                                </ng-container>
+                                <!-- Price name Column -->
+                                <ng-container matColumnDef="price">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        Precio
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row.price }}
+                                    </td>
+                                </ng-container>
+                                <!-- Discount percentage Column -->
+                                <ng-container matColumnDef="discountPercentage">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        % Descuento
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row.discountPercentage }}
+                                    </td>
+                                </ng-container>
+                                <!-- Total price Column -->
+                                <ng-container matColumnDef="grandTotal">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        Precio total
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row.grandTotal }}
+                                    </td>
+                                </ng-container>
+                                <!-- Delivery days Column -->
+                                <ng-container matColumnDef="deliveryDays">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        Días de entrega
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        {{ row.deliveryDays }}
+                                    </td>
+                                </ng-container>
+                                <!-- Delete Detail -->
+                                <ng-container matColumnDef="delete">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                        Eliminar
+                                    </th>
+                                    <td mat-cell *matCellDef="let row; let i = index">
+                                        <!-- <a
+                                            class="cell-flex"
+                                            (click)="openDeleteDialog(row, $event, i)"
+                                        >
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Eliminar</span>
+                                        </a> -->
+                                        <a class="cell-flex">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Eliminar</span>
+                                        </a>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <!-- <tr
+                                    mat-row
+                                    *matRowDef="
+                                        let row;
+                                        columns: displayedColumns;
+                                        let i = index
+                                    "
+                                    (click)="openCreateEditStudyDialog(row, i)"
+                                ></tr> -->
+                                <tr
+                                    mat-row
+                                    *matRowDef="
+                                        let row;
+                                        columns: displayedColumns;
+                                        let i = index
+                                    "
+                                ></tr>
+                                <!-- Row shown when there is no matching data. -->
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td class="mat-cell" colspan="4">
+                                        <div class="table-error-message">
+                                            Sin resultados :( para: "{{ input.value }}"
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- <mat-paginator
+                                [pageSizeOptions]="[5, 10, 25, 100]"
+                                aria-label="Select page of users"
+                            ></mat-paginator> -->
+                        </div>
+                        <section class="row-custom">
+                            <!-- Descuentos agregados: -->
+                            <section class="child">
+                                <app-discounts></app-discounts>
+                            </section>
+                            <!-- RESUMEN DE LA ORDEN: -->
+                            <section class="child">
+                                <app-order-summary></app-order-summary>
+                            </section>
+                        </section>
+                    </section>
+                </form>
+                <div mat-dialog-actions class="grid-actions">
+                    <button
+                        class="grid-actions__button"
+                        color="primary"
+                        mat-stroked-button
+                        matStepperPrevious
+                    >
+                        ATRÁS
+                    </button>
+                    <button
+                        class="grid-actions__button"
+                        color="primary"
+                        mat-flat-button
+                        matStepperNext
+                    >
+                        CONTINUAR AL PAGO
+                    </button>
+                </div>
+            </mat-step>
+            <mat-step label="Pago" state="payments">
+                <section mat-dialog-content>
+                    <h3>Seleccione si desea crear una orden o una cotizción</h3>
+                    <p>Si un usuario tiene adeudos anteriores no liquidados el sistema no dejará que pueda hacer más de un pago, es decir tendrá que liquidar el total de sus estudios, en un solo pago.</p>
+                    <section class="add-container">
+                        <button
+                            class="add-button"
+                            color="primary"
+                            mat-raised-button
+                        >
+                            <mat-icon>add</mat-icon>
+                            AGREGAR PAGO
+                        </button>
+                    </section>
+                    <section class="row">
+                        <app-payment></app-payment>
+                        <app-payment></app-payment>
+                    </section>
+                </section>
+                <div mat-dialog-actions class="grid-actions">
+                    <button
+                        class="grid-actions__button"
+                        color="primary"
+                        mat-stroked-button
+                        matStepperPrevious
+                    >
+                        ATRÁS
+                    </button>
+                    <button
+                        class="grid-actions__button"
+                        color="primary"
+                        mat-flat-button
+                        (click)="stepper.reset()"
+                    >
+                        CREAR [ORDER|QUOTE]
+                    </button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </main>
+</section>
