@@ -1,0 +1,42 @@
+<section class="discounts mat-elevation-z8">
+    <h4 class="title">Descuentos agregados:</h4>
+    <hr />
+    <div>
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Descuento</mat-label>
+                <mat-select tabindex="">
+                    <mat-option
+                        *ngFor="let discount of discounts"
+                        autocomplete="disabled"
+                        [value]="discount.value"
+                    >
+                        {{ discount.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Descuento especializado:</mat-label>
+                <input
+                    matInput
+                    placeholder="% de descuento"
+                    tabindex=""
+                    autocomplete="disabled"
+                    suffix=" %"
+                    mask="separator.2"
+                />
+            </mat-form-field>
+        </div>
+    </div>
+    <ul class="discounts-list">
+        <li>
+            <strong>Descuento 1</strong>
+            <span class="action">
+                <mat-icon>delete</mat-icon>
+                Eliminar
+            </span>
+        </li>
+    </ul>
+</section>

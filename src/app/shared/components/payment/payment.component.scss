@@ -1,0 +1,24 @@
+.payment {
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--brand-secondary);
+}
+
+.change {
+    color: var(--brand-secondary);
+    font-weight: bold;
+    font-size: 28px;
+}

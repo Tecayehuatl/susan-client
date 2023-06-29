@@ -1,0 +1,54 @@
+<section class="payment mat-elevation-z8">
+    <div class="row">
+        <h3>Pago 1</h3>
+        <div class="delete">
+            Eliminar <mat-icon>delete</mat-icon>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row-item">
+            <p><strong>Forma de pago</strong></p>
+            <div>
+                <mat-form-field>
+                    <mat-label>Forma de pago</mat-label>
+                    <!-- <mat-select formControlName="state"> -->
+                    <mat-select>
+                        <mat-option
+                            autocomplete="disabled"
+                            *ngFor="let paymentType of paymentTypes"
+                            [value]="paymentType.valueText"
+                        >
+                            {{ paymentType.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row-item">
+            <p><strong>¿Cuanto voy a cobrar?</strong></p>
+            <div>
+                <mat-form-field>
+                    <mat-label>Pago 1</mat-label>
+                    <input matInput />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row-item">
+            <p><strong>¿Cuánto recibí?</strong></p>
+            <div>
+                <mat-form-field>
+                    <mat-label>Pago 1</mat-label>
+                    <input matInput />
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row-item">
+            <p><strong>¿Cuanto tengo que dar de cambio?</strong></p>
+            <div class="change">
+                <strong>
+                    $100.000
+                </strong>
+            </div>
+        </div>
+    </div>
+</section>

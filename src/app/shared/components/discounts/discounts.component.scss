@@ -1,0 +1,30 @@
+.discounts {
+    padding: 15px;
+    border-radius: 8px;
+
+    &-list {
+        li {
+            align-items: center;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .action {
+            align-items: center;
+            color: var(--brand-secondary);
+            cursor: pointer;
+            display: flex;
+        }
+    }
+}
+
+.title {
+    color: var(--brand-third);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    justify-content: flex-end;
+}
