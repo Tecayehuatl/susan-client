@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -26,6 +27,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     declarations: [],
     imports: [CommonModule],
     exports: [
+        MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
         MatDatepickerModule,
