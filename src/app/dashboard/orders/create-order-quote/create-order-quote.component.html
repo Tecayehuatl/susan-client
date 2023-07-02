@@ -2,10 +2,10 @@
     <div class="modal-close" mat-dialog-close>
         <mat-icon>close</mat-icon>
     </div>
-    <h2>CREAR ORDEN ORDEN O COTIZACIÓN</h2>
+    <h2>CREAR {{ orderType | uppercase }}</h2>
     <mat-divider></mat-divider>
-    <main>
-        <mat-stepper [linear]="false" #stepper>
+    <form [formGroup]="orderForm">
+        <mat-stepper [linear]="false" #stepper formArrayName="formArray">
             <!-- Override the icons -->
             <ng-template matStepperIcon="orderType">
                 <mat-icon>list_alt</mat-icon>
@@ -16,17 +16,19 @@
             <ng-template matStepperIcon="payments">
                 <mat-icon>paid</mat-icon>
             </ng-template>
+            <!-- / Override the icons -->
             <!-- 1.- Elejir orden -->
             <mat-step
-                [stepControl]="firstFormGroup"
+                formGroupName="0"
+                [stepControl]="orderFormArray.get([0])!"
                 label="Tipo de orden"
                 state="orderType"
             >
-                <form mat-dialog-content [formGroup]="firstFormGroup">
+                <section mat-dialog-content>
                     <h3>Seleccione si desea crear una orden o una cotizción</h3>
                     <mat-radio-group
                         aria-label="Select an option"
-                        formControlName="firstCtrl"
+                        formControlName="orderType"
                     >
                         <div>
                             <mat-radio-button value="1">Orden</mat-radio-button>
@@ -37,70 +39,101 @@
                             </mat-radio-button>
                         </div>
                     </mat-radio-group>
-                    <!-- <mat-form-field>
-                        <mat-label>Name</mat-label>
-                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-                    </mat-form-field> -->
-                </form>
-                <div mat-dialog-actions class="grid-actions">
+                </section>
+                <div mat-dialog-actions class="gråid-actions">
                     <button
                         class="grid-actions__button"
                         color="primary"
                         mat-flat-button
                         matStepperNext
+                        [disabled]="orderFormArray.get([0])?.invalid"
                     >
                         SIGUIENTE
                     </button>
                 </div>
             </mat-step>
+
             <!-- 2.- Tabla de estudios -->
             <mat-step
-                [stepControl]="secondFormGroup"
+                formGroupName="1"
+                [stepControl]="orderFormArray.get([1])!"
                 label="Agregar estudios"
                 state="studies"
             >
-                <form mat-dialog-content [formGroup]="secondFormGroup">
-                    <!-- <mat-dialog-content>This will delete all elements that are currently on this page and cannot be undone.</mat-dialog-content> -->
-                    <!-- <mat-form-field>
-                        <mat-label>Address</mat-label>
-                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-                    </mat-form-field> -->
+                <section mat-dialog-content formArrayName="studies">
                     <section>
                         <mat-form-field>
                             <mat-label>Búsqueda de estudios</mat-label>
                             <input
                                 matInput
-                                (keyup)="applyFilter($event)"
+                                (keyup)="searchStudies($event)"
                                 placeholder="Buscar estudios por ID, Nombre, correo electrónico o teléfono"
+                                [formControl]="searchStudiesControl"
                                 #input
+                                [matAutocomplete]="auto"
                             />
                             <mat-icon matSuffix>search</mat-icon>
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option
+                                    class="study-search__item"
+                                    *ngFor="let option of studiesFiltered"
+                                    (click)="addStudy(option)"
+                                >
+                                    {{
+                                        option.price
+                                            | currency : 'MXN' : 'symbol'
+                                    }}
+                                    - {{ option.name | uppercase }}
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
                         <div class="table-container mat-elevation-z8">
-                            <h3>Estudios agregados:</h3>
+                            <h3>
+                                Estudios agregados:
+                                {{ studiesFormArray.length }}
+                            </h3>
                             <hr />
                             <table mat-table [dataSource]="dataSource" matSort>
                                 <!-- ID Column -->
                                 <ng-container matColumnDef="study_id">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        mat-sort-header
+                                    >
                                         ID
                                     </th>
-                                    <td mat-cell *matCellDef="let row">
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let row; let index = index"
+                                    >
                                         {{ row.study_id }}
                                     </td>
                                 </ng-container>
                                 <!-- Study name Column -->
                                 <ng-container matColumnDef="name">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        mat-sort-header
+                                    >
                                         Nombre del estudio
                                     </th>
-                                    <td mat-cell *matCellDef="let row">
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let row"
+                                        style="width: 260px;"
+                                    >
                                         {{ row.name }}
                                     </td>
                                 </ng-container>
                                 <!-- Alias Column -->
                                 <ng-container matColumnDef="alias">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        mat-sort-header
+                                    >
                                         Alias
                                     </th>
                                     <td mat-cell *matCellDef="let row">
@@ -109,93 +142,170 @@
                                 </ng-container>
                                 <!-- Price name Column -->
                                 <ng-container matColumnDef="price">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        mat-sort-header
+                                    >
                                         Precio
                                     </th>
-                                    <td mat-cell *matCellDef="let row">
-                                        {{ row.price }}
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let row; let index = index"
+                                        [formGroupName]="index"
+                                    >
+                                        <input
+                                            class="edit-cell"
+                                            [ngClass]="{
+                                                'edit-cell--no-border':
+                                                    studiesFormArray
+                                                        .get([index])
+                                                        ?.get('isEditable')
+                                                        ?.value === true
+                                            }"
+                                            matInput
+                                            type="text"
+                                            formControlName="price"
+                                            [readonly]="
+                                                !studiesFormArray
+                                                    .get([index])
+                                                    ?.get('isEditable')?.value
+                                            "
+                                            style="width: 50px;"
+                                            prefix="$ "
+                                            mask="separator.2"
+                                            thousandSeparator=","
+                                        />
                                     </td>
                                 </ng-container>
                                 <!-- Discount percentage Column -->
                                 <ng-container matColumnDef="discountPercentage">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        mat-sort-header
+                                    >
                                         % Descuento
                                     </th>
-                                    <td mat-cell *matCellDef="let row">
-                                        {{ row.discountPercentage }}
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let row; let index = index"
+                                        [formGroupName]="index"
+                                    >
+                                        <input
+                                            class="edit-cell"
+                                            [ngClass]="{
+                                                'edit-cell--no-border':
+                                                    studiesFormArray
+                                                        .get([index])
+                                                        ?.get('isEditable')
+                                                        ?.value === true
+                                            }"
+                                            matInput
+                                            type="text"
+                                            formControlName="discountPercentage"
+                                            [readonly]="
+                                                !studiesFormArray
+                                                    .get([index])
+                                                    ?.get('isEditable')?.value
+                                            "
+                                            style="width: 50px;"
+                                        />
                                     </td>
                                 </ng-container>
-                                <!-- Total price Column -->
+                                <!-- Grand Total price Column -->
                                 <ng-container matColumnDef="grandTotal">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        mat-sort-header
+                                    >
                                         Precio total
                                     </th>
                                     <td mat-cell *matCellDef="let row">
-                                        {{ row.grandTotal }}
+                                        <strong>
+                                            {{
+                                                row.grandTotal
+                                                    | currency
+                                                        : 'MXN'
+                                                        : 'symbol'
+                                                        : '1.2-2'
+                                            }}
+                                        </strong>
                                     </td>
                                 </ng-container>
                                 <!-- Delivery days Column -->
                                 <ng-container matColumnDef="deliveryDays">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        mat-sort-header
+                                    >
                                         Días de entrega
                                     </th>
                                     <td mat-cell *matCellDef="let row">
                                         {{ row.deliveryDays }}
                                     </td>
                                 </ng-container>
-                                <!-- Delete Detail -->
-                                <ng-container matColumnDef="delete">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                        Eliminar
+                                <!-- Edit/Delete column -->
+                                <ng-container matColumnDef="editDelete">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        mat-sort-header
+                                    >
+                                        Acciones
                                     </th>
-                                    <td mat-cell *matCellDef="let row; let i = index">
-                                        <!-- <a
-                                            class="cell-flex"
-                                            (click)="openDeleteDialog(row, $event, i)"
+                                    <td
+                                        mat-cell
+                                        *matCellDef="let row; let i = index"
+                                    >
+                                        <button
+                                            mat-icon-button
+                                            matTooltip="Editar"
+                                            color="primary"
+                                            (click)="editStudy(i)"
+                                        >
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+
+                                        <button
+                                            mat-icon-button
+                                            class="material-icons app-toolbar-menu delete-button"
+                                            matTooltip="Eliminar"
+                                            color="accent"
+                                            (click)="removeAt(i)"
                                         >
                                             <mat-icon>delete</mat-icon>
-                                            <span>Eliminar</span>
-                                        </a> -->
-                                        <a class="cell-flex">
-                                            <mat-icon>delete</mat-icon>
-                                            <span>Eliminar</span>
-                                        </a>
+                                        </button>
                                     </td>
                                 </ng-container>
-
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                <!-- <tr
-                                    mat-row
-                                    *matRowDef="
-                                        let row;
-                                        columns: displayedColumns;
-                                        let i = index
-                                    "
-                                    (click)="openCreateEditStudyDialog(row, i)"
-                                ></tr> -->
+                                <!-- Delete column -->
+                                <tr
+                                    mat-header-row
+                                    *matHeaderRowDef="displayedColumns"
+                                ></tr>
                                 <tr
                                     mat-row
                                     *matRowDef="
                                         let row;
-                                        columns: displayedColumns;
-                                        let i = index
+                                        columns: displayedColumns
                                     "
                                 ></tr>
                                 <!-- Row shown when there is no matching data. -->
                                 <tr class="mat-row" *matNoDataRow>
                                     <td class="mat-cell" colspan="4">
                                         <div class="table-error-message">
-                                            Sin resultados :( para: "{{ input.value }}"
+                                            No hay estudios agregados :(
                                         </div>
                                     </td>
                                 </tr>
                             </table>
-                            <!-- <mat-paginator
-                                [pageSizeOptions]="[5, 10, 25, 100]"
-                                aria-label="Select page of users"
-                            ></mat-paginator> -->
                         </div>
-                        <section class="row-custom">
+                        <section
+                            class="row-custom"
+                            *ngIf="studiesFormArray.length"
+                        >
                             <!-- Descuentos agregados: -->
                             <section class="child">
                                 <app-discounts></app-discounts>
@@ -206,7 +316,7 @@
                             </section>
                         </section>
                     </section>
-                </form>
+                </section>
                 <div mat-dialog-actions class="grid-actions">
                     <button
                         class="grid-actions__button"
@@ -221,12 +331,20 @@
                         color="primary"
                         mat-flat-button
                         matStepperNext
+                        [disabled]="orderFormArray.get([1])?.invalid"
                     >
                         CONTINUAR AL PAGO
                     </button>
                 </div>
             </mat-step>
-            <mat-step label="Pago" state="payments">
+
+            <!-- 3.- Pagos -->
+            <mat-step
+                label="Pago"
+                state="payments"
+                formGroupName="2"
+                [stepControl]="orderFormArray.get([2])!"
+            >
                 <section mat-dialog-content>
                     <h3>Seleccione si desea crear una orden o una cotizción</h3>
                     <p>Si un usuario tiene adeudos anteriores no liquidados el sistema no dejará que pueda hacer más de un pago, es decir tendrá que liquidar el total de sus estudios, en un solo pago.</p>
@@ -265,5 +383,5 @@
                 </div>
             </mat-step>
         </mat-stepper>
-    </main>
+    </form>
 </section>

@@ -36,11 +36,13 @@
 .table-container {
     padding: 15px;
     margin-bottom: 20px;
+    border-radius: 8px;
 }
 
 .row-custom {
     display: flex;
     justify-content: space-between;
+
     .child {
         width: 450px;
 
@@ -52,48 +54,58 @@
 
 table {
     width: 100%;
-  }
-  .mat-cell {
-    .table-error-message {
-      color: var(--brand-secondary);
-      font-size: 20px;
-      font-weight: bold;
-      padding: 15px;
-    }
-  }
+}
 
-  .mat-mdc-form-field {
+.mat-cell {
+    .table-error-message {
+        color: var(--brand-secondary);
+        font-size: 20px;
+        font-weight: bold;
+        padding: 15px;
+    }
+}
+
+.mat-mdc-form-field {
     font-size: 14px;
     width: 100%;
-  }
+}
 
-  .mat-mdc-row {
+.mat-mdc-row {
     .mat-mdc-cell {
-      cursor: pointer;
+        cursor: pointer;
     }
 
     &:hover {
-      .mat-mdc-cell {
-        color: var(--white);
-        border-color: transparent;
-        background-color: var(--brand-main);
-      }
+        .mat-mdc-cell {
+            // color: var(--white);
+            // border-color: transparent;
+            // background-color: rgba(55, 54, 52, 0.7);
+        }
 
-      .cell-flex {
-        color: var(--white);
-      }
+        .cell-flex {
+            color: var(--white);
+        }
     }
-  }
+}
 
-  // Only for different actions like delete action
-  .cell-flex {
+// Only for different actions like delete action
+.cell-flex {
     color: var(--brand-secondary);
     display: flex;
     align-items: center;
-  }
+}
 
-  .add-container {
+.add-container {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 15px;
-  }
+}
+
+.edit-cell {
+    border: 0;
+
+    &--no-border {
+        padding: 5px;
+        border: 1px solid var(--brand-third);
+    }
+}

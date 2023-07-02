@@ -16,7 +16,7 @@ export class PatientDetailComponent {
 
     openCreateOrderQuote(): void {
         const dialogRef = this.dialog.open(CreateOrderQuoteComponent, {
-            width: '1100px',
+            width: '1200px',
             minHeight: '500px',
             // data: { studies: },
         });

@@ -1,11 +1,17 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { StudiesService } from 'src/app/services/studies.service';
 import { Study } from '../../studies/studies.component';
 import { OrdersQuotesService } from 'src/app/services/orders-quotes.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { getGrandTotal } from 'src/app/shared/utils/utils';
 
 @Component({
     selector: 'app-create-order-quote',
@@ -13,8 +19,6 @@ import { MatSort } from '@angular/material/sort';
     styleUrls: ['./create-order-quote.component.scss'],
 })
 export class CreateOrderQuoteComponent implements OnInit {
-    mode!: 'create' | 'edit';
-    title!: string;
     displayedColumns: string[] = [
         'study_id',
         'name',
@@ -23,20 +27,33 @@ export class CreateOrderQuoteComponent implements OnInit {
         'discountPercentage',
         'grandTotal',
         'deliveryDays',
-        'delete',
+        'editDelete',
     ];
     dataSource!: MatTableDataSource<Study>;
 
     orderForm!: FormGroup;
-    studies: Study[] = [];
-    firstFormGroup = this.fb.group({
-        firstCtrl: ['', Validators.required],
-    });
-    secondFormGroup = this.fb.group({
-        secondCtrl: ['', Validators.required],
-    });
-    isLinear = false;
-    @ViewChild(MatSort) sort!: MatSort;
+
+    searchStudiesControl = new FormControl('');
+    studiesFiltered: Study[] = [];
+
+    timer: any;
+    delaySearch = true;
+
+    get orderFormArray(): FormArray {
+        return this.orderForm.get('formArray') as FormArray;
+    }
+
+    get studiesFormArray(): FormArray {
+        return this.orderFormArray.get([1])?.get('studies') as FormArray;
+    }
+
+    get orderType(): string {
+        if (this.orderFormArray.get([0])?.get('orderType')?.value === '1')
+            return 'orden';
+        if (this.orderFormArray.get([0])?.get('orderType')?.value === '2')
+            return 'cotización';
+        return '';
+    }
 
     constructor(
         public dialogRef: MatDialogRef<CreateOrderQuoteComponent>,
@@ -47,68 +64,118 @@ export class CreateOrderQuoteComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.studiesService
-            .getStudies()
-            .subscribe((studies: Study[]) => (this.studies = studies));
         this.createForm();
-        const temp: Study[] = [
-            {
-                study_id: '1',
-                name: 'EGO TEMP',
-                alias: '',
-                price: 10,
-                discountPercentage: 0,
-                grandTotal: 90,
-                deliveryDays: 1,
-                conditions: '',
-                notes: '',
-            },
-        ];
-        this.dataSource = new MatTableDataSource(temp as Study[]);
+        this.dataSource = new MatTableDataSource(this.studiesFormArray.value);
     }
 
     createForm(): void {
         this.orderForm = this.fb.group({
-            first_name: ['', Validators.required],
-            middle_name: [''],
-            last_name: [''],
-            phone1: '',
-            phone2: [''],
-            cedula: ['', [Validators.maxLength(15)]],
-            email: [''],
+            formArray: this.fb.array([
+                this.fb.group({
+                    orderType: ['', Validators.required],
+                }),
+                this.fb.group({
+                    studies: this.fb.array(
+                        [],
+                        [Validators.required, Validators.minLength(1)]
+                    ),
+                    discounts: [],
+                }),
+                this.fb.group({}),
+            ]),
         });
     }
 
-    createUpdateItem(): void {
-        const formValues = {
-            ...this.orderForm.value,
-        };
-
-        this.ordersService
-            .createOrder(formValues)
-            .subscribe((response: any) => {
-                this.dialogRef.close({
-                    formValues: response,
-                });
-            });
+    initiateVOForm(study: Study): FormGroup {
+        return this.fb.group({
+            study_id: new FormControl(study.study_id || ''),
+            name: new FormControl(study.name || ''),
+            alias: new FormControl(study.alias || ''),
+            price: new FormControl(study.price || ''),
+            grandTotal: new FormControl(study.grandTotal || ''),
+            discountPercentage: new FormControl(study.discountPercentage || ''),
+            deliveryDays: new FormControl(study.deliveryDays || ''),
+            conditions: new FormControl(study.conditions || ''),
+            notes: new FormControl(study.notes || ''),
+            isEditable: new FormControl(false),
+        });
     }
 
-    applyFilter(event: Event): void {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-
-        if (this.dataSource.paginator) {
-            this.dataSource.paginator.firstPage();
+    searchStudies(query: any): void {
+        if (this.timer) {
+            clearTimeout(this.timer);
         }
+
+        this.timer = setTimeout(() => {
+            const _query = query.target.value;
+
+            this.studiesService
+                .searchStudies(_query)
+                .subscribe(
+                    (studies: Study[]) => (this.studiesFiltered = studies)
+                );
+        }, 1000);
+    }
+
+    addStudy(study: Study): void {
+        this.studiesFormArray.insert(
+            this.studiesFormArray.controls.length,
+            this.initiateVOForm(study)
+        );
+
+        this.dataSource.data = [...this.studiesFormArray.value];
+    }
+
+    addValueChangesListener(index: number): void {
+        // This function will add a subscription to price and discount controls
+        const priceControl = this.studiesFormArray.get([index])?.get('price');
+        const discountControl = this.studiesFormArray
+            .get([index])
+            ?.get('discountPercentage');
+        const grandTotalControl = this.studiesFormArray
+            .get([index])
+            ?.get('grandTotal');
+
+        priceControl?.valueChanges.subscribe((value) => {
+            const total = getGrandTotal(+value, +discountControl?.value);
+            grandTotalControl?.setValue(total);
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
+
+            this.timer = setTimeout(() => {
+                this.saveEditStudy();
+            }, 1000);
+        });
+
+        discountControl?.valueChanges.subscribe((value) => {
+            const total = getGrandTotal(+priceControl?.value, +value);
+            grandTotalControl?.setValue(total);
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
+
+            this.timer = setTimeout(() => {
+                this.saveEditStudy();
+            }, 1000);
+        });
+    }
+
+    editStudy(index: number): void {
+        const currentIsEditableValue = this.studiesFormArray
+            .get([index])
+            ?.get('isEditable');
+        currentIsEditableValue?.setValue(!currentIsEditableValue.value);
+        this.addValueChangesListener(index);
+    }
+
+    saveEditStudy(): void {
+        this.dataSource.data = [...this.studiesFormArray.value];
     }
 
     removeAt(index: number): void {
-        const data = this.dataSource.data;
-        // data.splice(
-        //     this.paginator.pageIndex * this.paginator.pageSize + index,
-        //     1
-        // );
-        this.dataSource.data = data;
+        this.studiesFormArray.removeAt(index);
+        this.dataSource.data = [...this.studiesFormArray.value];
     }
 }
 
