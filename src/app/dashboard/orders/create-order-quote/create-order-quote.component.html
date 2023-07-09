@@ -303,7 +303,7 @@
                             </table>
                         </div>
                     </section>
-                    <section class="row-custom" *ngIf="studiesFormArray.length">
+                    <section class="row-custom">
                         <!-- Descuentos agregados: -->
                         <section class="child">
                             <app-discounts
@@ -313,7 +313,10 @@
                         </section>
                         <!-- RESUMEN DE LA ORDEN: -->
                         <section class="child">
-                            <app-order-summary></app-order-summary>
+                            <app-order-summary
+                                [studiesForm]="studiesFormArray"
+                                [discountsForm]="discountsFormArray"
+                            ></app-order-summary>
                         </section>
                     </section>
                 </section>

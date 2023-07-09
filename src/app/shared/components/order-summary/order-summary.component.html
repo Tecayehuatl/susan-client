@@ -4,23 +4,33 @@
     <div class="container">
         <div class="row">
             <div class="item">Total</div>
-            <div class="item item--right">$100</div>
+            <div class="item item--right">
+                {{ total | currency : 'MXN' : 'symbol' }}
+            </div>
         </div>
         <div class="row">
             <div class="item">Subtotal</div>
-            <div class="item item--right">$86.2</div>
+            <div class="item item--right">
+                {{ subtotal | currency : 'MXN' : 'symbol' }}
+            </div>
         </div>
         <div class="row">
             <div class="item">Descuento</div>
-            <div class="item item--right">$86.2</div>
+            <div class="item item--right">
+                {{ discount | currency : 'MXN' : 'symbol' }}
+            </div>
         </div>
         <div class="row">
             <div class="item">IVA</div>
-            <div class="item item--right">$86.2</div>
+            <div class="item item--right">
+                {{ tax | currency : 'MXN' : 'symbol' }}
+            </div>
         </div>
         <div class="row">
             <div class="item item--grand">Total a pagar</div>
-            <div class="item item--right item--grand">$00.00</div>
+            <div class="item item--right item--grand">
+                {{ grandTotal | currency : 'MXN' : 'symbol' }}
+            </div>
         </div>
     </div>
 </section>
