@@ -38,8 +38,8 @@ export class DiscountsService {
     }
 }
 
-interface Discount {
-    discount_id: number;
+export interface Discount {
+    discount_id?: number;
     name: string;
     discountPercentage: number;
 }
