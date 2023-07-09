@@ -19,7 +19,12 @@ const imports = [
 
 @NgModule({
     declarations: [...imports, NotFoundComponent],
-    imports: [CommonModule, MaterialModule, NgxMaskModule.forRoot()],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        NgxMaskModule.forRoot(),
+    ],
     exports: [
         ...imports,
         CommonModule,

@@ -1,42 +1,109 @@
 <section class="discounts mat-elevation-z8">
-    <h4 class="title">Descuentos agregados:</h4>
+    <h4
+        class="title"
+        matTooltip="Ésta sección es para agregar descuentos a las orden en general"
+    >
+        Descuentos agregados:
+    </h4>
     <hr />
-    <div>
+    <form [formGroup]="discountsParentForm">
         <div class="row">
-            <mat-form-field>
-                <mat-label>Descuento</mat-label>
-                <mat-select tabindex="">
-                    <mat-option
-                        *ngFor="let discount of discounts"
-                        autocomplete="disabled"
-                        [value]="discount.value"
-                    >
-                        {{ discount.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <section>
+                <button
+                    type="button"
+                    color="primary"
+                    mat-flat-button
+                    (click)="addDiscount()"
+                >
+                    <mat-icon>add</mat-icon>
+                    Agregar descuento
+                </button>
+            </section>
         </div>
-        <div class="row">
-            <mat-form-field>
-                <mat-label>Descuento especializado:</mat-label>
-                <input
-                    matInput
-                    placeholder="% de descuento"
-                    tabindex=""
-                    autocomplete="disabled"
-                    suffix=" %"
-                    mask="separator.2"
-                />
-            </mat-form-field>
-        </div>
-    </div>
-    <ul class="discounts-list">
-        <li>
-            <strong>Descuento 1</strong>
-            <span class="action">
-                <mat-icon>delete</mat-icon>
-                Eliminar
-            </span>
-        </li>
-    </ul>
+        <ng-container formArrayName="discounts">
+            <ul class="discounts-list">
+                <li
+                    [formGroupName]="index"
+                    *ngFor="
+                        let discountControl of discountsArrayControl.controls;
+                        let index = index
+                    "
+                >
+                    <div>
+                        <div>
+                            <h4>Descuento {{ index + 1 }}</h4>
+                            <mat-form-field>
+                                <mat-label>Descuento</mat-label>
+                                <mat-select
+                                    formControlName="discountPercentage"
+                                >
+                                    <mat-option
+                                        autocomplete="disabled"
+                                        [value]="discount.discountPercentage"
+                                        (click)="
+                                            selectDiscount(index, discount)
+                                        "
+                                        *ngFor="
+                                            let discount of discountsOptionsList
+                                        "
+                                    >
+                                        {{ discount.name }} -
+                                        {{ discount?.discountPercentage }}%
+                                    </mat-option>
+                                    <mat-option
+                                        autocomplete="disabled"
+                                        value="0"
+                                        (click)="
+                                            selectDiscount(index, {
+                                                name: 'custom',
+                                                discountPercentage: 0
+                                            })
+                                        "
+                                    >
+                                        * PERSONALIZADO
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field
+                                *ngIf="
+                                    discountControl.value['name'] === 'custom'
+                                "
+                            >
+                            <mat-label>Descuento especializado:</mat-label>
+                                <input
+                                    formControlName="discountPercentage"
+                                    matInput
+                                    placeholder="% de descuento"
+                                    tabindex=""
+                                    autocomplete="disabled"
+                                    suffix=" %"
+                                    mask="separator.2"
+                                />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="action">
+                        <button
+                            mat-button
+                            color="accent"
+                            (click)="removeDiscount(index)"
+                        >
+                            <mat-icon>delete</mat-icon>
+                            Eliminar
+                        </button>
+                    </div>
+                </li>
+                <div
+                    class="no-discounts"
+                    *ngIf="discountsArrayControl.controls.length === 0"
+                >
+                    <p>
+                        Sin descuentos agregados :(. Haga click en el botón de "Agregar descuento"
+                    </p>
+                </div>
+            </ul>
+        </ng-container>
+    </form>
 </section>

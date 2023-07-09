@@ -12,6 +12,7 @@ import { Study } from '../../studies/studies.component';
 import { OrdersQuotesService } from 'src/app/services/orders-quotes.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { getGrandTotal } from 'src/app/shared/utils/utils';
+import { Discount, DiscountsService } from 'src/app/services/discounts.service';
 
 @Component({
     selector: 'app-create-order-quote',
@@ -39,6 +40,8 @@ export class CreateOrderQuoteComponent implements OnInit {
     timer: any;
     delaySearch = true;
 
+    discounts: Discount[] = [];
+
     get orderFormArray(): FormArray {
         return this.orderForm.get('formArray') as FormArray;
     }
@@ -55,15 +58,21 @@ export class CreateOrderQuoteComponent implements OnInit {
         return '';
     }
 
+    get discountsFormArray(): FormArray {
+        return this.orderFormArray.get([1])?.get('discounts') as FormArray;
+    }
+
     constructor(
         public dialogRef: MatDialogRef<CreateOrderQuoteComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private fb: FormBuilder,
         private studiesService: StudiesService,
-        private ordersService: OrdersQuotesService
+        private ordersService: OrdersQuotesService,
+        private discountsService: DiscountsService
     ) {}
 
     ngOnInit() {
+        this.getDiscounts();
         this.createForm();
         this.dataSource = new MatTableDataSource(this.studiesFormArray.value);
     }
@@ -79,14 +88,14 @@ export class CreateOrderQuoteComponent implements OnInit {
                         [],
                         [Validators.required, Validators.minLength(1)]
                     ),
-                    discounts: [],
+                    discounts: this.fb.array([]),
                 }),
                 this.fb.group({}),
             ]),
         });
     }
 
-    initiateVOForm(study: Study): FormGroup {
+    addStudyGroupForm(study: Study): FormGroup {
         return this.fb.group({
             study_id: new FormControl(study.study_id || ''),
             name: new FormControl(study.name || ''),
@@ -120,7 +129,7 @@ export class CreateOrderQuoteComponent implements OnInit {
     addStudy(study: Study): void {
         this.studiesFormArray.insert(
             this.studiesFormArray.controls.length,
-            this.initiateVOForm(study)
+            this.addStudyGroupForm(study)
         );
 
         this.dataSource.data = [...this.studiesFormArray.value];
@@ -176,6 +185,28 @@ export class CreateOrderQuoteComponent implements OnInit {
     removeAt(index: number): void {
         this.studiesFormArray.removeAt(index);
         this.dataSource.data = [...this.studiesFormArray.value];
+    }
+
+    getDiscounts(): void {
+        this.discountsService
+            .getDiscounts()
+            .subscribe((discounts: Discount[]) => {
+                this.discounts = discounts;
+            });
+    }
+
+    setDiscountsForm(discountsFormArray: []) {
+        this.discountsFormArray.clear();
+
+        discountsFormArray?.forEach((control) => {
+            this.discountsFormArray.insert(
+                this.discountsFormArray.length,
+                this.fb.group({
+                    name: control['name'],
+                    discountPercentage: control['discountPercentage'],
+                })
+            );
+        });
     }
 }
 

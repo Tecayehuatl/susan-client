@@ -3,17 +3,21 @@
     border-radius: 8px;
 
     &-list {
+        padding: 0;
+
         li {
             align-items: center;
             display: flex;
             justify-content: flex-end;
+            border-bottom: 1px dotted black;
+            margin-bottom: 5px;
         }
 
         .action {
             align-items: center;
             color: var(--brand-secondary);
-            cursor: pointer;
             display: flex;
+            margin-left: 20px;
         }
     }
 }
@@ -27,4 +31,11 @@
 .row {
     display: flex;
     justify-content: flex-end;
+}
+
+.no-discounts {
+    color: var(--brand-secondary);
+    font-weight: bold;
+    font-size: 16px;
+    margin: 25px auto;
 }

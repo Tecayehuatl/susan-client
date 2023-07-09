@@ -60,8 +60,8 @@
                 label="Agregar estudios"
                 state="studies"
             >
-                <section mat-dialog-content formArrayName="studies">
-                    <section>
+                <section mat-dialog-content>
+                    <section formArrayName="studies">
                         <mat-form-field>
                             <mat-label>Búsqueda de estudios</mat-label>
                             <input
@@ -302,18 +302,18 @@
                                 </tr>
                             </table>
                         </div>
-                        <section
-                            class="row-custom"
-                            *ngIf="studiesFormArray.length"
-                        >
-                            <!-- Descuentos agregados: -->
-                            <section class="child">
-                                <app-discounts></app-discounts>
-                            </section>
-                            <!-- RESUMEN DE LA ORDEN: -->
-                            <section class="child">
-                                <app-order-summary></app-order-summary>
-                            </section>
+                    </section>
+                    <section class="row-custom" *ngIf="studiesFormArray.length">
+                        <!-- Descuentos agregados: -->
+                        <section class="child">
+                            <app-discounts
+                                [discountsOptionsList]="discounts"
+                                (sendDiscountsForm)="setDiscountsForm($event)"
+                            ></app-discounts>
+                        </section>
+                        <!-- RESUMEN DE LA ORDEN: -->
+                        <section class="child">
+                            <app-order-summary></app-order-summary>
                         </section>
                     </section>
                 </section>
