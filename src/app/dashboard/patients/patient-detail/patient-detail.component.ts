@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateOrderQuoteComponent } from '../../orders/create-order-quote/create-order-quote.component';
 import { Study } from '../../studies/studies.component';
+import { ActivatedRoute } from '@angular/router';
+import { PaymentMethod } from 'src/app/services/payment-methods.service';
+import { Doctor } from '../../doctors/doctors.component';
 
 @Component({
     selector: 'app-patient-detail',
@@ -11,14 +14,28 @@ import { Study } from '../../studies/studies.component';
 })
 export class PatientDetailComponent {
     studies!: Study[];
+    paymentMethods: PaymentMethod[] = [];
+    doctors: Doctor[] = [];
 
-    constructor(private dialog: MatDialog, private _snackBar: MatSnackBar) {}
+    constructor(
+        private dialog: MatDialog,
+        private _snackBar: MatSnackBar,
+        private route: ActivatedRoute
+    ) {
+        console.log(this.route);
+
+        this.paymentMethods = this.route.snapshot.data['paymentMethods'];
+        this.doctors = this.route.snapshot.data['doctors'];
+    }
 
     openCreateOrderQuote(): void {
         const dialogRef = this.dialog.open(CreateOrderQuoteComponent, {
             width: '1200px',
             minHeight: '500px',
-            // data: { studies: },
+            data: {
+                paymentMethods: this.paymentMethods,
+                doctors: this.doctors,
+            },
         });
 
         dialogRef.afterClosed().subscribe(({ formValues, mode }) => {

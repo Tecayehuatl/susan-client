@@ -13,6 +13,10 @@ import { OrdersQuotesService } from 'src/app/services/orders-quotes.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { getGrandTotal } from 'src/app/shared/utils/utils';
 import { Discount, DiscountsService } from 'src/app/services/discounts.service';
+import { PaymentMethod } from 'src/app/services/payment-methods.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Doctor } from '../../doctors/doctors.component';
+import { Observable, map, startWith } from 'rxjs';
 
 @Component({
     selector: 'app-create-order-quote',
@@ -41,6 +45,10 @@ export class CreateOrderQuoteComponent implements OnInit {
     delaySearch = true;
 
     discounts: Discount[] = [];
+    paymentMethods: PaymentMethod[] = [];
+    doctors: Doctor[] = [];
+
+    isSkippedPayment = false;
 
     get orderFormArray(): FormArray {
         return this.orderForm.get('formArray') as FormArray;
@@ -48,6 +56,10 @@ export class CreateOrderQuoteComponent implements OnInit {
 
     get studiesFormArray(): FormArray {
         return this.orderFormArray.get([1])?.get('studies') as FormArray;
+    }
+
+    get doctorControl(): FormControl {
+        return this.orderFormArray.get([1])?.get('doctorId') as FormControl;
     }
 
     get orderType(): string {
@@ -62,6 +74,10 @@ export class CreateOrderQuoteComponent implements OnInit {
         return this.orderFormArray.get([1])?.get('discounts') as FormArray;
     }
 
+    get paymentsFormArray(): FormArray {
+        return this.orderFormArray.get([2])?.get('payments') as FormArray;
+    }
+
     constructor(
         public dialogRef: MatDialogRef<CreateOrderQuoteComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -69,12 +85,20 @@ export class CreateOrderQuoteComponent implements OnInit {
         private studiesService: StudiesService,
         private ordersService: OrdersQuotesService,
         private discountsService: DiscountsService
-    ) {}
+    ) {
+        this.paymentMethods = data.paymentMethods;
+        this.doctors = data.doctors;
+    }
 
     ngOnInit() {
         this.getDiscounts();
         this.createForm();
         this.dataSource = new MatTableDataSource(this.studiesFormArray.value);
+
+        this.paymentsFormArray.valueChanges.subscribe((form: any) => {
+            if (this.paymentsFormArray.controls.length >= 1)
+                this.isSkippedPayment = false;
+        });
     }
 
     createForm(): void {
@@ -84,13 +108,19 @@ export class CreateOrderQuoteComponent implements OnInit {
                     orderType: ['', Validators.required],
                 }),
                 this.fb.group({
+                    doctorId: [null, Validators.required],
                     studies: this.fb.array(
                         [],
                         [Validators.required, Validators.minLength(1)]
                     ),
                     discounts: this.fb.array([]),
                 }),
-                this.fb.group({}),
+                this.fb.group({
+                    payments: this.fb.array(
+                        [],
+                        [Validators.required, Validators.minLength(1)]
+                    ),
+                }),
             ]),
         });
     }
@@ -123,7 +153,7 @@ export class CreateOrderQuoteComponent implements OnInit {
                 .subscribe(
                     (studies: Study[]) => (this.studiesFiltered = studies)
                 );
-        }, 1000);
+        }, 0);
     }
 
     addStudy(study: Study): void {
@@ -202,15 +232,60 @@ export class CreateOrderQuoteComponent implements OnInit {
             this.discountsFormArray.insert(
                 this.discountsFormArray.length,
                 this.fb.group({
-                    name: control['name'],
-                    discountPercentage: control['discountPercentage'],
+                    name: [control['name'], Validators.required],
+                    discountPercentage: [
+                        control['discountPercentage'],
+                        Validators.required,
+                    ],
                 })
             );
         });
+    }
+
+    addPaymentGroup(): void {
+        this.paymentsFormArray.insert(
+            this.paymentsFormArray.length,
+            this.fb.group({
+                payment_id: [null, Validators.required],
+                totalTransaction: [
+                    null,
+                    [Validators.required, Validators.min(1)],
+                ],
+                cashReceived: [null],
+                changeDue: [null],
+            })
+        );
+    }
+
+    getPayementGroup(index: number): FormGroup {
+        return this.paymentsFormArray.get([index]) as FormGroup;
+    }
+
+    removePayment(indexPayment: number): void {
+        this.paymentsFormArray.removeAt(indexPayment);
+    }
+
+    disablePaymentValidators(event: MatCheckboxChange): void {
+        if (event.checked) {
+            this.paymentsFormArray.removeValidators([
+                Validators.required,
+                Validators.minLength(1),
+            ]);
+            this.paymentsFormArray.updateValueAndValidity();
+            return;
+        } else {
+            this.paymentsFormArray.addValidators([
+                Validators.required,
+                Validators.minLength(1),
+            ]);
+            this.paymentsFormArray.updateValueAndValidity();
+        }
     }
 }
 
 export interface DialogData {
     title: string;
     itemData: any;
+    paymentMethods: PaymentMethod[];
+    doctors: Doctor[];
 }

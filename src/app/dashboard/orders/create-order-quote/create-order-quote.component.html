@@ -5,7 +5,7 @@
     <h2>CREAR {{ orderType | uppercase }}</h2>
     <mat-divider></mat-divider>
     <form [formGroup]="orderForm">
-        <mat-stepper [linear]="false" #stepper formArrayName="formArray">
+        <mat-stepper [linear]="true" #stepper formArrayName="formArray">
             <!-- Override the icons -->
             <ng-template matStepperIcon="orderType">
                 <mat-icon>list_alt</mat-icon>
@@ -40,7 +40,7 @@
                         </div>
                     </mat-radio-group>
                 </section>
-                <div mat-dialog-actions class="gråid-actions">
+                <div mat-dialog-actions class="grid-actions">
                     <button
                         class="grid-actions__button"
                         color="primary"
@@ -61,10 +61,29 @@
                 state="studies"
             >
                 <section mat-dialog-content>
+                    <section>
+                        <mat-form-field>
+                            <mat-label>Seleccione al médico</mat-label>
+                            <mat-select formControlName="doctorId">
+                                <mat-option
+                                    *ngFor="let doctor of doctors"
+                                    autocomplete="disabled"
+                                    [value]="doctor.doctor_id"
+                                >
+                                    {{ doctor.first_name | uppercase }}
+                                    {{ doctor.middle_name | uppercase }}
+                                    {{ doctor.last_name | uppercase }} -
+                                    {{ doctor.cedula }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </section>
+                    <mat-divider></mat-divider>
                     <section formArrayName="studies">
                         <mat-form-field>
                             <mat-label>Búsqueda de estudios</mat-label>
                             <input
+                                type="text"
                                 matInput
                                 (keyup)="searchStudies($event)"
                                 placeholder="Buscar estudios por ID, Nombre, correo electrónico o teléfono"
@@ -343,46 +362,85 @@
 
             <!-- 3.- Pagos -->
             <mat-step
-                label="Pago"
-                state="payments"
                 formGroupName="2"
                 [stepControl]="orderFormArray.get([2])!"
+                label="Pago"
+                state="payments"
             >
                 <section mat-dialog-content>
-                    <h3>Seleccione si desea crear una orden o una cotizción</h3>
-                    <p>Si un usuario tiene adeudos anteriores no liquidados el sistema no dejará que pueda hacer más de un pago, es decir tendrá que liquidar el total de sus estudios, en un solo pago.</p>
+                    <h3>Agregar pagos</h3>
+                    <p>
+                        Si un usuario tiene adeudos anteriores no liquidados el sistema no dejará que pueda hacer más de un pago, es decir tendrá que liquidar el total de sus estudios, en un solo pago.
+                    </p>
                     <section class="add-container">
                         <button
                             class="add-button"
                             color="primary"
                             mat-raised-button
+                            [disabled]="
+                                isSkippedPayment ||
+                                paymentsFormArray.controls.length >= 3
+                            "
+                            (click)="addPaymentGroup()"
                         >
                             <mat-icon>add</mat-icon>
                             AGREGAR PAGO
                         </button>
                     </section>
-                    <section class="row">
-                        <app-payment></app-payment>
-                        <app-payment></app-payment>
+                    <mat-divider></mat-divider>
+                    <section class="row" formArrayName="payments">
+                        <app-payment
+                            [formGroup]="getPayementGroup(index)"
+                            [indexPayment]="index"
+                            (removePaymentEvent)="removePayment($event)"
+                            *ngFor="
+                                let paymentFormGroup of paymentsFormArray.controls;
+                                let index = index
+                            "
+                            [paymentMethods]="paymentMethods"
+                        ></app-payment>
                     </section>
+                    <section
+                        class="row no-payments"
+                        *ngIf="paymentsFormArray.controls.length === 0"
+                    >
+                        Sin pagos agregados, agregue pagos pulsando el botón "AGREGAR PAGO"
+                    </section>
+                    <mat-divider></mat-divider>
                 </section>
-                <div mat-dialog-actions class="grid-actions">
-                    <button
-                        class="grid-actions__button"
-                        color="primary"
-                        mat-stroked-button
-                        matStepperPrevious
-                    >
-                        ATRÁS
-                    </button>
-                    <button
-                        class="grid-actions__button"
-                        color="primary"
-                        mat-flat-button
-                        (click)="stepper.reset()"
-                    >
-                        CREAR [ORDER|QUOTE]
-                    </button>
+                <div
+                    mat-dialog-actions
+                    class="grid-actions grid-actions--space"
+                >
+                    <div class="row">
+                        <mat-checkbox
+                            class="example-margin"
+                            [(ngModel)]="isSkippedPayment"
+                            [ngModelOptions]="{ standalone: true }"
+                            [disabled]="paymentsFormArray.controls.length >= 1"
+                            (change)="disablePaymentValidators($event)"
+                        >
+                            Crear la orden sin agregar pagos (No recomendado)
+                        </mat-checkbox>
+                    </div>
+                    <div class="row row--flex-end">
+                        <button
+                            class="grid-actions__button"
+                            color="primary"
+                            mat-stroked-button
+                            matStepperPrevious
+                        >
+                            ATRÁS
+                        </button>
+                        <button
+                            class="grid-actions__button"
+                            color="primary"
+                            mat-flat-button
+                            [disabled]="orderForm.invalid"
+                        >
+                            CREAR {{ orderType | uppercase }}
+                        </button>
+                    </div>
                 </div>
             </mat-step>
         </mat-stepper>

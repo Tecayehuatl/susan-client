@@ -21,9 +21,14 @@
         justify-content: flex-end;
         padding: 15px;
 
+        &--space {
+            justify-content: space-between;
+        }
+
         &__button {
             margin-left: 15px;
             width: 100%;
+            min-width: 200px;
             max-width: 200px;
 
             &:first-child {
@@ -37,6 +42,13 @@
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 8px;
+}
+
+.row {
+    &--flex-end {
+        display: flex;
+        justify-content: flex-end;
+    }
 }
 
 .row-custom {
@@ -108,4 +120,13 @@ table {
         padding: 5px;
         border: 1px solid var(--brand-third);
     }
+}
+
+.no-payments {
+    color: rgba(#373634, 0.4);
+    margin: 50px auto;
+    text-align: center;
+    font-size: 26px;
+    max-width: 500px;
+    line-height: 1.5;
 }
