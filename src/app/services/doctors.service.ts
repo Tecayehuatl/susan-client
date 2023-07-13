@@ -1,8 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Doctor } from '../dashboard/doctors/doctors.component';
 import { Observable } from 'rxjs';
+import {
+    ActivatedRouteSnapshot,
+    ResolveFn,
+    RouterStateSnapshot,
+} from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -29,3 +34,10 @@ export class DoctorsService {
         return this.http.delete(`${environment.baseUrl}/doctors/${id}`);
     }
 }
+
+export const getDoctorsResolver: ResolveFn<any> = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+) => {
+    return inject(DoctorsService).getDoctors();
+};
