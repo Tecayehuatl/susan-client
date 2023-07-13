@@ -1,44 +1,87 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+    FormControl,
+    FormGroup,
+    FormGroupDirective,
+    Validators,
+} from '@angular/forms';
+import { PaymentMethod } from 'src/app/services/payment-methods.service';
 
 @Component({
     selector: 'app-payment',
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.scss'],
 })
-export class PaymentComponent {
-    paymentTypes: PaymentType[] = [
-        {
-            name: 'Tarjeta de crédito',
-            valueText: PaymentTypes.creditCard,
-        },
-        {
-            name: 'Tarjeta de débito',
-            valueText: PaymentTypes.debitCard,
-        },
-        {
-            name: 'Tarjeta de vales de despensa',
-            valueText: PaymentTypes.foodVoucher,
-        },
-        {
-            name: 'Efectivo',
-            valueText: PaymentTypes.cash,
-        },
-        {
-            name: 'Transferencia electrónica',
-            valueText: PaymentTypes.transfer,
-        },
-    ];
-}
+export class PaymentComponent implements OnInit {
+    @Input() paymentMethods: PaymentMethod[] = [];
+    @Input() paymentFormGroup!: FormGroup;
+    @Input() indexPayment!: number;
+    @Output() removePaymentEvent: EventEmitter<any> = new EventEmitter<any>();
 
-interface PaymentType {
-    name: string;
-    valueText: string;
-}
+    get paymentIdControl(): FormControl {
+        return this.paymentFormGroup.get('payment_id') as FormControl;
+    }
+    get totalTransactionControl(): FormControl {
+        return this.paymentFormGroup.get('totalTransaction') as FormControl;
+    }
+    get cashReceivedControl(): FormControl {
+        return this.paymentFormGroup.get('cashReceived') as FormControl;
+    }
+    get changeDueControl(): FormControl {
+        return this.paymentFormGroup.get('changeDue') as FormControl;
+    }
 
-enum PaymentTypes {
-    creditCard = 'CREDIT_CARD',
-    debitCard = 'DEBIT_CARD',
-    foodVoucher = 'FOOD_VOUCHER',
-    cash = 'CASH',
-    transfer = 'TRANSFER',
+    constructor(private rootFormGroup: FormGroupDirective) {}
+
+    ngOnInit(): void {
+        this.paymentFormGroup = this.rootFormGroup.control;
+
+        this.totalTransactionControl.valueChanges.subscribe((total: number) => {
+            if (
+                +this.paymentIdControl.value === 1 &&
+                this.cashReceivedControl.value > 0
+            ) {
+                const change = +this.cashReceivedControl.value - total;
+                this.changeDueControl?.setValue(+change.toFixed(2));
+            }
+        });
+
+        this.cashReceivedControl.valueChanges.subscribe(
+            (cashReceived: number) => {
+                if (
+                    +this.paymentIdControl.value === 1 &&
+                    this.totalTransactionControl.value > 0 &&
+                    +cashReceived > 0
+                ) {
+                    const change =
+                        +cashReceived - +this.totalTransactionControl.value;
+
+                    this.changeDueControl?.setValue(+change.toFixed(2));
+                }
+            }
+        );
+
+        this.paymentIdControl.valueChanges.subscribe((value) => {
+            if (value && value === 1) {
+                this.cashReceivedControl.setValidators([
+                    Validators.required,
+                    Validators.min(1),
+                ]);
+                this.cashReceivedControl.updateValueAndValidity();
+            } else {
+                this.cashReceivedControl.removeValidators([
+                    Validators.required,
+                    Validators.min(1),
+                ]);
+                this.cashReceivedControl.setValue(null);
+                this.changeDueControl.setValue(null);
+                this.cashReceivedControl.updateValueAndValidity();
+                this.changeDueControl.updateValueAndValidity();
+            }
+        });
+    }
+
+    removePayment(indexPayment: number): void {
+        this.removePaymentEvent.emit(indexPayment);
+    }
 }

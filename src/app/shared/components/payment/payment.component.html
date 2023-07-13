@@ -1,22 +1,22 @@
 <section class="payment mat-elevation-z8">
     <div class="row">
-        <h3>Pago 1</h3>
-        <div class="delete">
-            Eliminar <mat-icon>delete</mat-icon>
-        </div>
+        <h3>Pago {{ indexPayment + 1 }}</h3>
+        <button class="delete" mat-button (click)="removePayment(indexPayment)">
+            Eliminar
+            <mat-icon>delete</mat-icon>
+        </button>
     </div>
-    <div class="row">
+    <div class="row row--start" [formGroup]="paymentFormGroup">
         <div class="row-item">
             <p><strong>Forma de pago</strong></p>
             <div>
                 <mat-form-field>
                     <mat-label>Forma de pago</mat-label>
-                    <!-- <mat-select formControlName="state"> -->
-                    <mat-select>
+                    <mat-select formControlName="payment_id">
                         <mat-option
                             autocomplete="disabled"
-                            *ngFor="let paymentType of paymentTypes"
-                            [value]="paymentType.valueText"
+                            *ngFor="let paymentType of paymentMethods"
+                            [value]="paymentType.payment_id"
                         >
                             {{ paymentType.name }}
                         </mat-option>
@@ -24,29 +24,45 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row-item">
+        <div class="row-item" *ngIf="paymentIdControl.value">
             <p><strong>¿Cuanto voy a cobrar?</strong></p>
             <div>
                 <mat-form-field>
                     <mat-label>Pago 1</mat-label>
-                    <input matInput />
+                    <input
+                        matInput
+                        formControlName="totalTransaction"
+                        prefix="$ "
+                        mask="separator.2"
+                        thousandSeparator=","
+                    />
                 </mat-form-field>
             </div>
         </div>
-        <div class="row-item">
+        <div class="row-item" *ngIf="paymentIdControl?.value === 1">
             <p><strong>¿Cuánto recibí?</strong></p>
             <div>
                 <mat-form-field>
                     <mat-label>Pago 1</mat-label>
-                    <input matInput />
+                    <input
+                        matInput
+                        formControlName="cashReceived"
+                        prefix="$ "
+                        mask="separator.2"
+                        thousandSeparator=","
+                    />
                 </mat-form-field>
             </div>
         </div>
-        <div class="row-item">
+        <!-- Value number 1 is ONLY for CASH, values shouldn't change in database, if a change is made this might broke -->
+        <div class="row-item" *ngIf="paymentIdControl?.value === 1">
             <p><strong>¿Cuanto tengo que dar de cambio?</strong></p>
             <div class="change">
                 <strong>
-                    $100.000
+                    {{
+                        changeDueControl?.value
+                            | currency : '' : 'symbol-narrow' : '' : 'en-US'
+                    }}
                 </strong>
             </div>
         </div>

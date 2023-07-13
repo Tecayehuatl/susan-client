@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material/material.module';
 import { RouterModule } from '@angular/router';
 import { GenericModalComponent } from './components/generic-modal/generic-modal.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -23,6 +23,7 @@ const imports = [
         CommonModule,
         MaterialModule,
         ReactiveFormsModule,
+        FormsModule,
         NgxMaskModule.forRoot(),
     ],
     exports: [
@@ -31,6 +32,7 @@ const imports = [
         MaterialModule,
         RouterModule,
         ReactiveFormsModule,
+        FormsModule,
         NgxMaskModule,
     ],
 })
