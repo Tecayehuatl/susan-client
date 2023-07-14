@@ -20,7 +20,7 @@ export class PatientsService {
     }
 
     getPatient(id: string): Observable<Patient> {
-        return this.http.get<Patient>(`${environment.baseUrl}/patient/${id}`);
+        return this.http.get<Patient>(`${environment.baseUrl}/patients/${id}`);
     }
 
     createPatient(patient: Patient): Observable<Patient> {

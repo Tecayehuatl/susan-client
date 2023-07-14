@@ -10,6 +10,8 @@ import { StudiesComponent } from './studies/studies.component';
 import { UsersComponent } from './users/users.component';
 import { getBranchOfficesResolver } from '../services/branch-offices.service';
 import { getPatientDetailResolver } from '../services/patients.service';
+import { getPaymentMethodsResolver } from '../services/payment-methods.service';
+import { getDoctorsResolver } from '../services/doctors.service';
 
 const routes: Routes = [
     {
@@ -22,7 +24,11 @@ const routes: Routes = [
             },
             {
                 path: 'patients/:patientId',
-                resolve: [getPatientDetailResolver],
+                resolve: {
+                    paymentMethods: getPaymentMethodsResolver,
+                    doctors: getDoctorsResolver,
+                    patient: getPatientDetailResolver,
+                },
                 component: PatientDetailComponent,
             },
             {
