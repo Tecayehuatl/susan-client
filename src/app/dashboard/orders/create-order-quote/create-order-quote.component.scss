@@ -45,10 +45,21 @@
 }
 
 .row {
-    &--flex-end {
+    width: 100% ;
+    margin-bottom: 15px;
+
+    &--space {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
     }
+
+    &--tar {
+        text-align-last: right;
+    }
+}
+
+.actions {
+    display: flex;
 }
 
 .row-custom {
@@ -129,4 +140,11 @@ table {
     font-size: 26px;
     max-width: 500px;
     line-height: 1.5;
+}
+
+.total {
+    color: var(--brand-main);
+    display: inline-block;
+    font-size: 28px;
+    margin-bottom: 30px;
 }

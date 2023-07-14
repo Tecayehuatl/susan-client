@@ -25,7 +25,9 @@
                 state="orderType"
             >
                 <section mat-dialog-content>
-                    <h3>Seleccione si desea crear una orden o una cotizción</h3>
+                    <h3>
+                        1.- Seleccione si desea crear una orden o una cotizción
+                    </h3>
                     <mat-radio-group
                         aria-label="Select an option"
                         formControlName="orderType"
@@ -62,6 +64,7 @@
             >
                 <section mat-dialog-content>
                     <section>
+                        <h3>1.- Seleccione el nombre del médico</h3>
                         <mat-form-field>
                             <mat-label>Seleccione al médico</mat-label>
                             <mat-select formControlName="doctorId">
@@ -80,6 +83,7 @@
                     </section>
                     <mat-divider></mat-divider>
                     <section formArrayName="studies">
+                        <h3>2.- Seleccione los estudios a realizar</h3>
                         <mat-form-field>
                             <mat-label>Búsqueda de estudios</mat-label>
                             <input
@@ -335,6 +339,7 @@
                             <app-order-summary
                                 [studiesForm]="studiesFormArray"
                                 [discountsForm]="discountsFormArray"
+                                (setTotalOrder)="totalOrder = $event"
                             ></app-order-summary>
                         </section>
                     </section>
@@ -378,6 +383,7 @@
                             color="primary"
                             mat-raised-button
                             [disabled]="
+                                orderType === 'cotización' ||
                                 isSkippedPayment ||
                                 paymentsFormArray.controls.length >= 3
                             "
@@ -412,34 +418,54 @@
                     mat-dialog-actions
                     class="grid-actions grid-actions--space"
                 >
-                    <div class="row">
-                        <mat-checkbox
-                            class="example-margin"
-                            [(ngModel)]="isSkippedPayment"
-                            [ngModelOptions]="{ standalone: true }"
-                            [disabled]="paymentsFormArray.controls.length >= 1"
-                            (change)="disablePaymentValidators($event)"
-                        >
-                            Crear la orden sin agregar pagos (No recomendado)
-                        </mat-checkbox>
+                    <div class="row row--tar">
+                        <span>Total a pagar: </span>
+                        <strong class="total">
+                            {{
+                                totalOrder
+                                    | currency
+                                        : ''
+                                        : 'symbol-narrow'
+                                        : ''
+                                        : 'en-US'
+                            }}
+                        </strong>
                     </div>
-                    <div class="row row--flex-end">
-                        <button
-                            class="grid-actions__button"
-                            color="primary"
-                            mat-stroked-button
-                            matStepperPrevious
-                        >
-                            ATRÁS
-                        </button>
-                        <button
-                            class="grid-actions__button"
-                            color="primary"
-                            mat-flat-button
-                            [disabled]="orderForm.invalid"
-                        >
-                            CREAR {{ orderType | uppercase }}
-                        </button>
+                    <div class="row row--space">
+                        <div>
+                            <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="isSkippedPayment"
+                                [ngModelOptions]="{ standalone: true }"
+                                [disabled]="
+                                    paymentsFormArray.controls.length >= 1 ||
+                                    orderType === 'cotización'
+                                "
+                                (change)="
+                                    disablePaymentValidators($event.checked)
+                                "
+                            >
+                                Crear la orden sin agregar pagos (NO recomendado).
+                            </mat-checkbox>
+                        </div>
+                        <div class="actions">
+                            <button
+                                class="grid-actions__button"
+                                color="primary"
+                                mat-stroked-button
+                                matStepperPrevious
+                            >
+                                ATRÁS
+                            </button>
+                            <button
+                                class="grid-actions__button"
+                                color="primary"
+                                mat-flat-button
+                                [disabled]="orderForm.invalid"
+                            >
+                                CREAR {{ orderType | uppercase }}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </mat-step>

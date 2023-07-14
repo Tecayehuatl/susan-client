@@ -50,6 +50,8 @@ export class CreateOrderQuoteComponent implements OnInit {
 
     isSkippedPayment = false;
 
+    totalOrder = 0;
+
     get orderFormArray(): FormArray {
         return this.orderForm.get('formArray') as FormArray;
     }
@@ -68,6 +70,10 @@ export class CreateOrderQuoteComponent implements OnInit {
         if (this.orderFormArray.get([0])?.get('orderType')?.value === '2')
             return 'cotización';
         return '';
+    }
+
+    get orderTypeControl(): FormControl {
+        return this.orderFormArray.get([0])?.get('orderType') as FormControl;
     }
 
     get discountsFormArray(): FormArray {
@@ -98,6 +104,18 @@ export class CreateOrderQuoteComponent implements OnInit {
         this.paymentsFormArray.valueChanges.subscribe((form: any) => {
             if (this.paymentsFormArray.controls.length >= 1)
                 this.isSkippedPayment = false;
+        });
+
+        this.orderTypeControl.valueChanges.subscribe((value: any) => {
+            // Quote
+            if (value === '2') {
+                this.disablePaymentValidators(true);
+                this.paymentsFormArray.clear();
+                this.isSkippedPayment = false;
+                // Order
+            } else if (value === '1') {
+                this.disablePaymentValidators(false);
+            }
         });
     }
 
@@ -265,8 +283,8 @@ export class CreateOrderQuoteComponent implements OnInit {
         this.paymentsFormArray.removeAt(indexPayment);
     }
 
-    disablePaymentValidators(event: MatCheckboxChange): void {
-        if (event.checked) {
+    disablePaymentValidators(isChecked: boolean): void {
+        if (isChecked) {
             this.paymentsFormArray.removeValidators([
                 Validators.required,
                 Validators.minLength(1),

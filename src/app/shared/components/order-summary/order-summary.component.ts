@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+} from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { OperationType, transformPrices } from '../../utils/utils';
 import { Study } from 'src/app/dashboard/studies/studies.component';
@@ -12,6 +18,8 @@ import { Discount } from 'src/app/services/discounts.service';
 export class OrderSummaryComponent implements AfterViewInit {
     @Input() studiesForm!: FormArray;
     @Input() discountsForm!: FormArray;
+    @Output() setTotalOrder: EventEmitter<number> = new EventEmitter<number>();
+
     total = 0;
     subtotal = 0;
     discount = 0;
@@ -29,7 +37,6 @@ export class OrderSummaryComponent implements AfterViewInit {
             );
         });
         this.discountsForm.valueChanges.subscribe((discounts) => {
-            console.log('discounts ', discounts);
             this.discounts = discounts;
             this.calculateOrder(
                 this.studies,
@@ -64,6 +71,9 @@ export class OrderSummaryComponent implements AfterViewInit {
             discounts,
             OperationType.GRAND_TOTAL_CALCULATION
         );
+
+        // Sending back the grand total
+        this.setTotalOrder.emit(this.grandTotal);
     }
 
     extractDiscounts(discountsObject: any[]): number[] {
