@@ -1,7 +1,23 @@
 <section>
     <h1>
         <a class="title-link" routerLink="/dashboard/patients">PACIENTES</a> /
-        <span class="title-link title-link--brand">ENRIQUE DELGADO TECAYEHUATL</span>
+        <span class="title-link title-link--brand">
+            {{ patient.first_name }} {{ patient.middle_name }}
+            {{ patient.last_name }}
+        </span>
+        <button
+            mat-icon-button
+            matTooltip="Copiar"
+            [cdkCopyToClipboard]="
+                patient.first_name +
+                ' ' +
+                patient.middle_name +
+                ' ' +
+                patient.last_name
+            "
+        >
+            <mat-icon>content_copy</mat-icon>
+        </button>
     </h1>
     <mat-divider class="divider"></mat-divider>
     <section class="patient-container">
@@ -14,43 +30,69 @@
             <div class="patient-text-wrapper">
                 <p class="patient-text">ID DEL PACIENTE</p>
                 <p class="patient-text patient-text--value">
-                    1234-1234-1234-1234
+                    {{ patient.patient_id }}
                 </p>
             </div>
             <div class="patient-text-wrapper">
                 <p class="patient-text">NOMBRE COMPLETO</p>
                 <p class="patient-text patient-text--value">
-                    ENRIQUE DELGADO TECAYEHUATL
+                    {{ patient.first_name }} {{ patient.middle_name }}
+                    {{ patient.last_name }}
+                    <button
+                        mat-icon-button
+                        matTooltip="Copiar"
+                        [cdkCopyToClipboard]="
+                            patient.first_name +
+                            ' ' +
+                            patient.middle_name +
+                            ' ' +
+                            patient.last_name
+                        "
+                    >
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
                 </p>
             </div>
             <div class="patient-text-wrapper patient-text-wrapper--flex">
                 <div>
                     <p class="patient-text">EDAD</p>
-                    <p class="patient-text patient-text--value">30 AÑOS</p>
+                    <p class="patient-text patient-text--value">
+                        {{ patient.age }} AÑOS
+                    </p>
                 </div>
                 <div>
                     <p class="patient-text">FECHA DE NACIMIENTO</p>
                     <p class="patient-text patient-text--value">
-                        14 AGOSTO 1992
+                        {{ patient.date_birth | date : 'longDate' }}
                     </p>
                 </div>
             </div>
             <div class="patient-text-wrapper">
                 <p class="patient-text">CORREO</p>
                 <p class="patient-text patient-text--value">
-                    enrique.delgado@live.com
+                    {{ patient.email }}
                 </p>
             </div>
             <div class="patient-text-wrapper patient-text-wrapper--flex">
                 <div>
                     <p class="patient-text">TELEFONO 1</p>
                     <p class="patient-text patient-text--value">
-                        22-23-98-89-11
+                        {{
+                            patient.phone1
+                                ? (patient.phone1 | mask : '(000) 000-0000')
+                                : '-'
+                        }}
                     </p>
                 </div>
                 <div>
                     <p class="patient-text">TELEFONO 2</p>
-                    <p class="patient-text patient-text--value">-</p>
+                    <p class="patient-text patient-text--value">
+                        {{
+                            patient.phone2
+                                ? (patient.phone2 | mask : '(000) 000-0000')
+                                : '-'
+                        }}
+                    </p>
                 </div>
             </div>
             <div class="patient-text-wrapper">

@@ -6,6 +6,7 @@ import { Study } from '../../studies/studies.component';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentMethod } from 'src/app/services/payment-methods.service';
 import { Doctor } from '../../doctors/doctors.component';
+import { Patient } from '../patients.component';
 
 @Component({
     selector: 'app-patient-detail',
@@ -16,16 +17,17 @@ export class PatientDetailComponent {
     studies!: Study[];
     paymentMethods: PaymentMethod[] = [];
     doctors: Doctor[] = [];
+    patient!: Patient;
 
     constructor(
         private dialog: MatDialog,
         private _snackBar: MatSnackBar,
         private route: ActivatedRoute
     ) {
-        console.log(this.route);
-
         this.paymentMethods = this.route.snapshot.data['paymentMethods'];
         this.doctors = this.route.snapshot.data['doctors'];
+        this.patient = this.route.snapshot.data['patient'];
+        console.log(this.patient);
     }
 
     openCreateOrderQuote(): void {
