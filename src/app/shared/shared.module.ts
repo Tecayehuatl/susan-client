@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MaterialModule } from './material/material.module';
 import { RouterModule } from '@angular/router';
 import { GenericModalComponent } from './components/generic-modal/generic-modal.component';
@@ -34,6 +35,7 @@ const imports = [
         ReactiveFormsModule,
         FormsModule,
         NgxMaskModule,
+        ClipboardModule,
     ],
 })
 export class SharedModule {}

@@ -48,7 +48,24 @@
                 <mat-icon>menu</mat-icon>
             </button>
             <mat-menu #topMenu="matMenu">
-                <button mat-menu-item (click)="authService.logout()">Salir</button>
+                <div class="user-menu-popup">
+                    <div class="user-menu-icon">
+                        {{ shortName ? (shortName | uppercase) : '-' }}
+                    </div>
+                    <div class="user-menu-content">
+                        <div class="user-menu-text">
+                            {{ fullName.trim() | titlecase }}
+                        </div>
+                        <div class="user-menu-text-sub">
+                            {{ userData.username }}
+                        </div>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="authService.logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Salir</span>
+                </button>
             </mat-menu>
         </mat-toolbar>
         <main class="main">

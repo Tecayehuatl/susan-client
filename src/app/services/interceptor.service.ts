@@ -18,7 +18,7 @@ export class InterceptorService implements HttpInterceptor {
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        const { token } = this.authService.userValue;
+        const { token } = this.authService.userSystemData;
         if (token) {
             request = request.clone({
                 setHeaders: {

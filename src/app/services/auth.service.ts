@@ -1,27 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     private userSubject!: BehaviorSubject<any>;
-    user!: Observable<IUser>;
+    userSystem!: Observable<UserSystem>;
     localStorageKeyName = 'bioUser';
 
-    get userValue(): IUser {
+    get userSystemData(): UserSystem {
         return this.userSubject.value;
     }
 
     constructor(private http: HttpClient, private router: Router) {
         this.userSubject = new BehaviorSubject<any>(this.getItem());
-        this.user = this.userSubject.asObservable();
+        this.userSystem = this.userSubject.asObservable();
     }
 
-    getItem(): any {
+    getItem(): string {
         const localStorageValue = localStorage.getItem(
             this.localStorageKeyName
         );
@@ -40,9 +40,25 @@ export class AuthService {
                 password,
             })
             .pipe(
-                map(({ token }) => {
-                    const user: IUser = {
-                        token: token,
+                map((response) => {
+                    // TODO: Make sure to be receiving this values from the BE
+                    const {
+                        username: usernameMail,
+                        userId,
+                        firstName,
+                        middleName,
+                        lastName,
+                        branchOfficeId,
+                    } = jwt_decode(response.token) as UserSystem;
+
+                    const user: UserSystem = {
+                        token: response.token,
+                        userId: userId || '',
+                        username: usernameMail || '',
+                        firstName: firstName || '',
+                        middleName: middleName || '',
+                        lastName: lastName || '',
+                        branchOfficeId: branchOfficeId || '',
                     };
                     localStorage.setItem(
                         this.localStorageKeyName,
@@ -61,6 +77,12 @@ export class AuthService {
     }
 }
 
-export interface IUser {
+export interface UserSystem {
     token?: string;
+    userId: string;
+    username: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    branchOfficeId: string;
 }

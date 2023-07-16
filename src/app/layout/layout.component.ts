@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService, UserSystem } from '../services/auth.service';
 
 @Component({
     selector: 'app-layout',
@@ -49,7 +49,26 @@ export class LayoutComponent {
             icon: 'supervisor_account',
         },
     ];
-    constructor(public authService: AuthService) {}
+
+    userData!: UserSystem;
+    shortName = '';
+    fullName = '';
+
+    constructor(public authService: AuthService) {
+        this.userData = this.authService.userSystemData;
+        this.fullName =
+            this.userData.firstName +
+            ' ' +
+            this.userData.middleName +
+            ' ' +
+            this.userData.lastName;
+
+        this.shortName = `${
+            this.userData.firstName?.charAt(0)
+                ? this.userData.middleName.charAt(0)
+                : ''
+        }`;
+    }
 }
 
 interface MenuItem {
