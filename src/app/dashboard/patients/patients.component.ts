@@ -150,6 +150,7 @@ export interface Patient {
     middle_name: string;
     last_name: string;
     date_birth: string;
+    age: number;
     phone1: string;
     phone2: string;
     email: string;
