@@ -28,6 +28,7 @@ export class PatientsComponent implements AfterViewInit {
         'delete',
     ];
     dataSource!: MatTableDataSource<Patient>;
+    timer: any;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -48,13 +49,33 @@ export class PatientsComponent implements AfterViewInit {
         });
     }
 
-    applyFilter(event: Event): void {
-        const filterValue = (event.target as HTMLInputElement).value;
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+    // applyFilter(event: Event): void {
+    //     const filterValue = (event.target as HTMLInputElement).value;
+    //     this.dataSource.filter = filterValue.trim().toLowerCase();
 
-        if (this.dataSource.paginator) {
-            this.dataSource.paginator.firstPage();
+    //     if (this.dataSource.paginator) {
+    //         this.dataSource.paginator.firstPage();
+    //     }
+    // }
+
+    searchStudies(query: any): void {
+
+        if (this.timer) {
+            clearTimeout(this.timer);
         }
+
+        this.timer = setTimeout(() => {
+            const _query = query.target.value.trim();
+
+            this.patientsService
+                .searchPatients(_query)
+                .subscribe((patients: Patient[]) => {
+                    this.dataSource.data = patients;
+                    if (this.dataSource.paginator) {
+                        this.dataSource.paginator.firstPage();
+                    }
+                });
+        }, 700);
     }
 
     openCreateEditPatientDialog(

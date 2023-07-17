@@ -16,8 +16,9 @@
             <mat-label>Búsqueda de pacientes</mat-label>
             <input
                 matInput
-                (keyup)="applyFilter($event)"
+                (keyup)="searchStudies($event)"
                 placeholder="Buscar pacientes por ID, Nombre, correo electrónico o teléfono"
+                autocomplete="disabled"
                 #input
             />
             <mat-icon matSuffix>search</mat-icon>

@@ -41,25 +41,25 @@ export class AuthService {
             })
             .pipe(
                 map((response) => {
-                    // TODO: Make sure to be receiving this values from the BE
                     const {
-                        username: usernameMail,
-                        userId,
-                        firstName,
-                        middleName,
-                        lastName,
-                        branchOfficeId,
+                        email: email,
+                        user_id,
+                        first_name,
+                        middle_name,
+                        last_name,
+                        branch_office_id,
                     } = jwt_decode(response.token) as UserSystem;
 
                     const user: UserSystem = {
                         token: response.token,
-                        userId: userId || '',
-                        username: usernameMail || '',
-                        firstName: firstName || '',
-                        middleName: middleName || '',
-                        lastName: lastName || '',
-                        branchOfficeId: branchOfficeId || '',
+                        user_id: user_id || '',
+                        email: email || '',
+                        first_name: first_name || '',
+                        middle_name: middle_name || '',
+                        last_name: last_name || '',
+                        branch_office_id: branch_office_id || '',
                     };
+
                     localStorage.setItem(
                         this.localStorageKeyName,
                         JSON.stringify(user)
@@ -79,10 +79,10 @@ export class AuthService {
 
 export interface UserSystem {
     token?: string;
-    userId: string;
-    username: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    branchOfficeId: string;
+    user_id: string;
+    email: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    branch_office_id: string;
 }

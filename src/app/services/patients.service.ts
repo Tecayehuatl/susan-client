@@ -19,6 +19,17 @@ export class PatientsService {
         return this.http.get<Patient[]>(`${environment.baseUrl}/patients`);
     }
 
+    searchPatients(query: string): Observable<Patient[]> {
+        return this.http.get<Patient[]>(
+            `${environment.baseUrl}/patients/search`,
+            {
+                params: {
+                    q: query,
+                },
+            }
+        );
+    }
+
     getPatient(id: string): Observable<Patient> {
         return this.http.get<Patient>(`${environment.baseUrl}/patients/${id}`);
     }

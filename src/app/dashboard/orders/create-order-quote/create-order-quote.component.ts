@@ -164,7 +164,7 @@ export class CreateOrderQuoteComponent implements OnInit {
         }
 
         this.timer = setTimeout(() => {
-            const _query = query.target.value;
+            const _query = query.target.value.trim();
 
             this.studiesService
                 .searchStudies(_query)
