@@ -49,17 +49,7 @@ export class PatientsComponent implements AfterViewInit {
         });
     }
 
-    // applyFilter(event: Event): void {
-    //     const filterValue = (event.target as HTMLInputElement).value;
-    //     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    //     if (this.dataSource.paginator) {
-    //         this.dataSource.paginator.firstPage();
-    //     }
-    // }
-
     searchStudies(query: any): void {
-
         if (this.timer) {
             clearTimeout(this.timer);
         }
