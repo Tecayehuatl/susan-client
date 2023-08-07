@@ -10,12 +10,14 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DiscountsComponent } from './components/discounts/discounts.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { GetOrderStatusPipe } from './pipes/get-order-status.pipe';
 
 const imports = [
     GenericModalComponent,
     OrderSummaryComponent,
     DiscountsComponent,
     PaymentComponent,
+    GetOrderStatusPipe,
 ];
 
 @NgModule({
