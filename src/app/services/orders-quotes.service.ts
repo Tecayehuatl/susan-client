@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Study } from '../dashboard/studies/studies.component';
+import { Discount } from './discounts.service';
+import { Patient } from '../dashboard/patients/patients.component';
+import { Doctor } from '../dashboard/doctors/doctors.component';
 
 @Injectable({
     providedIn: 'root',
@@ -19,7 +23,7 @@ export class OrdersQuotesService {
 
     updateOrder(order: Order): Observable<Order> {
         return this.http.put<Order>(
-            `${environment.baseUrl}/orders/${order.orderId}`,
+            `${environment.baseUrl}/orders/${order.order_type_id}`,
             order
         );
     }
@@ -29,6 +33,20 @@ export class OrdersQuotesService {
     }
 }
 
-interface Order {
-    orderId: string;
+export interface Order {
+    branch_office_id: number;
+    created_at: string;
+    order_type_id: number;
+    order_status_id: number;
+    payment_status_id: number;
+    delivery_status_id: number;
+    patient_id: number;
+    doctor_id: number;
+    studies: Study[];
+    payments: any[];
+    discounts: Discount[];
+    notes?: any;
+    patient?: Patient;
+    doctor?: Doctor;
+    order_studies?: Study[];
 }

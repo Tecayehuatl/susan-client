@@ -15,8 +15,24 @@ import {
 export class PatientsService {
     constructor(private http: HttpClient) {}
 
-    getPatients(): Observable<Patient[]> {
-        return this.http.get<Patient[]>(`${environment.baseUrl}/patients`);
+    getPatients(): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}/patients`, {
+            // TODO: make this dynamic
+            params: {
+                page: 1,
+                pageSize: 100,
+            },
+        });
+    }
+
+    getAllOrdersQuotesPatient(patiendId: string): Observable<Patient[]> {
+        return this.http.get<Patient[]>(
+            `${environment.baseUrl}/patients/${patiendId}/orders`
+        );
+    }
+
+    getOrderDetail(orderId: string): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}/orders/${orderId}`);
     }
 
     searchPatients(query: string): Observable<Patient[]> {
@@ -59,4 +75,22 @@ export const getPatientDetailResolver: ResolveFn<any> = (
 ) => {
     const id = route.params['patientId'];
     return inject(PatientsService).getPatient(id);
+};
+
+export const getAllOrdersQuotesPatientResolver: ResolveFn<any> = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+) => {
+    const id = route.params['patientId'];
+    return inject(PatientsService).getAllOrdersQuotesPatient(id);
+};
+
+export const getOrderDetailResolver: ResolveFn<any> = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+) => {
+    const id = route.params['orderId'];
+    console.log('id mamalon ' + id);
+
+    return inject(PatientsService).getOrderDetail(id);
 };
