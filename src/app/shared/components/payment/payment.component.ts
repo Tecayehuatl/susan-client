@@ -22,13 +22,13 @@ export class PaymentComponent implements OnInit {
         return this.paymentFormGroup.get('payment_id') as FormControl;
     }
     get totalTransactionControl(): FormControl {
-        return this.paymentFormGroup.get('totalTransaction') as FormControl;
+        return this.paymentFormGroup.get('total_transaction') as FormControl;
     }
     get cashReceivedControl(): FormControl {
-        return this.paymentFormGroup.get('cashReceived') as FormControl;
+        return this.paymentFormGroup.get('cash_received') as FormControl;
     }
     get changeDueControl(): FormControl {
-        return this.paymentFormGroup.get('changeDue') as FormControl;
+        return this.paymentFormGroup.get('change_due') as FormControl;
     }
 
     constructor(private rootFormGroup: FormGroupDirective) {}
