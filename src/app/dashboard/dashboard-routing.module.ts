@@ -9,7 +9,11 @@ import { DoctorsComponent } from './doctors/doctors.component';
 import { StudiesComponent } from './studies/studies.component';
 import { UsersComponent } from './users/users.component';
 import { getBranchOfficesResolver } from '../services/branch-offices.service';
-import { getPatientDetailResolver } from '../services/patients.service';
+import {
+    getAllOrdersQuotesPatientResolver,
+    getOrderDetailResolver,
+    getPatientDetailResolver,
+} from '../services/patients.service';
 import { getPaymentMethodsResolver } from '../services/payment-methods.service';
 import { getDoctorsResolver } from '../services/doctors.service';
 
@@ -18,6 +22,11 @@ const routes: Routes = [
         path: 'dashboard',
         component: LayoutComponent,
         children: [
+            {
+                path: '',
+                redirectTo: 'patients',
+                pathMatch: 'full',
+            },
             {
                 path: 'patients',
                 component: PatientsComponent,
@@ -28,11 +37,15 @@ const routes: Routes = [
                     paymentMethods: getPaymentMethodsResolver,
                     doctors: getDoctorsResolver,
                     patient: getPatientDetailResolver,
+                    patientAllOrdersQuotes: getAllOrdersQuotesPatientResolver,
                 },
                 component: PatientDetailComponent,
             },
             {
                 path: 'patients/:patientId/:orderId',
+                resolve: {
+                    orderDetail: getOrderDetailResolver,
+                },
                 component: OrderDetailComponent,
             },
             {
