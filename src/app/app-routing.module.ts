@@ -8,6 +8,11 @@ const routes: Routes = [
         path: 'login',
         component: LoginComponent,
     },
+    {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+    },
     // {
     //     path: '**',
     //     component: NotFoundComponent,
