@@ -18,6 +18,24 @@ export enum OperationType {
     GRAND_TOTAL_CALCULATION = 'grandTotalCalculation',
 }
 
+export enum GeneralOrderStatus {
+    ONGOING = 1,
+    CANCELLED = 2,
+    CLOSED = 3,
+}
+
+export enum PaymentStatus {
+    COMPLETED = 1,
+    PENDING = 2,
+    CANCELLED = 3,
+}
+
+export enum DeliveryStatus {
+    DELIVERED = 1,
+    NOT_DELIVERED = 2,
+    CANCELLED = 3,
+}
+
 export function transformPrices(_labStudies: Study[], ...args: any[]): number {
     let total = 0;
     let subtotal = 0;
