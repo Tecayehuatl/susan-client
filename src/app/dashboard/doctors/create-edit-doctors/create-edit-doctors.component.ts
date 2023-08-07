@@ -40,7 +40,7 @@ export class CreateEditDoctorsComponent implements OnInit {
 
     setData(): void {
         // Edit mode
-        if (this.data.itemData) {
+        if (this.data?.itemData) {
             this.mode = 'edit';
             const data = this.data.itemData;
 
