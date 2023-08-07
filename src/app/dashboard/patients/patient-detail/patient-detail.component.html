@@ -112,20 +112,26 @@
                     color="primary"
                     (click)="openCreateOrderQuote()"
                 >
-                    <mat-icon>add</mat-icon>
-                    AGREGAR ORDEN Y COTIZACIÓN
+                    <mat-icon>post_add</mat-icon>
+                    AGREGAR ORDEN Ó COTIZACIÓN
                 </button>
             </section>
             <section class="patient-container-orders">
                 <mat-tab-group>
                     <mat-tab label="ORDENES">
                         <section class="mat-tab-container">
-                            <app-orders title="Ordenes"></app-orders>
+                            <app-orders
+                                title="Ordenes"
+                                [ordersQuotes]="patientAllOrders"
+                            ></app-orders>
                         </section>
                     </mat-tab>
                     <mat-tab label="COTIZACIONES">
                         <section class="mat-tab-container">
-                            <app-orders title="Cotizaciones"></app-orders>
+                            <app-orders
+                                title="Cotizaciones"
+                                [ordersQuotes]="patientAllQuotes"
+                            ></app-orders>
                         </section>
                     </mat-tab>
                 </mat-tab-group>

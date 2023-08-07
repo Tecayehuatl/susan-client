@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateOrderQuoteComponent } from '../../orders/create-order-quote/create-order-quote.component';
@@ -13,11 +13,14 @@ import { Patient } from '../patients.component';
     templateUrl: './patient-detail.component.html',
     styleUrls: ['./patient-detail.component.scss'],
 })
-export class PatientDetailComponent {
+export class PatientDetailComponent implements OnInit {
     studies!: Study[];
     paymentMethods: PaymentMethod[] = [];
     doctors: Doctor[] = [];
     patient!: Patient;
+    patientAllOrdersQuotes!: any[];
+    patientAllOrders!: any[];
+    patientAllQuotes!: any[];
 
     constructor(
         private dialog: MatDialog,
@@ -27,7 +30,19 @@ export class PatientDetailComponent {
         this.paymentMethods = this.route.snapshot.data['paymentMethods'];
         this.doctors = this.route.snapshot.data['doctors'];
         this.patient = this.route.snapshot.data['patient'];
-        console.log(this.patient);
+        this.patientAllOrdersQuotes =
+            this.route.snapshot.data['patientAllOrdersQuotes'];
+    }
+
+    ngOnInit(): void {
+        // 1: order
+        this.patientAllOrders = this.patientAllOrdersQuotes.filter(
+            (patient) => patient.order_type_id === 1
+        );
+        // 2: quote
+        this.patientAllQuotes = this.patientAllOrdersQuotes.filter(
+            (patient) => patient.order_type_id === 2
+        );
     }
 
     openCreateOrderQuote(): void {
@@ -37,6 +52,7 @@ export class PatientDetailComponent {
             data: {
                 paymentMethods: this.paymentMethods,
                 doctors: this.doctors,
+                patient_id: this.patient.patient_id,
             },
         });
 
