@@ -2,7 +2,9 @@
     <h1 class="title">
         <a class="title-link" routerLink="/dashboard/patients">PACIENTES</a> /
         <a class="title-link title-link--brand" [routerLink]="['/dashboard', 'patients', orderId]">
-          ENRIQUE DELGADO TECAYEHUATL
+            {{ orderDetail.patient?.first_name }}
+            {{ orderDetail.patient?.middle_name }}
+            {{ orderDetail.patient?.last_name }}
         </a> /
         DETALLE
     </h1>
@@ -15,19 +17,23 @@
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">ID DEL PACIENTE:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        1234-1234-1234-1232
+                        {{ orderDetail.patient?.patient_id }}
                     </p>
                 </section>
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">NOMBRE DEL PACIENTE:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        ENRIQUE DELGADO TECAYEHUATL
+                        {{ orderDetail.patient?.first_name }}
+                        {{ orderDetail.patient?.middle_name }}
+                        {{ orderDetail.patient?.last_name }}
                     </p>
                 </section>
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">NOMBRE DEL MÉDICO:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        SEBASTIÁN RAMOS PALACIOS
+                        {{ orderDetail.doctor?.first_name }}
+                        {{ orderDetail.doctor?.middle_name }}
+                        {{ orderDetail.doctor?.last_name }}
                     </p>
                 </section>
             </section>
@@ -35,19 +41,19 @@
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">ESTADO DE LA ORDEN:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        EN CURSO
+                        {{ orderDetail.order_status_id | getOrderStatus : 'generalOrderStatus' }}
                     </p>
                 </section>
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">ESTATUS DEL PAGO:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        PENDIENTE DE LIQUIDAR
+                        {{ orderDetail.payment_status_id | getOrderStatus : 'paymentStatus' }}
                     </p>
                 </section>
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">ESTATUS DE ENTREGA:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        SIN ENTREGAR
+                        {{ orderDetail.delivery_status_id | getOrderStatus : 'deliveryStatus' }}
                     </p>
                 </section>
             </section>
@@ -55,19 +61,23 @@
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">DÍAS DE ENTREGA:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        1 DÍA
+                        ???
                     </p>
                 </section>
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">CARTA RESPONSIVA:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        NO FIRMADA <mat-icon>print</mat-icon>
+                        ??? NO FIRMADA <mat-icon>print</mat-icon>
                     </p>
                 </section>
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">FECHA DE CREACIÓN:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        14 AGOSTO 2022
+                        {{
+                            orderDetail.created_at
+                                | date : 'longDate'
+                                | uppercase
+                        }}
                     </p>
                 </section>
             </section>
@@ -99,7 +109,7 @@
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">ACTUAL DEUDA:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        $100.00
+                        ???
                     </p>
                 </section>
             </section>
@@ -107,7 +117,7 @@
                 <section class="card-detail-text-container">
                     <p class="card-detail-text">CREADO POR:</p>
                     <p class="card-detail-text card-detail-text--value">
-                        AGUSTINA TECAYEHUATL RODRIGUEZ
+                        ???
                     </p>
                 </section>
                 <section class="card-detail-text-container">
@@ -133,16 +143,7 @@
                             ID
                         </th>
                         <td mat-cell *matCellDef="let row">
-                            {{ row.id }}
-                        </td>
-                    </ng-container>
-                    <!-- Added date Column -->
-                    <ng-container matColumnDef="creationDate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                            Fecha de creación
-                        </th>
-                        <td mat-cell *matCellDef="let row">
-                            {{ row.creationDate }}
+                            {{ row.study_id }}
                         </td>
                     </ng-container>
                     <!-- Study name Column -->
@@ -163,13 +164,22 @@
                             {{ row.alias }}
                         </td>
                     </ng-container>
+                    <!-- Delivery days -->
+                    <ng-container matColumnDef="deliveryDays">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Días de entrega
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{ row.delivery_days }}
+                        </td>
+                    </ng-container>
                     <!-- Price status -->
                     <ng-container matColumnDef="price">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>
                             Precio
                         </th>
                         <td mat-cell *matCellDef="let row">
-                            {{ row.price }}
+                            {{ row.price | currency : '' : 'symbol-narrow' : '' : 'en-US' }}
                         </td>
                     </ng-container>
                     <!-- Discount Detail -->
@@ -178,10 +188,18 @@
                             Descuento
                         </th>
                         <td mat-cell *matCellDef="let row">
-                            {{ row.discount }}
+                            {{ row.discountPercentage + '%' }}
                         </td>
                     </ng-container>
-
+                    <!-- Grand total -->
+                    <ng-container matColumnDef="grandTotal">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Precio total
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{ row.grandTotal | currency : '' : 'symbol-narrow' : '' : 'en-US' }}
+                        </td>
+                    </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr
                         mat-row
