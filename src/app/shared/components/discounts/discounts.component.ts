@@ -37,6 +37,7 @@ export class DiscountsComponent implements OnInit {
 
     getNewDiscount(): FormGroup {
         return this.fb.group({
+            discount_id: [''],
             name: ['', Validators.required],
             discountPercentage: ['', Validators.required],
         });
@@ -46,6 +47,7 @@ export class DiscountsComponent implements OnInit {
         const groupDiscount = this.discountsArrayControl.get([index]);
 
         groupDiscount?.patchValue({
+            discount_id: discount.discount_id,
             name: discount.name,
             discountPercentage: discount.discountPercentage,
         });
