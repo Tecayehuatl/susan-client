@@ -28,19 +28,57 @@
                     <h3>
                         1.- Seleccione si desea crear una orden o una cotizción
                     </h3>
-                    <mat-radio-group
-                        aria-label="Select an option"
-                        formControlName="orderType"
-                    >
-                        <div>
-                            <mat-radio-button value="1">Orden</mat-radio-button>
+                    <div class="row">
+                        <mat-radio-group
+                            aria-label="Select an option"
+                            formControlName="orderType"
+                        >
+                            <div>
+                                <mat-radio-button value="1">
+                                    Orden
+                                </mat-radio-button>
+                            </div>
+                            <div>
+                                <mat-radio-button value="2">
+                                    Cotización
+                                </mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="custom-date">
+                            <mat-form-field>
+                                <mat-label>Fecha de creación</mat-label>
+                                <input
+                                    matInput
+                                    [matDatepicker]="createDatePicker"
+                                    formControlName="creationDate"
+                                />
+                                <mat-hint>MM/DD/AAAA</mat-hint>
+                                <mat-datepicker-toggle
+                                    matIconSuffix
+                                    [for]="createDatePicker"
+                                ></mat-datepicker-toggle>
+                                <mat-datepicker
+                                    #createDatePicker
+                                    [disabled]="datePickerDisabled"
+                                ></mat-datepicker>
+                            </mat-form-field>
+
+                            <button
+                                mat-icon-button
+                                aria-label="Editar fecha de creación"
+                                matTooltip="Editar fecha de creación"
+                                (click)="
+                                    datePickerDisabled = !datePickerDisabled"
+                            >
+                                <mat-icon>edit</mat-icon>
+                            </button>
                         </div>
-                        <div>
-                            <mat-radio-button value="2">
-                                Cotización
-                            </mat-radio-button>
-                        </div>
-                    </mat-radio-group>
+                    </div>
                 </section>
                 <div mat-dialog-actions class="grid-actions">
                     <button
@@ -65,6 +103,21 @@
                 <section mat-dialog-content>
                     <section>
                         <h3>1.- Seleccione el nombre del médico</h3>
+                        <button
+                            mat-button
+                            color="primary"
+                            (click)="openCreateEditDoctorDialog()"
+                        >
+                            <mat-icon>add</mat-icon>
+                            Agregar médico
+                        </button>
+                        <mat-icon
+                            matTooltip="Aquí se crea un nuevo médico sin salir de la sección de creación de orden u cotización"
+                        >
+                            info
+                        </mat-icon>
+                        <br />
+                        <br />
                         <mat-form-field>
                             <mat-label>Seleccione al médico</mat-label>
                             <mat-select formControlName="doctorId">
@@ -462,6 +515,7 @@
                                 color="primary"
                                 mat-flat-button
                                 [disabled]="orderForm.invalid"
+                                (click)="createOrderQuote()"
                             >
                                 CREAR {{ orderType | uppercase }}
                             </button>

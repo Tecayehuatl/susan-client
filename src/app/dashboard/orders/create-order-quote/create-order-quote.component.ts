@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
     FormArray,
     FormBuilder,
@@ -6,17 +6,25 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+    MAT_DIALOG_DATA,
+    MatDialog,
+    MatDialogRef,
+} from '@angular/material/dialog';
 import { StudiesService } from 'src/app/services/studies.service';
 import { Study } from '../../studies/studies.component';
-import { OrdersQuotesService } from 'src/app/services/orders-quotes.service';
+import {
+    Order,
+    OrdersQuotesService,
+} from 'src/app/services/orders-quotes.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { getGrandTotal } from 'src/app/shared/utils/utils';
 import { Discount, DiscountsService } from 'src/app/services/discounts.service';
 import { PaymentMethod } from 'src/app/services/payment-methods.service';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Doctor } from '../../doctors/doctors.component';
-import { Observable, map, startWith } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { CreateEditDoctorsComponent } from '../../doctors/create-edit-doctors/create-edit-doctors.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-create-order-quote',
@@ -43,6 +51,7 @@ export class CreateOrderQuoteComponent implements OnInit {
 
     timer: any;
     delaySearch = true;
+    datePickerDisabled = true;
 
     discounts: Discount[] = [];
     paymentMethods: PaymentMethod[] = [];
@@ -72,6 +81,10 @@ export class CreateOrderQuoteComponent implements OnInit {
         return '';
     }
 
+    get orderDateControl(): FormControl {
+        return this.orderFormArray.get([0])?.get('creationDate') as FormControl;
+    }
+
     get orderTypeControl(): FormControl {
         return this.orderFormArray.get([0])?.get('orderType') as FormControl;
     }
@@ -87,8 +100,11 @@ export class CreateOrderQuoteComponent implements OnInit {
     constructor(
         public dialogRef: MatDialogRef<CreateOrderQuoteComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        private dialog: MatDialog,
+        private _snackBar: MatSnackBar,
         private fb: FormBuilder,
         private studiesService: StudiesService,
+        private authService: AuthService,
         private ordersService: OrdersQuotesService,
         private discountsService: DiscountsService
     ) {
@@ -124,6 +140,10 @@ export class CreateOrderQuoteComponent implements OnInit {
             formArray: this.fb.array([
                 this.fb.group({
                     orderType: ['', Validators.required],
+                    creationDate: [
+                        { disabled: true, value: new Date() },
+                        Validators.required,
+                    ],
                 }),
                 this.fb.group({
                     doctorId: [null, Validators.required],
@@ -250,6 +270,7 @@ export class CreateOrderQuoteComponent implements OnInit {
             this.discountsFormArray.insert(
                 this.discountsFormArray.length,
                 this.fb.group({
+                    discount_id: [control['discount_id']],
                     name: [control['name'], Validators.required],
                     discountPercentage: [
                         control['discountPercentage'],
@@ -265,12 +286,12 @@ export class CreateOrderQuoteComponent implements OnInit {
             this.paymentsFormArray.length,
             this.fb.group({
                 payment_id: [null, Validators.required],
-                totalTransaction: [
+                total_transaction: [
                     null,
                     [Validators.required, Validators.min(1)],
                 ],
-                cashReceived: [null],
-                changeDue: [null],
+                cash_received: [null],
+                change_due: [null],
             })
         );
     }
@@ -299,6 +320,53 @@ export class CreateOrderQuoteComponent implements OnInit {
             this.paymentsFormArray.updateValueAndValidity();
         }
     }
+
+    createOrderQuote(): void {
+        const payload = {
+            branch_office_id: +this.authService.userSystemData.branch_office_id,
+            created_at: this.orderDateControl.value,
+            order_type_id: +this.orderTypeControl.value,
+            // todo: removed this harcoded data
+            // 1: ongoing, 2 cancelled, 3 closed
+            order_status_id: 1,
+            // 1: completed, 2 pending, 3 cancelled
+            payment_status_id: 1,
+            // 1: delivered, 2: not delivered, 3: cancelled
+            delivery_status_id: 2,
+            patient_id: this.data.patient_id,
+            doctor_id: +this.doctorControl.value,
+            studies: this.studiesFormArray.value,
+            payments: this.paymentsFormArray.value,
+            discounts: this.discountsFormArray.value,
+            notes: [],
+        };
+        console.log(payload);
+        this.ordersService
+            .createOrder(payload as Order)
+            .subscribe((response) => {
+                // TODO: Need to close this modal if successful
+                console.log('response', response);
+                this.dialogRef.close(response);
+            });
+    }
+
+    openCreateEditDoctorDialog(): void {
+        const dialogRef = this.dialog.open(CreateEditDoctorsComponent, {
+            width: '1100px',
+            minHeight: '500px',
+        });
+
+        dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
+            if (formValues && mode === 'create') {
+                // Updating the local datasource
+                this.doctors = [formValues, ...this.doctors];
+                this._snackBar.open(
+                    `DOCTOR: ${formValues.first_name} CREADA`,
+                    'CERRAR'
+                );
+            }
+        });
+    }
 }
 
 export interface DialogData {
@@ -306,4 +374,5 @@ export interface DialogData {
     itemData: any;
     paymentMethods: PaymentMethod[];
     doctors: Doctor[];
+    patient_id: number;
 }
