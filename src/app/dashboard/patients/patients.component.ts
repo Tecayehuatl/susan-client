@@ -1,4 +1,5 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
     templateUrl: './patients.component.html',
     styleUrls: ['./patients.component.scss'],
 })
-export class PatientsComponent implements AfterViewInit {
+export class PatientsComponent implements OnInit, AfterViewInit {
     title = 'PACIENTES';
     displayedColumns: string[] = [
         'patient_id',
@@ -27,18 +28,37 @@ export class PatientsComponent implements AfterViewInit {
         'edit',
         'delete',
     ];
+    genders = [
+        { name: 'Masculino', value: 'male' },
+        { name: 'Femenino', value: 'female' },
+    ];
+    filterPanelState = false;
     dataSource!: MatTableDataSource<Patient>;
     timer: any;
+    searchForm!: FormGroup;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
     constructor(
+        private fb: FormBuilder,
         private dialog: MatDialog,
         private _snackBar: MatSnackBar,
         private patientsService: PatientsService,
         private router: Router
     ) {}
+
+    ngOnInit(): void {
+        this.searchForm = this.fb.group({
+            first_name: '',
+            middle_name: '',
+            last_name: '',
+            phone1: '',
+            phone2: '',
+            email: '',
+            gender: '',
+        });
+    }
 
     ngAfterViewInit() {
         this.patientsService.getPatients().subscribe(({ data }) => {
@@ -49,18 +69,29 @@ export class PatientsComponent implements AfterViewInit {
         });
     }
 
-    searchStudies(query: any): void {
+    searchPatients(): void {
         if (this.timer) {
             clearTimeout(this.timer);
         }
 
         this.timer = setTimeout(() => {
-            const _query = query.target.value.trim();
+            let queryString = '';
+
+            Object.keys(this.searchForm.controls).map((controlName: string) => {
+                if (this.searchForm.get(controlName)?.value) {
+                    const controlValue =
+                        this.searchForm.get(controlName)?.value;
+
+                    queryString += `key=${controlName}&val=${controlValue}&`;
+                }
+            });
+
+            queryString = queryString.slice(0, -1);
 
             this.patientsService
-                .searchPatients(_query)
-                .subscribe((patients: Patient[]) => {
-                    this.dataSource.data = patients;
+                .searchPatients(queryString)
+                .subscribe(({ data }) => {
+                    this.dataSource.data = data;
                     if (this.dataSource.paginator) {
                         this.dataSource.paginator.firstPage();
                     }
