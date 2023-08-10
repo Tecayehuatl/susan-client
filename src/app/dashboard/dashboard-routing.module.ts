@@ -16,6 +16,7 @@ import {
 } from '../services/patients.service';
 import { getPaymentMethodsResolver } from '../services/payment-methods.service';
 import { getDoctorsResolver } from '../services/doctors.service';
+import { DiscountsComponent } from './discounts/discounts.component';
 
 const routes: Routes = [
     {
@@ -51,6 +52,10 @@ const routes: Routes = [
             {
                 path: 'branch-offices',
                 component: BranchOfficesComponent,
+            },
+            {
+                path: 'discounts',
+                component: DiscountsComponent,
             },
             {
                 path: 'doctors',

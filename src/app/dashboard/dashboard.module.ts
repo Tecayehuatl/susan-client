@@ -16,23 +16,25 @@ import { CreateEditStudiesComponent } from './studies/create-edit-studies/create
 import { UsersComponent } from './users/users.component';
 import { CreateEditUsersComponent } from './users/create-edit-users/create-edit-users.component';
 import { CreateOrderQuoteComponent } from './orders/create-order-quote/create-order-quote.component';
+import { DiscountsComponent } from './discounts/discounts.component';
 
 @NgModule({
     declarations: [
-        CreateEditPatientComponent,
-        PatientsComponent,
-        PatientDetailComponent,
-        OrdersComponent,
-        OrderDetailComponent,
         BranchOfficesComponent,
         CreateEditBranchOfficesComponent,
-        DoctorsComponent,
         CreateEditDoctorsComponent,
-        StudiesComponent,
+        CreateEditPatientComponent,
         CreateEditStudiesComponent,
-        UsersComponent,
         CreateEditUsersComponent,
         CreateOrderQuoteComponent,
+        DiscountsComponent,
+        DoctorsComponent,
+        OrdersComponent,
+        OrderDetailComponent,
+        PatientsComponent,
+        PatientDetailComponent,
+        StudiesComponent,
+        UsersComponent,
     ],
     imports: [DashboardRoutingModule, SharedModule],
 })
