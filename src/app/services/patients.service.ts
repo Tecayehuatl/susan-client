@@ -35,12 +35,15 @@ export class PatientsService {
         return this.http.get<any>(`${environment.baseUrl}/orders/${orderId}`);
     }
 
-    searchPatients(query: string): Observable<Patient[]> {
-        return this.http.get<Patient[]>(
-            `${environment.baseUrl}/patients/search`,
+    // TODO: Add an interface for the response
+    searchPatients(query: string): Observable<any> {
+        return this.http.get<any>(
+            `${environment.baseUrl}/patients/search?${query}`,
             {
                 params: {
-                    q: query,
+                    // TODO: make this dynamic
+                    page: 1,
+                    pageSize: 100,
                 },
             }
         );
