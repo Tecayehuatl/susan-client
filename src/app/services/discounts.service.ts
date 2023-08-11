@@ -33,13 +33,13 @@ export class DiscountsService {
         );
     }
 
-    deleteDiscount(id: string) {
+    deleteDiscount(id: number) {
         return this.http.delete(`${environment.baseUrl}/discounts/${id}`);
     }
 }
 
 export interface Discount {
-    discount_id?: number;
+    discount_id: number;
     name: string;
     discountPercentage: number;
 }

@@ -50,11 +50,13 @@
                                         {{ discount.name }} -
                                         {{ discount?.discountPercentage }}%
                                     </mat-option>
+                                    <!-- TODO: the discount_id 999 is harcoded, is for a custom discount -->
                                     <mat-option
                                         autocomplete="disabled"
                                         value="0"
                                         (click)="
                                             selectDiscount(index, {
+                                                discount_id: 999,
                                                 name: 'custom',
                                                 discountPercentage: 0
                                             })
