@@ -42,4 +42,5 @@ export interface Discount {
     discount_id: number;
     name: string;
     discountPercentage: number;
+    isActive: boolean;
 }

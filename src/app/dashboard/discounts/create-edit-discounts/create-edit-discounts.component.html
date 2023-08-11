@@ -1,3 +1,63 @@
-<p>
-  create-edit-discounts works!
-</p>
+<section class="modal">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>{{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} DESCUENTO</h2>
+    <mat-divider></mat-divider>
+    <form
+        class="grid-container"
+        autocomplete="disabled"
+        [formGroup]="discountsForm"
+    >
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Nombre del descuento</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Nombre del descuento"
+                    tabindex="1"
+                    autocomplete="disabled"
+                    formControlName="name"
+                />
+            </mat-form-field>
+            <mat-slide-toggle tabindex="3" formControlName="isActive">
+                ¿Iniciar activo? {{ discountsForm.get('isActive')?.value ? 'Sí' : 'No' }}
+            </mat-slide-toggle>
+        </section>
+        <section class="grid-item">
+            <mat-form-field>
+                <mat-label>Porcentaje de descuento</mat-label>
+                <input
+                    class="uppercase"
+                    matInput
+                    placeholder="Porcentaje de descuento"
+                    tabindex="2"
+                    autocomplete="disabled"
+                    formControlName="discountPercentage"
+                />
+            </mat-form-field>
+        </section>
+    </form>
+    <section class="grid-actions">
+        <button
+            class="grid-actions__button"
+            mat-stroked-button
+            color="primary"
+            mat-dialog-close
+        >
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button
+            class="grid-actions__button"
+            mat-flat-button
+            color="primary"
+            [disabled]="discountsForm.invalid"
+            (click)="createUpdateItem()"
+        >
+            <mat-icon>person_add</mat-icon>
+            {{ mode === 'edit' ? 'EDITAR' : 'CREAR' }} DESCUENTO
+        </button>
+    </section>
+</section>
