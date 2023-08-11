@@ -29,8 +29,8 @@ export class CreateEditDiscountsComponent implements OnInit {
         this.discountsForm = this.fb.group({
             discount_id: [''],
             name: [''],
-            discountPercentage: [''],
-            isActive: '',
+            discountPercentage: [],
+            isActive: true,
         });
     }
 
