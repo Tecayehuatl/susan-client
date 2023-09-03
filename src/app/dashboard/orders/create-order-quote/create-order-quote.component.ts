@@ -341,6 +341,7 @@ export class CreateOrderQuoteComponent implements OnInit {
             notes: [],
         };
         console.log(payload);
+        // TODO: Return the item just created, update the table and close the dialog
         this.ordersService
             .createOrder(payload as Order)
             .subscribe((response) => {

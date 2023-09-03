@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Discount } from 'src/app/services/discounts.service';
 
 @Component({
-    selector: 'app-discounts',
+    selector: 'app-discounts-inner-component',
     templateUrl: './discounts.component.html',
     styleUrls: ['./discounts.component.scss'],
 })
