@@ -57,6 +57,8 @@ export class CreateEditDiscountsComponent implements OnInit {
         };
 
         if (formValues && this.mode === 'create') {
+            delete formValues.discount_id;
+
             this.discountsService
                 .createDiscount(formValues)
                 .subscribe((response: Discount) => {
