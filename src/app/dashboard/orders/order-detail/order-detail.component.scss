@@ -1,7 +1,19 @@
 @import 'colors';
 
-.title {
+.main {
+    &-close-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
 
+.close {
+    cursor: pointer;
+    font-size: 26px;
+    padding: 20px;
+}
+
+.title {
   &-link {
     color: $brand-third;
     text-decoration-color: inherit;
@@ -95,4 +107,8 @@
     text-align: left;
     width: 100px;
   }
+}
+
+mat-sidenav {
+    width: 350px;
 }
