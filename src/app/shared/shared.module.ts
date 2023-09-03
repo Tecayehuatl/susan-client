@@ -11,13 +11,21 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DiscountsComponent } from './components/discounts/discounts.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { GetOrderStatusPipe } from './pipes/get-order-status.pipe';
+import { PaymentHistoricalTransactionsComponent } from './components/payment-historical-transactions/payment-historical-transactions.component';
+import { AdHostDirective } from './directives/ad-host.directive';
+import { HistoricInfoComponent } from './components/historic-info/historic-info.component';
+import { NotesComponent } from './components/notes/notes.component';
 
 const imports = [
-    GenericModalComponent,
-    OrderSummaryComponent,
+    AdHostDirective,
+    HistoricInfoComponent,
     DiscountsComponent,
-    PaymentComponent,
+    GenericModalComponent,
     GetOrderStatusPipe,
+    OrderSummaryComponent,
+    PaymentComponent,
+    PaymentHistoricalTransactionsComponent,
+    NotesComponent,
 ];
 
 @NgModule({

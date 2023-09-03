@@ -1,0 +1,38 @@
+@import 'colors';
+
+.container {
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+.circle {
+    background-color: $white;
+    border-radius: 50%;
+    border: 2px solid $brand-main;
+    height: 20px;
+    left: -33px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.comment {
+    font-size: 12px;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.date {
+    color: $black-40;
+    font-size: 12px;
+    font-style: italic;
+    margin-bottom: 20px;
+}
