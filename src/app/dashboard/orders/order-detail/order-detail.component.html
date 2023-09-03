@@ -216,7 +216,7 @@
                                     Nombre del estudio
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    {{ row.studyName }}
+                                    {{ row.study?.name }}
                                 </td>
                             </ng-container>
                             <!-- Alias Column -->
@@ -229,7 +229,7 @@
                                     Alias
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    {{ row.alias }}
+                                    {{ row.study?.alias }}
                                 </td>
                             </ng-container>
                             <!-- Delivery days -->
@@ -242,7 +242,7 @@
                                     Días de entrega
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    {{ row.delivery_days }}
+                                    {{ row.study?.deliveryDays }}
                                 </td>
                             </ng-container>
                             <!-- Price status -->
@@ -256,7 +256,7 @@
                                 </th>
                                 <td mat-cell *matCellDef="let row">
                                     {{
-                                        row.price
+                                        row.study?.price
                                             | currency
                                                 : ''
                                                 : 'symbol-narrow'
@@ -275,7 +275,7 @@
                                     Descuento
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    {{ row.discountPercentage + '%' }}
+                                    {{ row.study?.discountPercentage + '%' }}
                                 </td>
                             </ng-container>
                             <!-- Grand total -->
@@ -289,7 +289,7 @@
                                 </th>
                                 <td mat-cell *matCellDef="let row">
                                     {{
-                                        row.grandTotal
+                                        row.study?.grandTotal
                                             | currency
                                                 : ''
                                                 : 'symbol-narrow'
