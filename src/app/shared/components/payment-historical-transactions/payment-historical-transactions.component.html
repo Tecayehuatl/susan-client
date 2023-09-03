@@ -1,0 +1,13 @@
+<section class="container">
+    <h3>
+        <mat-icon>{{ titleIcon ? titleIcon : 'timeline' }}</mat-icon>
+        {{ title ? title : '- title temp' }}
+    </h3>
+    <mat-divider></mat-divider>
+    <section>
+        <app-historic-info
+            [item]
+            *ngFor="let item of Items"
+        ></app-historic-info>
+    </section>
+</section>
