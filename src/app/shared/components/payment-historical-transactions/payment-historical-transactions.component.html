@@ -5,9 +5,8 @@
     </h3>
     <mat-divider></mat-divider>
     <section>
-        <app-historic-info
-            [item]
-            *ngFor="let item of Items"
-        ></app-historic-info>
+        <ng-container *ngFor="let note of notesTransformed">
+            <app-historic-info [historicInfoItem]="note"></app-historic-info>
+        </ng-container>
     </section>
 </section>

@@ -6,5 +6,12 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./historic-info.component.scss'],
 })
 export class HistoricInfoComponent {
-    @Input() item!: any;
+    @Input() historicInfoItem!: HistoricInfoItem;
+}
+
+export interface HistoricInfoItem {
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    date?: string;
 }

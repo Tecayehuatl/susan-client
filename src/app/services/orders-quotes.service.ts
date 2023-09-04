@@ -45,8 +45,12 @@ export interface Order {
     studies: Study[];
     payments: any[];
     discounts: Discount[];
-    notes?: any;
+    order_notes?: OrderNote[];
     patient?: Patient;
     doctor?: Doctor;
     order_studies?: Study[];
+}
+
+export interface OrderNote {
+    note: string;
 }

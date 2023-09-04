@@ -86,6 +86,9 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
                     componentInstance =
                         this.viewContainerRef.createComponent(NotesComponent);
                     componentInstance.instance.title = 'Notas';
+                    componentInstance.instance.notes =
+                        this.orderDetail.order_notes;
+
                     this.isLoading = false;
                     componentInstance.onDestroy(() => {
                         this.isLoading = false;

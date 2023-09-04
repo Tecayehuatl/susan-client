@@ -1,0 +1,12 @@
+@import 'colors.scss';
+
+h3 {
+    color: $brand-secondary;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    padding: 10px;
+}

@@ -1,1 +1,12 @@
-<p>notes works!</p>
+<section class="container">
+    <h3>
+        <mat-icon>{{ titleIcon ? titleIcon : 'timeline' }}</mat-icon>
+        {{ title ? title : '- title temp' }}
+    </h3>
+    <mat-divider></mat-divider>
+    <section>
+        <ng-container *ngFor="let note of notesTransformed">
+            <app-historic-info [historicInfoItem]="note"></app-historic-info>
+        </ng-container>
+    </section>
+</section>

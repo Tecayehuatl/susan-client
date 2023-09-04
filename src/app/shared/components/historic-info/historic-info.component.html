@@ -1,14 +1,14 @@
 <section class="wrapper">
     <div class="container">
-        <div class="title" *ngIf="item.title">
-            {{ item.title }}
+        <div class="title" *ngIf="historicInfoItem.title">
+            {{ historicInfoItem.title }}
             <div class="circle"></div>
         </div>
-        <div class="comment" *ngIf="item.comment">
-            {{ item.comment }}
+        <div class="comment" *ngIf="historicInfoItem.description">
+            {{ historicInfoItem.description }}
         </div>
-        <div class="date" *ngIf="item.date">
-            {{ item.date }}
+        <div class="date" *ngIf="historicInfoItem.date">
+            {{ historicInfoItem.date }}
         </div>
     </div>
 </section>
