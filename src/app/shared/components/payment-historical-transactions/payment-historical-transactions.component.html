@@ -5,8 +5,18 @@
     </h3>
     <mat-divider></mat-divider>
     <section>
-        <ng-container *ngFor="let note of notesTransformed">
-            <app-historic-info [historicInfoItem]="note"></app-historic-info>
-        </ng-container>
+        <div *ngIf="paymentsTransformed.length; else noPayments">
+            <ng-container *ngFor="let note of paymentsTransformed">
+                <app-historic-info
+                    [historicInfoItem]="note"
+                ></app-historic-info>
+            </ng-container>
+        </div>
+        <ng-template #noPayments>
+            <section>
+                <h3>No hay pagos realizados</h3>
+                <button>Agregar pago</button>
+            </section>
+        </ng-template>
     </section>
 </section>

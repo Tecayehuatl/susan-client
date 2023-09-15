@@ -54,3 +54,10 @@ export interface Order {
 export interface OrderNote {
     note: string;
 }
+
+export interface Payment {
+    payment_id: number;
+    total_transaction: string;
+    change_due: string | number;
+    cash_received: string | number;
+}
