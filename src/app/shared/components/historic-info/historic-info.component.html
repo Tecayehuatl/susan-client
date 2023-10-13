@@ -4,11 +4,21 @@
             {{ historicInfoItem.title }}
             <div class="circle"></div>
         </div>
+        <div class="subtitle" *ngIf="historicInfoItem.subtitle">
+            {{ historicInfoItem.subtitle }}
+        </div>
         <div class="comment" *ngIf="historicInfoItem.description">
             {{ historicInfoItem.description }}
         </div>
         <div class="date" *ngIf="historicInfoItem.date">
             {{ historicInfoItem.date }}
         </div>
+    </div>
+    <div
+        class="delete"
+        (click)="openDeleteModal()"
+        *ngIf="historicInfoItem.isDeleteActionIncluded"
+    >
+        <mat-icon>delete</mat-icon>
     </div>
 </section>

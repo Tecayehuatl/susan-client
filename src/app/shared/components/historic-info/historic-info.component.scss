@@ -1,5 +1,10 @@
 @import 'colors';
 
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
 .container {
     margin-left: 20px;
     padding-left: 20px;
@@ -24,8 +29,14 @@
     position: relative;
 }
 
-.comment {
+.subtitle {
     font-size: 12px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.comment {
+    font-size: 10px;
     font-weight: normal;
     margin-bottom: 5px;
 }
@@ -35,4 +46,16 @@
     font-size: 12px;
     font-style: italic;
     margin-bottom: 20px;
+}
+
+.delete {
+    color: var(--brand-secondary);
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    width: 30px;
+
+    &:hover {
+        background-color: rgba(#E35A6B, 0.2);
+    }
 }
