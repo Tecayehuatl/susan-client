@@ -21,7 +21,7 @@ export enum OperationType {
 export enum GeneralOrderStatus {
     ONGOING = 1,
     CANCELLED = 2,
-    CLOSED = 3,
+    COMPLETED = 3,
 }
 
 export enum PaymentStatus {
