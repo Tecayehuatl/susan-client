@@ -1,4 +1,4 @@
-import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -58,8 +58,6 @@ registerLocaleData(localeEs, 'es-MX');
             provide: STEPPER_GLOBAL_OPTIONS,
             useValue: { displayDefaultIndicatorType: false, showError: true },
         },
-        // TODO: https://en.wikipedia.org/wiki/ISO_4217
-        { provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN' },
     ],
     bootstrap: [AppComponent],
 })
