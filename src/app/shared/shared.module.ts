@@ -5,7 +5,8 @@ import { MaterialModule } from './material/material.module';
 import { RouterModule } from '@angular/router';
 import { GenericModalComponent } from './components/generic-modal/generic-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskModule } from 'ngx-mask';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DiscountsComponent } from './components/discounts/discounts.component';
@@ -15,6 +16,9 @@ import { PaymentHistoricalTransactionsComponent } from './components/payment-his
 import { AdHostDirective } from './directives/ad-host.directive';
 import { HistoricInfoComponent } from './components/historic-info/historic-info.component';
 import { NotesComponent } from './components/notes/notes.component';
+import { CreateEditPaymentsComponent } from './components/payments/create-edit-payments/create-edit-payments.component';
+import { CreateEditNotesComponent } from './components/notes/create-edit-notes/create-edit-notes.component';
+import { LabelComponent } from './components/label/label.component';
 
 const imports = [
     AdHostDirective,
@@ -26,6 +30,9 @@ const imports = [
     PaymentComponent,
     PaymentHistoricalTransactionsComponent,
     NotesComponent,
+    CreateEditPaymentsComponent,
+    LabelComponent,
+    CreateEditNotesComponent,
 ];
 
 @NgModule({
@@ -33,9 +40,10 @@ const imports = [
     imports: [
         CommonModule,
         MaterialModule,
-        ReactiveFormsModule,
         FormsModule,
-        NgxMaskModule.forRoot(),
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
     ],
     exports: [
         ...imports,
@@ -44,8 +52,14 @@ const imports = [
         RouterModule,
         ReactiveFormsModule,
         FormsModule,
-        NgxMaskModule,
+        NgxMaskDirective,
+        NgxMaskPipe,
         ClipboardModule,
+    ],
+    providers: [
+        provideNgxMask(),
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },
     ],
 })
 export class SharedModule {}
