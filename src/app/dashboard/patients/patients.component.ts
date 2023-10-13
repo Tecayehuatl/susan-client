@@ -75,28 +75,29 @@ export class PatientsComponent implements OnInit, AfterViewInit {
         }
 
         this.timer = setTimeout(() => {
-            let queryString = '';
+            const queryObject: { [value: string]: string } = {};
+            let queryObjectEncoded = '';
 
             Object.keys(this.searchForm.controls).map((controlName: string) => {
                 if (this.searchForm.get(controlName)?.value) {
                     const controlValue =
                         this.searchForm.get(controlName)?.value;
-
-                    queryString += `key=${controlName}&val=${controlValue}&`;
+                    queryObject[controlName] = controlValue;
                 }
             });
-
-            queryString = queryString.slice(0, -1);
+            queryObjectEncoded = encodeURIComponent(
+                JSON.stringify(queryObject)
+            );
 
             this.patientsService
-                .searchPatients(queryString)
+                .searchPatients(queryObjectEncoded)
                 .subscribe(({ data }) => {
                     this.dataSource.data = data;
                     if (this.dataSource.paginator) {
                         this.dataSource.paginator.firstPage();
                     }
                 });
-        }, 700);
+        }, 1000);
     }
 
     openCreateEditPatientDialog(
@@ -197,4 +198,5 @@ export interface Patient {
     phone2: string;
     email: string;
     gender: string;
+    updated_at?: Date;
 }

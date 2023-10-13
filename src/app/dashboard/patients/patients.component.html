@@ -146,11 +146,7 @@
                     </th>
                     <td mat-cell *matCellDef="let row">
                         <!-- COMMENT: The utc-6 and es-mx arguments are optionals, in the app.module the locale id was set, you can delete as wish -->
-                        {{
-                            row.date_birth
-                                | date : 'longDate' : 'UTC -6' : 'es-MX'
-                                | uppercase
-                        }}
+                        {{ row.date_birth | date : 'longDate' | uppercase }}
                     </td>
                 </ng-container>
                 <!-- Age Column -->
