@@ -82,3 +82,20 @@ mat-divider {
 .uppercase {
     text-transform: uppercase !important;
 }
+
+.underline {
+    color: inherit;
+    text-decoration: underline !important;
+}
+
+.cursor {
+    cursor: pointer !important;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+    backdrop-filter: blur(5px);
+}
+
+.mat-drawer-transition .mat-drawer-backdrop {
+    backdrop-filter: blur(5px);
+}
