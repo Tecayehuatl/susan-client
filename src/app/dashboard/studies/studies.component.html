@@ -16,7 +16,7 @@
             <mat-label>Búsqueda de estudios</mat-label>
             <input
                 matInput
-                (keyup)="applyFilter($event)"
+                (keyup)="searchPatients($event)"
                 placeholder="Buscar estudios por ID, Nombre, correo electrónico o teléfono"
                 #input
             />
@@ -90,19 +90,19 @@
                 <!-- Conditions Column -->
                 <ng-container matColumnDef="conditions">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                        Condiciones
+                        Condiciones para el paciente
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.conditions }}
+                        <span class="truncate-text">{{ row.conditions }}</span>
                     </td>
                 </ng-container>
                 <!-- Notes Column -->
                 <ng-container matColumnDef="notes">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                        Notas
+                        Notas para el químico
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.notes }}
+                        <span class="truncate-text">{{ row.notes }}</span>
                     </td>
                 </ng-container>
                 <!-- Delete Detail -->

@@ -28,6 +28,7 @@ export class StudiesComponent implements AfterViewInit {
         'delete',
     ];
     dataSource!: MatTableDataSource<Study>;
+    timer: any;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -54,6 +55,24 @@ export class StudiesComponent implements AfterViewInit {
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
         }
+    }
+
+    searchPatients(event: Event): void {
+        const filterValue = (event.target as HTMLInputElement).value;
+        const searchKey = filterValue.trim().toLowerCase();
+
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+
+        this.timer = setTimeout(() => {
+            this.studiesService.searchStudies(searchKey).subscribe((data) => {
+                this.dataSource.data = data;
+                if (this.dataSource.paginator) {
+                    this.dataSource.paginator.firstPage();
+                }
+            });
+        }, 1000);
     }
 
     openCreateEditStudyDialog(itemData?: Study, index?: any): void {

@@ -24,6 +24,15 @@
   .mat-mdc-row {
     .mat-mdc-cell {
       cursor: pointer;
+
+        > span.truncate-text {
+            display: block;
+            width: 160px;
+            max-width: 160px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
     }
 
     &:hover {
