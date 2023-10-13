@@ -1,12 +1,25 @@
 @import 'colors.scss';
 
 h3 {
-    color: $brand-secondary;
-    font-weight: bold;
-    display: flex;
     align-items: center;
+    color: $brand-secondary;
+    display: flex;
+    font-weight: bold;
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px);
+    justify-content: space-between;
     padding: 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        min-width: 140px;
+    }
 }
