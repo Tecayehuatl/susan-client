@@ -63,7 +63,7 @@
                 <div>
                     <p class="patient-text">FECHA DE NACIMIENTO</p>
                     <p class="patient-text patient-text--value">
-                        {{ patient.date_birth | date : 'longDate' }}
+                        {{ patient.date_birth | date : 'longDate' | uppercase }}
                     </p>
                 </div>
             </div>
@@ -101,7 +101,9 @@
             </div>
             <div class="patient-text-wrapper">
                 <p class="patient-text">FECHA DE ÚLTIMA MODIFICACIÓN</p>
-                <p class="patient-text patient-text--value">06 ENERO 2022</p>
+                <p class="patient-text patient-text--value">
+                    {{ patient?.updated_at | date : 'medium' | uppercase }}
+                </p>
             </div>
         </section>
         <!-- Right side -->
@@ -122,7 +124,10 @@
                         <section class="mat-tab-container">
                             <app-orders
                                 title="Ordenes"
-                                [ordersQuotes]="patientAllOrders"
+                                [incomingOrdersQuotes]="patientAllOrders"
+                                (setNewincomingOrdersQuotes)="
+                                    setNewincomingOrdersQuotes($event)
+                                "
                             ></app-orders>
                         </section>
                     </mat-tab>
@@ -130,7 +135,10 @@
                         <section class="mat-tab-container">
                             <app-orders
                                 title="Cotizaciones"
-                                [ordersQuotes]="patientAllQuotes"
+                                [incomingOrdersQuotes]="patientAllQuotes"
+                                (setNewincomingOrdersQuotes)="
+                                    setNewincomingOrdersQuotes($event)
+                                "
                             ></app-orders>
                         </section>
                     </mat-tab>

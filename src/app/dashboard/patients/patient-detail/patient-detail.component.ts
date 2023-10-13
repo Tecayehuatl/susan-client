@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateOrderQuoteComponent } from '../../orders/create-order-quote/create-order-quote.component';
@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { PaymentMethod } from 'src/app/services/payment-methods.service';
 import { Doctor } from '../../doctors/doctors.component';
 import { Patient } from '../patients.component';
+import { Order } from 'src/app/services/orders-quotes.service';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
     selector: 'app-patient-detail',
@@ -18,9 +20,10 @@ export class PatientDetailComponent implements OnInit {
     paymentMethods: PaymentMethod[] = [];
     doctors: Doctor[] = [];
     patient!: Patient;
-    patientAllOrdersQuotes!: any[];
-    patientAllOrders!: any[];
-    patientAllQuotes!: any[];
+    patientAllOrdersQuotes!: Order[];
+    patientAllOrders!: Order[];
+    patientAllQuotes!: Order[];
+    @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
 
     constructor(
         private dialog: MatDialog,
@@ -37,11 +40,11 @@ export class PatientDetailComponent implements OnInit {
     ngOnInit(): void {
         // 1: order
         this.patientAllOrders = this.patientAllOrdersQuotes.filter(
-            (patient) => patient.order_type_id === 1
+            (order) => order.order_type_id === 1
         );
         // 2: quote
         this.patientAllQuotes = this.patientAllOrdersQuotes.filter(
-            (patient) => patient.order_type_id === 2
+            (order) => order.order_type_id === 2
         );
     }
 
@@ -56,30 +59,41 @@ export class PatientDetailComponent implements OnInit {
             },
         });
 
-        dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
-            // if (formValues && mode === 'create') {
-            //     // Updating the local datasource
-            //     const newDataSource = this.dataSource.data;
-            //     this.dataSource.data = [formValues, ...newDataSource];
-            //     this._snackBar.open(
-            //         `DOCTOR: ${formValues.first_name} CREADA`,
-            //         'CERRAR'
-            //     );
-            // } else if (formValues && mode === 'edit') {
-            //     // Updating the local datasource
-            //     const data = this.dataSource.data;
-            //     const newDataSource = data.map((doctor: Doctor, i) => {
-            //         if (i === index) {
-            //             return formValues;
-            //         }
-            //         return doctor;
-            //     });
-            //     this.dataSource.data = newDataSource;
-            //     this._snackBar.open(
-            //         `DOCTOR: ${formValues.first_name} ACTUALIZADO`,
-            //         'CERRAR'
-            //     );
-            // }
+        dialogRef.afterClosed().subscribe((response) => {
+            const newItemAdded = {
+                ...response,
+                order_type_id: response.order_type_id,
+                order_id: response.order_id,
+                created_at: response.created_at,
+                order_status_id: response.order_status_id,
+                payment_status_id: response.payment_status_id,
+                delivery_status_id: response.delivery_status_id,
+                grand_total: response.grand_total,
+                balance: response.balance,
+            } as Order;
+
+            // 1: Stands for order
+            if (newItemAdded.order_type_id == 1) {
+                this.patientAllOrders = [
+                    newItemAdded,
+                    ...this.patientAllOrders,
+                ];
+            }
+            // 2: Stands for quote
+            if (newItemAdded.order_type_id == 2) {
+                this.patientAllQuotes = [
+                    newItemAdded,
+                    ...this.patientAllQuotes,
+                ];
+            }
+            // Moving to the order or quote
+            this.tabGroup.selectedIndex = newItemAdded.order_type_id - 1;
+
+            this._snackBar.open(`ORDEN CREADA`, 'CERRAR');
         });
+    }
+
+    setNewincomingOrdersQuotes(newOrderQuotes: Order[]): void {
+        this.patientAllOrders = newOrderQuotes;
     }
 }
