@@ -38,7 +38,7 @@ export class PatientsService {
     // TODO: Add an interface for the response
     searchPatients(query: string): Observable<any> {
         return this.http.get<any>(
-            `${environment.baseUrl}/patients/search?${query}`,
+            `${environment.baseUrl}/patients/search?filter=${query}`,
             {
                 params: {
                     // TODO: make this dynamic
@@ -93,7 +93,5 @@ export const getOrderDetailResolver: ResolveFn<any> = (
     state: RouterStateSnapshot
 ) => {
     const id = route.params['orderId'];
-    console.log('id mamalon ' + id);
-
     return inject(PatientsService).getOrderDetail(id);
 };

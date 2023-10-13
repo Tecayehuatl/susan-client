@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { ResolveFn } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -37,6 +38,10 @@ export class DiscountsService {
         return this.http.delete(`${environment.baseUrl}/discounts/${id}`);
     }
 }
+
+export const getDiscountslResolver: ResolveFn<Discount[]> = () => {
+    return inject(DiscountsService).getDiscounts();
+};
 
 export interface Discount {
     discount_id: number;
