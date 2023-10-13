@@ -1,12 +1,37 @@
 <section class="container">
-    <h3>
-        <mat-icon>{{ titleIcon ? titleIcon : 'timeline' }}</mat-icon>
-        {{ title ? title : '- title temp' }}
-    </h3>
-    <mat-divider></mat-divider>
     <section>
-        <ng-container *ngFor="let note of notesTransformed">
-            <app-historic-info [historicInfoItem]="note"></app-historic-info>
-        </ng-container>
+        <h3>
+            <mat-icon>{{ titleIcon ? titleIcon : 'timeline' }}</mat-icon>
+            {{ title ? title : '- title temp' }}
+        </h3>
+        <mat-divider></mat-divider>
+        <section>
+            <div *ngIf="notesTransformed.length; else noNotes">
+                <ng-container *ngFor="let note of notesTransformed">
+                    <app-historic-info
+                        [historicInfoItem]="note"
+                        (deleteEmmiter)="deleteNoteFromOrder(note.id, orderId)"
+                    ></app-historic-info>
+                    <pre>
+                        {{ notesTransformed | json }}
+                    </pre>
+                </ng-container>
+            </div>
+            <ng-template #noNotes>
+                <section>
+                    <h4>No hay notas agregadas :(</h4>
+                </section>
+            </ng-template>
+        </section>
+    </section>
+    <section class="actions">
+        <button mat-flat-button color="accent" (click)="closeSidenav()">
+            <mat-icon>close</mat-icon>
+            Cerrar
+        </button>
+        <button mat-flat-button color="primary" (click)="openAddNoteDialog()">
+            <mat-icon>add</mat-icon>
+            Agregar nota
+        </button>
     </section>
 </section>
