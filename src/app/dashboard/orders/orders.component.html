@@ -3,7 +3,12 @@
         {{ title }}
     </h3>
     <section class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table
+            mat-table
+            matSort
+            [dataSource]="dataSource"
+            (matSortChange)="sortDataEvent($event)"
+        >
             <!-- ID Column -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -19,7 +24,7 @@
                     Fecha de creación
                 </th>
                 <td mat-cell *matCellDef="let row">
-                    {{ row.created_at | date : 'longDate' | uppercase }}
+                    {{ row.created_at | date : 'medium' | uppercase }}
                 </td>
             </ng-container>
             <!-- General status Column -->
@@ -28,10 +33,15 @@
                     Estatus general
                 </th>
                 <td mat-cell *matCellDef="let row">
-                    {{
-                        row.order_status_id
-                            | getOrderStatus : 'generalOrderStatus'
-                    }}
+                    <app-label
+                        type="generalOrderStatus"
+                        [value]="row.order_status_id"
+                    >
+                        {{
+                            row.order_status_id
+                                | getOrderStatus : 'generalOrderStatus'
+                        }}
+                    </app-label>
                 </td>
             </ng-container>
             <!-- Payment status Column -->
@@ -40,9 +50,15 @@
                     Estatus de pago
                 </th>
                 <td mat-cell *matCellDef="let row">
-                    {{
-                        row.payment_status_id | getOrderStatus : 'paymentStatus'
-                    }}
+                    <app-label
+                        type="paymentStatus"
+                        [value]="row.payment_status_id"
+                    >
+                        {{
+                            row.payment_status_id
+                                | getOrderStatus : 'paymentStatus'
+                        }}
+                    </app-label>
                 </td>
             </ng-container>
             <!-- Deliver status column -->
@@ -51,17 +67,52 @@
                     Estatus de entrega
                 </th>
                 <td mat-cell *matCellDef="let row">
-                    {{
-                        row.delivery_status_id
-                            | getOrderStatus : 'deliveryStatus'
-                    }}
+                    <app-label
+                        type="deliveryStatus"
+                        [value]="row.delivery_status_id"
+                    >
+                        {{
+                            row.delivery_status_id
+                                | getOrderStatus : 'deliveryStatus'
+                        }}
+                    </app-label>
                 </td>
             </ng-container>
             <!-- Grand total column-->
             <ng-container matColumnDef="grandTotal">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
                 <td mat-cell *matCellDef="let row">
-                    {{ row.grandTotal }}
+                    {{ row.grand_total }}
+                </td>
+            </ng-container>
+            <!-- Balance column-->
+            <ng-container matColumnDef="balance">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Pago pendiente
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    {{
+                        row.balance
+                            | mask
+                                : 'separator.2'
+                                : { thousandSeparator: ',', prefix: '$',
+                                }
+                    }}
+                </td>
+            </ng-container>
+            <!-- Delete Detail -->
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Eliminar
+                </th>
+                <td mat-cell *matCellDef="let row; let i = index">
+                    <a
+                        class="cell-flex"
+                        (click)="openDeleteDialog(row.order_id, $event, i)"
+                    >
+                        <mat-icon>delete</mat-icon>
+                        <span>Eliminar</span>
+                    </a>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -72,7 +123,8 @@
             ></tr>
         </table>
         <mat-paginator
-            [pageSizeOptions]="[5, 10, 25, 100]"
+            [pageSizeOptions]="[20, 40, 60, 100]"
+            [pageSize]="20"
             aria-label="Cotizaciones por página"
         ></mat-paginator>
     </section>
