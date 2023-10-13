@@ -17,6 +17,7 @@ import {
 import { getPaymentMethodsResolver } from '../services/payment-methods.service';
 import { getDoctorsResolver } from '../services/doctors.service';
 import { DiscountsComponent } from './discounts/discounts.component';
+import { getDiscountslResolver } from '../services/discounts.service';
 
 const routes: Routes = [
     {
@@ -46,6 +47,7 @@ const routes: Routes = [
                 path: 'patients/:patientId/:orderId',
                 resolve: {
                     orderDetail: getOrderDetailResolver,
+                    discounts: getDiscountslResolver,
                 },
                 component: OrderDetailComponent,
             },
