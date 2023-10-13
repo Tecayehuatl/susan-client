@@ -157,7 +157,10 @@
                                 >
                                     {{
                                         option.price
-                                            | currency : 'MXN' : 'symbol'
+                                            | mask
+                                            : 'separator.2'
+                                            : { thousandSeparator: ',', prefix: '$',
+                                            }
                                     }}
                                     - {{ option.name | uppercase }}
                                 </mat-option>
@@ -302,10 +305,10 @@
                                         <strong>
                                             {{
                                                 row.grandTotal
-                                                    | currency
-                                                        : 'MXN'
-                                                        : 'symbol'
-                                                        : '1.2-2'
+                                                    | mask
+                                                    : 'separator.2'
+                                                    : { thousandSeparator: ',', prefix: '$',
+                                                    }
                                             }}
                                         </strong>
                                     </td>
@@ -476,11 +479,10 @@
                         <strong class="total">
                             {{
                                 totalOrder
-                                    | currency
-                                        : ''
-                                        : 'symbol-narrow'
-                                        : ''
-                                        : 'en-US'
+                                    | mask
+                                    : 'separator.2'
+                                    : { thousandSeparator: ',', prefix: '$',
+                                    }
                             }}
                         </strong>
                     </div>
