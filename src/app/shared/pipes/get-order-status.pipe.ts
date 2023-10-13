@@ -17,7 +17,8 @@ export class GetOrderStatusPipe implements PipeTransform {
                 if (GeneralOrderStatus.ONGOING === id) statusText = 'en curso';
                 if (GeneralOrderStatus.CANCELLED === id)
                     statusText = 'cancelado';
-                if (GeneralOrderStatus.CLOSED === id) statusText = 'cerrado';
+                if (GeneralOrderStatus.COMPLETED === id)
+                    statusText = 'estudios completados';
                 break;
             case 'paymentStatus':
                 if (PaymentStatus.COMPLETED === id) statusText = 'completado';
