@@ -1,0 +1,27 @@
+@import 'colors';
+
+.label {
+    background-color: rgba(#373634, 0.1);
+    border-radius: 4px;
+    color: $brand-third;
+    font-weight: bold;
+    padding: 4px 8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    width: 100%;
+
+    &--success {
+        background-color: rgba(#00958C, 0.1);
+        color: $brand-main;
+    }
+
+    &--warn {
+        background-color: rgba(#E35A6B, 0.1);
+        color: $brand-secondary;
+    }
+
+    &--info {
+        background-color: rgba(#004085, 0.1);
+        color: #004085;
+    }
+}
