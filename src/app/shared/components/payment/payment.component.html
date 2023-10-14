@@ -61,7 +61,11 @@
                 <strong>
                     {{
                         changeDueControl.value
-                            | currency : '' : 'symbol-narrow' : '' : 'en-US'
+                            | mask : 'separator.2'
+                            : {
+                                thousandSeparator: ',',
+                                prefix: '$',
+                            }
                     }}
                 </strong>
             </div>
