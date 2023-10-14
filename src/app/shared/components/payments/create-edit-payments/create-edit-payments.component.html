@@ -1,0 +1,51 @@
+<section class="modal" [formGroup]="paymentsForm">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>Agregar pago</h2>
+    <section class="add-container">
+        <button
+            class="add-button"
+            color="primary"
+            mat-raised-button
+            [disabled]="paymentsFormArray.controls.length >= 3"
+            (click)="addPaymentGroup()"
+        >
+            <mat-icon>add</mat-icon>
+            AGREGAR PAGO
+        </button>
+    </section>
+    <ng-container formArrayName="payments">
+        <app-payment
+            [formGroup]="getPayementGroup(index)"
+            [indexPayment]="index"
+            (removePaymentEvent)="removePayment($event)"
+            *ngFor="
+                let paymentFormGroup of paymentsFormArray.controls;
+                let index = index
+            "
+            [paymentMethods]="paymentMethods"
+        ></app-payment>
+    </ng-container>
+    <section class="grid-actions">
+        <button
+            class="grid-actions__button"
+            mat-stroked-button
+            color="primary"
+            mat-dialog-close
+        >
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button
+            class="grid-actions__button"
+            mat-flat-button
+            color="primary"
+            [disabled]="paymentsForm.invalid"
+            (click)="addPaymentToOrder()"
+        >
+            <mat-icon>person_add</mat-icon>
+            Actualizar orden
+        </button>
+    </section>
+</section>
