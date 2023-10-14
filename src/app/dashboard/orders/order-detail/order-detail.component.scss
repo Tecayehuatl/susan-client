@@ -63,6 +63,13 @@
             font-weight: normal;
             margin-bottom: 0;
         }
+
+        &--high {
+            color: var(--brand-secondary);
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 0;
+        }
     }
 }
 
