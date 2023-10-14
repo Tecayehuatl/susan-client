@@ -1,10 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { OperationType, transformPrices } from '../../utils/utils';
 import { Study } from 'src/app/dashboard/studies/studies.component';
@@ -15,7 +9,7 @@ import { Discount } from 'src/app/services/discounts.service';
     templateUrl: './order-summary.component.html',
     styleUrls: ['./order-summary.component.scss'],
 })
-export class OrderSummaryComponent implements AfterViewInit {
+export class OrderSummaryComponent implements OnInit {
     @Input() studiesForm!: FormArray;
     @Input() discountsForm!: FormArray;
     @Output() setTotalOrder: EventEmitter<number> = new EventEmitter<number>();
@@ -28,7 +22,18 @@ export class OrderSummaryComponent implements AfterViewInit {
     studies: any;
     discounts!: any[];
 
-    ngAfterViewInit(): void {
+    ngOnInit(): void {
+        // This will run once, only to display the order total summary
+        if (this.studiesForm.controls.length) {
+            this.studies = this.studiesForm?.value;
+            this.discounts = this.discountsForm.value;
+
+            this.calculateOrder(
+                this.studies,
+                this.extractDiscounts(this.discounts)
+            );
+        }
+
         this.studiesForm.valueChanges.subscribe((studies) => {
             this.studies = studies;
             this.calculateOrder(

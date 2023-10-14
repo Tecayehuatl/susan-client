@@ -5,31 +5,56 @@
         <div class="row">
             <div class="item">Total</div>
             <div class="item item--right">
-                {{ total | currency : 'MXN' : 'symbol' }}
+                {{ total
+                    | mask
+                        : 'separator.2'
+                        : { thousandSeparator: ',', prefix: '$',
+                        }
+                }}
             </div>
         </div>
         <div class="row">
             <div class="item">Subtotal</div>
             <div class="item item--right">
-                {{ subtotal | currency : 'MXN' : 'symbol' }}
+                {{ subtotal
+                    | mask
+                        : 'separator.2'
+                        : { thousandSeparator: ',', prefix: '$',
+                        }
+                }}
             </div>
         </div>
         <div class="row">
             <div class="item">Descuento</div>
             <div class="item item--right">
-                {{ discount | currency : 'MXN' : 'symbol' }}
+                {{ discount
+                    | mask
+                        : 'separator.2'
+                        : { thousandSeparator: ',', prefix: '$',
+                        }
+                }}
             </div>
         </div>
         <div class="row">
             <div class="item">IVA</div>
             <div class="item item--right">
-                {{ tax | currency : 'MXN' : 'symbol' }}
+                {{ tax
+                    | mask
+                        : 'separator.2'
+                        : { thousandSeparator: ',', prefix: '$',
+                        }
+                }}
             </div>
         </div>
         <div class="row">
             <div class="item item--grand">Total a pagar</div>
             <div class="item item--right item--grand">
-                {{ grandTotal | currency : 'MXN' : 'symbol' }}
+                {{ grandTotal
+                    | mask
+                        : 'separator.2'
+                        : { thousandSeparator: ',', prefix: '$',
+                        }
+                }}
             </div>
         </div>
     </div>
