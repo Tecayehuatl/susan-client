@@ -1,0 +1,44 @@
+.modal {
+    padding: 15px;
+    position: relative;
+
+    &-close {
+        cursor: pointer;
+        color: var(--brand-main);
+        position: absolute;
+        right: 15px;
+        top: 15px;
+
+        mat-icon {
+            font-size: 24px;
+        }
+    }
+}
+
+.grid {
+    &-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 15px;
+
+        &__button {
+            margin-left: 15px;
+            width: 100%;
+            max-width: 200px;
+
+            &:first-child {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.form-container {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+mat-form-field {
+    width: 100%;
+}

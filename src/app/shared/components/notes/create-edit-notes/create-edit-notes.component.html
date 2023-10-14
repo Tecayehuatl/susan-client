@@ -1,0 +1,51 @@
+<section class="modal" [formGroup]="notesForm">
+    <div class="modal-close" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </div>
+    <h2>Agregar nota</h2>
+    <section formArrayName="notes">
+        <section
+            class="form-container"
+            [formGroupName]="index"
+            *ngFor="
+                let paymentFormGroup of notesFormArray.controls;
+                let index = index
+            "
+        >
+            <mat-form-field>
+                <mat-label>Descripción de la nota</mat-label>
+                <textarea
+                    class="uppercase"
+                    matInput
+                    placeholder="Describa la nota"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="3"
+                    cdkAutosizeMaxRows="10"
+                    autocomplete="disabled"
+                    formControlName="note"
+                ></textarea>
+            </mat-form-field>
+        </section>
+    </section>
+    <section class="grid-actions">
+        <button
+            class="grid-actions__button"
+            mat-stroked-button
+            color="primary"
+            mat-dialog-close
+        >
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button
+            class="grid-actions__button"
+            mat-flat-button
+            color="primary"
+            [disabled]="notesForm.invalid"
+            (click)="addNoteToOrder()"
+        >
+            <mat-icon>add</mat-icon>
+            Crear nota
+        </button>
+    </section>
+</section>
