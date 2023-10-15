@@ -154,6 +154,7 @@ export interface Study {
     price: number;
     grandTotal: number;
     discountPercentage: number;
+    progressStatus: boolean;
     deliveryDays: number;
     conditions: string;
     notes: string;
