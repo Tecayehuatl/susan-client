@@ -83,12 +83,12 @@
 
   &__item {
     &--studies {
-      width: 70%;
+      width: 75%;
     }
 
     &--summary {
       padding-left: 10px;
-      width: 30%;
+      width: 25%;
     }
   }
 }
@@ -118,4 +118,8 @@
 
 mat-sidenav {
     width: 350px;
+}
+
+.no-wrap {
+    white-space: nowrap;
 }
