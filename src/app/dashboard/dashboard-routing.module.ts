@@ -18,6 +18,8 @@ import { getPaymentMethodsResolver } from '../services/payment-methods.service';
 import { getDoctorsResolver } from '../services/doctors.service';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { getDiscountslResolver } from '../services/discounts.service';
+import { QuotesComponent } from './quotes/quotes.component';
+import { getStudiesResolver } from '../services/studies.service';
 
 const routes: Routes = [
     {
@@ -50,6 +52,16 @@ const routes: Routes = [
                     discounts: getDiscountslResolver,
                 },
                 component: OrderDetailComponent,
+            },
+            {
+                path: 'quotes',
+                component: QuotesComponent,
+                resolve: {
+                    doctors: getDoctorsResolver,
+                    studies: getStudiesResolver,
+                    branchOffices: getBranchOfficesResolver,
+                    paymentMethods: getPaymentMethodsResolver,
+                },
             },
             {
                 path: 'branch-offices',

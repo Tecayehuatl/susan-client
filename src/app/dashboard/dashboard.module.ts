@@ -18,6 +18,7 @@ import { CreateEditUsersComponent } from './users/create-edit-users/create-edit-
 import { CreateOrderQuoteComponent } from './orders/create-order-quote/create-order-quote.component';
 import { DiscountsComponent } from './discounts/discounts.component';
 import { CreateEditDiscountsComponent } from './discounts/create-edit-discounts/create-edit-discounts.component';
+import { QuotesComponent } from './quotes/quotes.component';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import { CreateEditDiscountsComponent } from './discounts/create-edit-discounts/
         PatientDetailComponent,
         StudiesComponent,
         UsersComponent,
+        QuotesComponent,
     ],
     imports: [DashboardRoutingModule, SharedModule],
 })

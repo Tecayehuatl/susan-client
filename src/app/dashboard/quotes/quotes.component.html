@@ -1,0 +1,367 @@
+<section>
+    <h1>{{ title }}</h1>
+    <mat-divider class="divider"></mat-divider>
+    <div class="container-actions">
+        <button mat-stroked-button color="primary" (click)="resetFormFilters()">
+            <mat-icon>delete</mat-icon>
+            Borrar filtros
+        </button>
+    </div>
+    <div [formGroup]="testForm">
+        <pre>
+            {{ testForm?.value | json }}
+        </pre>
+        <!-- ONLY FOR TESTING PURPOSES -->
+        <mat-form-field [formGroupName]="'order'">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input
+                [formGroupName]="'created_at'"
+                [rangePicker]="pickerTest"
+            >
+                <input
+                    matStartDate
+                    #matStartDateTest
+                    formControlName="from"
+                    placeholder="Start date"
+                    (dateChange)="setDateRangeTest($event)"
+                />
+                <input
+                    matEndDate
+                    #matEndDateTest
+                    formControlName="to"
+                    placeholder="End date"
+                    (dateChange)="
+                        setDateRangeTest($event)
+                    "
+                />
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+                matIconSuffix
+                [for]="pickerTest"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #pickerTest></mat-date-range-picker>
+        </mat-form-field>
+    </div>
+    <section>
+        <mat-accordion>
+            <mat-expansion-panel
+                expanded
+                (click)="filterPanelState = !filterPanelState"
+            >
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon>filter_alt</mat-icon>
+                        {{ filterPanelState ? 'Ocultar' : 'Mostrar' }} filtros
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div [formGroup]="searchForm">
+                    <!-- <pre>
+                        {{ searchForm?.value | json }}
+                    </pre> -->
+                    <mat-grid-list cols="2" rowHeight="90px" gutterSize="20px">
+                        <!-- doctorsIds -->
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <mat-label>Nombre del medico</mat-label>
+                                <mat-select
+                                    multiple
+                                    formControlName="doctorIds"
+                                    (selectionChange)="searchPatients()"
+                                >
+                                    <mat-option
+                                        *ngFor="let doctor of doctors"
+                                        [value]="doctor.doctor_id"
+                                    >
+                                        {{ doctor.first_name | uppercase }}
+                                        {{ doctor.middle_name | uppercase }}
+                                        {{ doctor.last_name | uppercase }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <!-- studyIds -->
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <mat-label>Estudios</mat-label>
+                                <mat-select
+                                    multiple
+                                    formControlName="studyIds"
+                                    (selectionChange)="searchPatients()"
+                                >
+                                    <mat-option
+                                        *ngFor="let study of studies"
+                                        [value]="study.study_id"
+                                    >
+                                        {{ study.name | uppercase }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <!-- branchOfficeIds -->
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <mat-label>Sucursales</mat-label>
+                                <mat-select
+                                    multiple
+                                    formControlName="branchOfficeIds"
+                                    (selectionChange)="searchPatients()"
+                                >
+                                    <mat-option
+                                        *ngFor="let office of branchOffices"
+                                        [value]="office.branch_office_id"
+                                    >
+                                        {{ office.name | uppercase }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <!-- paymentMethodsIds -->
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <mat-label>Métodos de pago</mat-label>
+                                <mat-select
+                                    multiple
+                                    formControlName="paymentIds"
+                                    (selectionChange)="searchPatients()"
+                                >
+                                    <mat-option
+                                        *ngFor="let method of paymentMethods"
+                                        [value]="method.payment_id"
+                                    >
+                                        {{ method.name | uppercase }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <!-- Age range -->
+                        <mat-grid-tile [formGroupName]="'patient'">
+                            <ng-container [formGroupName]="'age'">
+                                <mat-form-field>
+                                    <mat-label>Desde Edad</mat-label>
+                                    <mat-select
+                                        formControlName="from"
+                                        (selectionChange)="searchPatients()"
+                                    >
+                                        <mat-option
+                                            *ngFor="let age of ageList"
+                                            [value]="age"
+                                        >
+                                            {{ age }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Hasta Edad</mat-label>
+                                    <mat-select
+                                        formControlName="to"
+                                        (selectionChange)="searchPatients()"
+                                    >
+                                        <mat-option
+                                            *ngFor="let age of ageList"
+                                            [value]="age"
+                                        >
+                                            {{ age }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </ng-container>
+                        </mat-grid-tile>
+                        <!-- Date creation -->
+                        <mat-grid-tile>
+                            <mat-form-field [formGroupName]="'order'">
+                                <mat-label>Enter a date range</mat-label>
+                                <mat-date-range-input
+                                    [formGroupName]="'created_at'"
+                                    [rangePicker]="picker"
+                                >
+                                    <input
+                                        matStartDate
+                                        #matStartDate
+                                        formControlName="from"
+                                        placeholder="Start date"
+                                        (dateChange)="
+                                            setDateRange(
+                                                matStartDate,
+                                                matEndDate
+                                            )
+                                        "
+                                    />
+                                    <input
+                                        matEndDate
+                                        #matEndDate
+                                        formControlName="to"
+                                        placeholder="End date"
+                                        (dateChange)="
+                                            setDateRange(
+                                                matStartDate,
+                                                matEndDate
+                                            )
+                                        "
+                                    />
+                                </mat-date-range-input>
+                                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle
+                                    matIconSuffix
+                                    [for]="picker"
+                                ></mat-datepicker-toggle>
+                                <mat-date-range-picker
+                                    #picker
+                                ></mat-date-range-picker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <!-- total order range -->
+                        <!-- TODO: Quizá para este control tenga que convertir de string a numero, por ahora MVP que se vayan como string, ver si no truena -->
+                        <mat-grid-tile [formGroupName]="'order'">
+                            <ng-container [formGroupName]="'total'">
+                                <mat-form-field>
+                                    <mat-label>Desde $</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Desde $"
+                                        autocomplete="disabled"
+                                        formControlName="from"
+                                        prefix="$ "
+                                        mask="separator.2"
+                                        thousandSeparator=","
+                                        (keyup)="searchPatients()"
+                                    />
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Hasta $</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Desde $"
+                                        autocomplete="disabled"
+                                        formControlName="to"
+                                        prefix="$ "
+                                        mask="separator.2"
+                                        thousandSeparator=","
+                                        (keyup)="searchPatients()"
+                                    />
+                                </mat-form-field>
+                            </ng-container>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <br />
+        <br />
+        <!-- Results table -->
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <!-- ID Order Column -->
+                <ng-container matColumnDef="order_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Order ID
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.order_id }}
+                    </td>
+                </ng-container>
+                <!-- Full Name name Column -->
+                <ng-container matColumnDef="patientName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Nombre del paciente
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.patient?.first_name }}
+                        {{ row.patient?.middle_name }}
+                        {{ row.patient?.last_name }}
+                    </td>
+                </ng-container>
+                <!-- Age Column -->
+                <ng-container matColumnDef="age">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Edad
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.patient.age }}
+                    </td>
+                </ng-container>
+                <!-- Email Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Correo electrónico
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.patient?.email ? row.patient.email : '-' }}
+                    </td>
+                </ng-container>
+                <!-- Date birth Column -->
+                <ng-container matColumnDef="date_birth">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Fecha de nacimiento
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <!-- COMMENT: The utc-6 and es-mx arguments are optionals, in the app.module the locale id was set, you can delete as wish -->
+                        {{
+                            row.patient?.date_birth
+                                | date : 'longDate'
+                                | uppercase
+                        }}
+                    </td>
+                </ng-container>
+                <!-- created at Column -->
+                <ng-container matColumnDef="created_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Fecha de creación
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.created_at | date : 'longDate' | uppercase }}
+                    </td>
+                </ng-container>
+                <!-- branch office creation Column -->
+                <ng-container matColumnDef="branch_office">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Sucursal de creación
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.branch_office.name }}
+                    </td>
+                </ng-container>
+                <!-- Doctor name column -->
+                <ng-container matColumnDef="doctorName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Nombre del médico
+                    </th>
+                    <td mat-cell *matCellDef="let row; let i = index">
+                        {{ row.doctor?.first_name }}
+                        {{ row.doctor?.middle_name }}
+                        {{ row.doctor?.last_name }}
+                    </td>
+                </ng-container>
+                <!-- Delete Detail -->
+                <ng-container matColumnDef="grandTotal">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Total estudios
+                    </th>
+                    <td mat-cell *matCellDef="let row; let i = index">
+                        {{ row.grand_total | mask : 'separator.2' : { thousandSeparator: ',', prefix: '$', } }}
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                    mat-row
+                    *matRowDef="
+                        let row;
+                        columns: displayedColumns;
+                        let i = index
+                    "
+                ></tr>
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">
+                        <div class="table-error-message">Sin resultados :(</div>
+                    </td>
+                </tr>
+            </table>
+            <mat-paginator
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page of users"
+            ></mat-paginator>
+        </div>
+    </section>
+</section>
