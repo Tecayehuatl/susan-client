@@ -61,6 +61,10 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.getPatients();
+    }
+
+    getPatients(): void {
         this.patientsService.getPatients().subscribe(({ data }) => {
             // Assign the data to the data source for the table to render
             this.dataSource = new MatTableDataSource(data as Patient[]);
@@ -75,6 +79,16 @@ export class PatientsComponent implements OnInit, AfterViewInit {
         }
 
         this.timer = setTimeout(() => {
+            const hasAnyFormInput = Object.keys(this.searchForm.value).find(
+                (key) => this.searchForm.value[key]
+            );
+
+            // Call the original function with no 'search' parameter
+            if (!hasAnyFormInput) {
+                this.getPatients();
+                return;
+            }
+
             const queryObject: { [value: string]: string } = {};
             let queryObjectEncoded = '';
 

@@ -50,6 +50,7 @@ export function transformPrices(_labStudies: Study[], ...args: any[]): number {
     const _discounts: number[] = args[0] || [];
     const _operationType: string = args[1] || undefined;
     let _totalBaseDiscounts = 0;
+    let _totalDiscounts = 0;
 
     /**
      * 1.- Getting the total
@@ -59,14 +60,10 @@ export function transformPrices(_labStudies: Study[], ...args: any[]): number {
     });
 
     /**
-     * 2.- Getting the subtotal, NO TAX INCLUDED
-     */
-    subtotal = total / 1.16;
-
-    /**
-     * 3.- This will return values only when discounts are present.
+     * 2.- This will return values only when discounts are present.
      *     Getting the discount amount
      */
+
     _totalBaseDiscounts = total;
     _discounts.map((_discountNumber: number) => {
         const singleDiscount = _totalBaseDiscounts * (_discountNumber / 100);
@@ -74,6 +71,11 @@ export function transformPrices(_labStudies: Study[], ...args: any[]): number {
 
         discount = discount + singleDiscount;
     });
+
+    /**
+     * 3.- Getting the subtotal, NO TAX INCLUDED and subtotal with DISCOUNTS included
+     */
+    subtotal = _totalBaseDiscounts / 1.16;
 
     /**
      * 4.- Getting the grand total(final payment)

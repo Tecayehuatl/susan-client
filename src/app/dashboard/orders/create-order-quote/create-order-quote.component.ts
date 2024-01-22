@@ -330,7 +330,7 @@ export class CreateOrderQuoteComponent implements OnInit {
             // 1: ongoing, 2 cancelled, 3 closed
             order_status_id: 1,
             // 1: completed, 2 pending, 3 cancelled
-            payment_status_id: 1,
+            // payment_status_id: 1,
             // 1: delivered, 2: not delivered, 3: cancelled
             delivery_status_id: 2,
             patient_id: this.data.patient_id,
@@ -340,13 +340,10 @@ export class CreateOrderQuoteComponent implements OnInit {
             discounts: this.discountsFormArray.value,
             notes: [],
         };
-        console.log(payload);
         // TODO: Return the item just created, update the table and close the dialog
         this.ordersService
             .createOrder(payload as Order)
             .subscribe((response) => {
-                // TODO: Need to close this modal if successful
-                console.log('response', response);
                 this.dialogRef.close(response);
             });
     }

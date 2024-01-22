@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Study } from '../dashboard/studies/studies.component';
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -15,6 +16,8 @@ export class StudiesService {
     }
 
     searchStudies(query: string): Observable<Study[]> {
+        console.log('query', query);
+
         return this.http.get<Study[]>(`${environment.baseUrl}/studies/search`, {
             params: {
                 q: query,
@@ -37,3 +40,10 @@ export class StudiesService {
         return this.http.delete(`${environment.baseUrl}/studies/${id}`);
     }
 }
+
+export const getStudiesResolver: ResolveFn<any> = (
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+) => {
+    return inject(StudiesService).getStudies();
+};

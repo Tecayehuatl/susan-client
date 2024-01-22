@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Study } from '../dashboard/studies/studies.component';
 import { Discount } from './discounts.service';
 import { Patient } from '../dashboard/patients/patients.component';
 import { Doctor } from '../dashboard/doctors/doctors.component';
 import { User } from '../dashboard/users/users.component';
+import { Quote } from '../dashboard/quotes/quotes.component';
 
 @Injectable({
     providedIn: 'root',
@@ -14,8 +15,18 @@ import { User } from '../dashboard/users/users.component';
 export class OrdersQuotesService {
     constructor(private http: HttpClient) {}
 
-    getOrders(): Observable<Order[]> {
-        return this.http.get<Order[]>(`${environment.baseUrl}/orders`);
+    getOrdersAndQuotes(queryOptions?: any): Observable<responseOrders> {
+        return this.http.post<responseOrders>(
+            `${environment.baseUrl}/orders/search`,
+            queryOptions,
+            {
+                // TODO: make this dynamic
+                params: {
+                    page: 1,
+                    pageSize: 100,
+                },
+            }
+        );
     }
 
     createOrder(order: Order): Observable<Order> {
@@ -46,6 +57,14 @@ export class OrdersQuotesService {
             `${environment.baseUrl}/orders/${orderId}/notes/${noteId}`
         );
     }
+}
+
+interface responseOrders {
+    currentPage: number;
+    data: Order[];
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
 }
 
 export interface Order {
