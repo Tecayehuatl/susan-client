@@ -7,42 +7,6 @@
             Borrar filtros
         </button>
     </div>
-    <div [formGroup]="testForm">
-        <pre>
-            {{ testForm?.value | json }}
-        </pre>
-        <!-- ONLY FOR TESTING PURPOSES -->
-        <mat-form-field [formGroupName]="'order'">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input
-                [formGroupName]="'created_at'"
-                [rangePicker]="pickerTest"
-            >
-                <input
-                    matStartDate
-                    #matStartDateTest
-                    formControlName="from"
-                    placeholder="Start date"
-                    (dateChange)="setDateRangeTest($event)"
-                />
-                <input
-                    matEndDate
-                    #matEndDateTest
-                    formControlName="to"
-                    placeholder="End date"
-                    (dateChange)="
-                        setDateRangeTest($event)
-                    "
-                />
-            </mat-date-range-input>
-            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle
-                matIconSuffix
-                [for]="pickerTest"
-            ></mat-datepicker-toggle>
-            <mat-date-range-picker #pickerTest></mat-date-range-picker>
-        </mat-form-field>
-    </div>
     <section>
         <mat-accordion>
             <mat-expansion-panel
@@ -180,27 +144,17 @@
                                         #matStartDate
                                         formControlName="from"
                                         placeholder="Start date"
-                                        (dateChange)="
-                                            setDateRange(
-                                                matStartDate,
-                                                matEndDate
-                                            )
-                                        "
+                                        (dateChange)="searchPatients()"
                                     />
                                     <input
                                         matEndDate
                                         #matEndDate
                                         formControlName="to"
                                         placeholder="End date"
-                                        (dateChange)="
-                                            setDateRange(
-                                                matStartDate,
-                                                matEndDate
-                                            )
-                                        "
+                                        (dateChange)="searchPatients()"
                                     />
                                 </mat-date-range-input>
-                                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                                <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
                                 <mat-datepicker-toggle
                                     matIconSuffix
                                     [for]="picker"

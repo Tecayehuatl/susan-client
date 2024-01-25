@@ -12,8 +12,7 @@ import { Doctor } from '../doctors/doctors.component';
 import { Study } from '../studies/studies.component';
 import { BranchOffice } from '../branch-offices/branch-offices.component';
 import { PaymentMethod } from 'src/app/services/payment-methods.service';
-import { DatePipe, formatDate } from '@angular/common';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-quotes',
@@ -51,6 +50,9 @@ export class QuotesComponent implements OnInit {
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
+
+    @ViewChild('matStartDate') matStartDate!: ElementRef;
+    @ViewChild('matEndDate') matEndDate!: ElementRef;
 
     // @ViewChild('matStartDate') matStartDate!: ElementRef;
     // @ViewChild('matEndDate') matEndDate!: ElementRef;
@@ -172,20 +174,24 @@ export class QuotesComponent implements OnInit {
         }
 
         this.timer = setTimeout(() => {
-            console.log('Valid form, requesting data...');
             const extractedValues = this.extractFormValues(this.searchForm);
-
-            console.log('extractedValues: ');
-            console.log(extractedValues);
 
             // Call the original function with no 'search' parameter
             if (Object.keys(extractedValues).length === 0) {
-                console.log('Calling initial call...');
                 this.getQuotes({});
                 return;
             }
 
-            console.log('Calling NO initialcall...');
+            const startDate = this.matStartDate.nativeElement.value;
+            const endDate = this.matEndDate.nativeElement.value;
+
+            if (startDate && endDate) {
+                extractedValues['order'].created_at.from =
+                    this.setDateRange(startDate);
+                extractedValues['order'].created_at.to =
+                    this.setDateRange(endDate);
+            }
+
             this.getQuotes(extractedValues);
         }, 1000);
     }
@@ -234,99 +240,16 @@ export class QuotesComponent implements OnInit {
         return numberList;
     }
 
-    setDateRange(start: any, end: any): void {
-        // Converting the start and end strings to real dates using Date object form JavaScript
-
-        // if (start.value && end.value) {
-        //     const datePipe = new DatePipe('es-MX');
-        //     const [startDay, startMonth, startYear] = start.value.split('/');
-        //     const startDateObject = new Date(
-        //         startYear,
-        //         startMonth - 1,
-        //         startDay
-        //     );
-
-        //     this.order
-        //         .get('created_at')
-        //         ?.get('from')
-        //         ?.setValue(datePipe.transform(startDateObject, 'yyyy-MM-dd'));
-
-        //     const endDatePipe = new DatePipe('es-MX');
-        //     const [endDay, endMonth, endYear] = end.value.split('/');
-        //     const endDateObject = new Date(endYear, endMonth - 1, endDay);
-
-        //     this.order
-        //         .get('created_at')
-        //         ?.get('to')
-        //         ?.setValue(endDatePipe.transform(endDateObject, 'yyyy-MM-dd'));
-
-        //     this.searchPatients();
-        // }
-
-        if (start?.value) {
-            const datePipe = new DatePipe('es-MX');
-            const [day, month, year] = start.value.split('/');
-            const dateObject = new Date(year, month - 1, day);
-
-            const temp = datePipe.transform(dateObject, 'yyyy-MM-dd');
-
-            this.order.get('created_at')?.get('from')?.patchValue(temp);
-        }
-
-        if (end?.value) {
-            const endDatePipe = new DatePipe('es-MX');
-            const [day, month, year] = end.value.split('/');
-            const dateObject = new Date(year, month - 1, day);
-
-            this.order
-                .get('created_at')
-                ?.get('to')
-                ?.patchValue(endDatePipe.transform(dateObject, 'yyyy-MM-dd'));
-        }
-
-        if (start.value && end.value) {
-            this.searchPatients();
-        }
-    }
-
-    setDateRangeTest(event: MatDatepickerInputEvent<Date>) {
-        // todo: ME QUEDE PROBANDO ESTE PEDO, NO SE PUDO CONVERTIR LA FECHA Y HAY UN ISSUE CUANDO SE SELECCIONA EL RANGO, ESTABA VIENDO EJEMPLOS DE STACKBLITZ PARA VER COMO IMPLEMENTAN, AHORITA CAMBIE EL PARÁMETRO DE ESTA FUNCION DE START, END A EVENTM, PERO AUN NO ESTOY SEGURO COMO PODRÓA AYUDAR, NO RESPETA LOS RANGOS EL COMPONENTE DE ANGULAR CUANDO CONVIERTO https://stackblitz.com/edit/angular-date-range-picker-actions-n331ly?file=src%2Fapp%2Fdate-range-picker-forms-example.html,src%2Fapp%2Fdate-range-picker-forms-example.ts, RECOMENDACION: LEER MAS LA DOCUMENTACION DEL DATE PICKER RANGE Y VER PORQUE FALLA https://v14.material.angular.io/components/datepicker/overview
-        console.log(event);
+    setDateRange(date: any): string | null {
+        const [day, month, year] = date.split('/');
+        const startDateObject = new Date(year, month - 1, day);
         const datePipe = new DatePipe('es-MX');
-        const temp = datePipe.transform(event.value, 'yyyy-MM-dd');
-        console.log('RESULTADO: ', temp);
-        this.orderTest.get('created_at')?.get('from')?.patchValue(temp);
-
-        // if (start?.value) {
-        //     console.log('start?.value: ', start?.value);
-
-        //     // const datePipe = new DatePipe('es-MX');
-        //     // const [day, month, year] = start.value.split('/');
-        //     // const dateObject = new Date(year, month - 1, day);
-
-        //     // const temp = datePipe.transform(dateObject, 'short');
-
-        //     // this.orderTest.get('created_at')?.get('from')?.patchValue(temp);
-        // }
-
-        // if (end?.value) {
-        //     const endDatePipe = new DatePipe('es-MX');
-        //     const [day, month, year] = end.value.split('/');
-        //     const dateObject = new Date(year, month - 1, day);
-
-        //     this.orderTest
-        //         .get('created_at')
-        //         ?.get('to')
-        //         ?.patchValue(endDatePipe.transform(dateObject, 'yy/MM/dd'));
-        // }
+        return datePipe.transform(startDateObject, 'yyyy-MM-dd');
     }
 
     resetFormFilters(): void {
         this.searchForm.reset();
         this.searchPatients();
-
-        // this.matStartDate.nativeElement.value = null;
-        // this.matEndDate.nativeElement.value = null;
     }
 }
 
