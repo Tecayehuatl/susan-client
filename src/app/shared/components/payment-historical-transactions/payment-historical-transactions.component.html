@@ -31,13 +31,17 @@
             <mat-icon>close</mat-icon>
             Cerrar
         </button>
-        <button
-            mat-flat-button
-            color="primary"
-            (click)="openAddPaymentDialog()"
-        >
-            <mat-icon>add</mat-icon>
-            Agregar pago
-        </button>
+        <!-- The below condition is only allowed when payment has not been completed and
+        when the order has not been cancelled -->
+        <ng-container *ngIf="paymentStatusId === 2 && orderStatusId !== 2">
+            <button
+                mat-flat-button
+                color="primary"
+                (click)="openAddPaymentDialog()"
+            >
+                <mat-icon>add</mat-icon>
+                Agregar pago
+            </button>
+        </ng-container>
     </section>
 </section>

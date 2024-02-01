@@ -16,8 +16,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PaymentHistoricalTransactionsComponent {
     @Input() title!: string;
     @Input() titleIcon!: string;
+    @Input() orderStatusId!: number;
+    @Input() paymentStatusId!: number | undefined;
     @Input() set incomingPayments(payments: Payment[]) {
-        this.paymentsTransformed = this.transformNotes(payments);
+        this.paymentsTransformed = this.transformPayments(payments);
     }
     @Input() orderId!: string;
     @Output() closeSidenavEmmit: EventEmitter<any> = new EventEmitter();
@@ -34,8 +36,7 @@ export class PaymentHistoricalTransactionsComponent {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {}
 
-    transformNotes(payments: Payment[]): HistoricInfoItem[] {
-        console.log('---transformNotes payments');
+    transformPayments(payments: Payment[]): HistoricInfoItem[] {
         console.log(payments);
 
         const transformed: HistoricInfoItem[] = payments.map(
