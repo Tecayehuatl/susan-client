@@ -49,7 +49,6 @@ const routes: Routes = [
                 path: 'patients/:patientId/:orderId',
                 resolve: {
                     orderDetail: getOrderDetailResolver,
-                    discounts: getDiscountslResolver,
                 },
                 component: OrderDetailComponent,
             },
