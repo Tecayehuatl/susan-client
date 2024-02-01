@@ -74,7 +74,7 @@ export interface Order {
     order_type_id: number;
     delivery_days?: number;
 
-    order_status_id?: number;
+    order_status_id: number;
     payment_status_id?: number;
     delivery_status_id?: number;
 
