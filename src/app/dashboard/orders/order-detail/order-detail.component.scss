@@ -53,11 +53,13 @@
     }
 
     &-text {
-        font-weight: bold;
-        font-size: 12px;
+        align-items: center;
         color: $brand-third;
-        margin-top: 0;
+        display: flex;
+        font-size: 12px;
+        font-weight: bold;
         margin-bottom: 5px;
+        margin-top: 0;
 
         &--value {
             font-weight: normal;

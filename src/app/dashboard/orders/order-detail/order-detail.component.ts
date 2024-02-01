@@ -38,7 +38,7 @@ import { AdHostDirective } from 'src/app/shared/directives/ad-host.directive';
     styleUrls: ['./order-detail.component.scss'],
 })
 export class OrderDetailComponent implements OnInit, AfterViewInit {
-    orderId!: string;
+    patientId!: string;
     displayedColumns: string[] = [
         'id',
         'studyName',
@@ -51,7 +51,6 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
     ];
     dataSource!: MatTableDataSource<any>;
     orderDetail: Order;
-    discounts: Discount[];
     isLoading = true;
     viewContainerRef!: ViewContainerRef;
     studiesFormArray!: FormArray;
@@ -70,11 +69,10 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         private orderQuoteService: OrdersQuotesService,
         private patientService: PatientsService
     ) {
-        this.orderId = this.route.snapshot.params['patientId'];
+        this.patientId = this.route.snapshot.params['patientId'];
 
         // Assign the data to the data source for the table to render
         this.orderDetail = this.route.snapshot.data['orderDetail'];
-        this.discounts = this.route.snapshot.data['discounts'];
 
         this.studiesFormArray = this.transformStudiesInFormArray(
             this.orderDetail.order_studies || []
@@ -117,6 +115,10 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
                         this.orderDetail.order_payments || [];
                     historicComponentInstance.instance.orderId =
                         this.orderDetail.order_id || '';
+                    historicComponentInstance.instance.orderStatusId =
+                        this.orderDetail.order_status_id;
+                    historicComponentInstance.instance.paymentStatusId =
+                        this.orderDetail.payment_status_id;
 
                     this.isLoading = false;
 
@@ -269,25 +271,15 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         return _discountsFormArray;
     }
 
-    findDiscountById(id: number, discounts: Discount[]): string {
-        let discountName = '';
-        discounts.map((discount) => {
-            if (discount.discount_id === id) {
-                discountName = discount.name;
-            }
-        });
-        return discountName;
-    }
-
     openChangeDeliverStatusDialog(): void {
         const dialogRef = this.dialog.open(GenericModalComponent, {
             minWidth: '800px',
             data: {
-                title: `¿SEGURO QUE DESEA MARCAR COMO COMPLETADA LA ORDEN"?`,
+                title: `¿SEGURO QUE DESEA MARCAR COMO ENTREGADA LA ORDEN"?`,
                 content:
-                    'Al completar la orden pasará cambiarán el estado de la entrega como ENTREGADO y estatus de la orden como COMPLETADA',
+                    'Al marcar la orden como entregada se entiende que ha trabajado todos los estudios y los pagos han sido cubiertos por parte del paciente.',
                 actions: {
-                    main: 'COMPLETAR ORDEN',
+                    main: 'MARCAR COMO ENTREGADA LA ORDEN',
                     secondary: 'CANCELAR',
                 },
             },
@@ -295,12 +287,20 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result === true) {
-                console.log('Changing DELIVERY statys...');
-                // this.orderQuoteService
-                //     .updateOrder(order, orderId)
-                //     .subscribe(() => {
-                //         this._snackBar.open(`ORDEN ACTUALIZADA`, 'CERRAR');
-                //     });
+                const order = {
+                    // TODO: Try to get this valeu change dynamically
+                    delivery_status_id: 1,
+                };
+                const orderId = this.orderDetail.order_id || '';
+                this.orderQuoteService
+                    .updateOrder(order, orderId)
+                    .subscribe(() => {
+                        this._snackBar.open(
+                            `ORDEN MARCADA COMO ENTREGADA`,
+                            'CERRAR'
+                        );
+                        this.getOrderDatailData(orderId);
+                    });
             }
         });
     }
@@ -321,13 +321,17 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result === true) {
-                // TODO: Cancel order
-                console.log('Cancelling order...');
-                // this.orderQuoteService
-                //     .updateOrder(order, orderId)
-                //     .subscribe(() => {
-                //         this._snackBar.open(`ORDEN ACTUALIZADA`, 'CERRAR');
-                //     });
+                const order = {
+                    // TODO: Try to get this cancelation value dynamically
+                    order_status_id: 2,
+                };
+                const orderId = this.orderDetail.order_id || '';
+                this.orderQuoteService
+                    .updateOrder(order, orderId)
+                    .subscribe(() => {
+                        this._snackBar.open(`ORDEN CANCELADA`, 'CERRAR');
+                        this.getOrderDatailData(orderId);
+                    });
             }
         });
     }
@@ -353,5 +357,11 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         //         this._snackBar.open(`ORDEN ACTUALIZADA`, 'CERRAR');
         //     });
         this._snackBar.open(`ESTUDIO ACTUALIZADO`, 'CERRAR');
+    }
+
+    getOrderDatailData(orderId: string): void {
+        this.patientService.getOrderDetail(orderId).subscribe((data) => {
+            this.orderDetail = data;
+        });
     }
 }
