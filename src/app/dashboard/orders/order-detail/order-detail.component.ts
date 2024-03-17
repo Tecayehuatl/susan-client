@@ -336,8 +336,9 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         });
     }
 
-    openAndGeneratePdfOrderQuote(): void {
+    openAndGeneratePdfOrderQuote(id: string): void {
         console.log('Generating PDF...');
+        window.open(`https://localhost:3000/orders/${id}/pdf`);
         // const dialogRef = this.dialog.open(OrderQuotePdfComponent, {
         //     minWidth: '800px',
         //     data: {

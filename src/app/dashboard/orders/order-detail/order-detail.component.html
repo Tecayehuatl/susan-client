@@ -23,7 +23,10 @@
     <mat-sidenav-content>
         <section class="order-detail">
             <h1 class="title">
-                <a class="title-link" routerLink="/dashboard/patients">PACIENTES</a> /
+                <a class="title-link" routerLink="/dashboard/patients">
+                    PACIENTES
+                </a>
+                /
                 <a
                     class="title-link title-link--brand"
                     [routerLink]="['/dashboard', 'patients', patientId]"
@@ -205,11 +208,14 @@
                         >
                             <p
                                 class="card-detail-text"
-                                (click)="openAndGeneratePdfOrderQuote()"
+                                (click)="
+                                    openAndGeneratePdfOrderQuote(
+                                        orderDetail.order_id || ''
+                                    )
+                                "
                             >
-
-                            <mat-icon>print</mat-icon>
-                            IMPRIMIR COTIZACION U ORDEN
+                                <mat-icon>print</mat-icon>
+                                IMPRIMIR COTIZACION U ORDEN
                             </p>
                         </section>
                         <section class="card-detail-text-container">
@@ -457,7 +463,7 @@
                             ></tr>
                             <tr
                                 mat-row
-                                *matRowDef="let row; columns: displayedColumns;"
+                                *matRowDef="let row; columns: displayedColumns"
                             ></tr>
                         </table>
                         <mat-paginator
@@ -486,7 +492,8 @@
                                     </li>
                                     <em
                                         *ngIf="
-                                            orderDetail.order_discounts?.length === 0
+                                            orderDetail.order_discounts
+                                                ?.length === 0
                                         "
                                     >
                                         No se agregaron descuentos :(
