@@ -48,6 +48,7 @@ export class AuthService {
                         middle_name,
                         last_name,
                         branch_office_id,
+                        roles,
                     } = jwt_decode(response.token) as UserSystem;
 
                     const user: UserSystem = {
@@ -58,6 +59,7 @@ export class AuthService {
                         middle_name: middle_name || '',
                         last_name: last_name || '',
                         branch_office_id: branch_office_id || '',
+                        roles: roles || [],
                     };
 
                     localStorage.setItem(
@@ -85,4 +87,5 @@ export interface UserSystem {
     middle_name: string;
     last_name: string;
     branch_office_id: string;
+    roles: string[];
 }

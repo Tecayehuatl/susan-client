@@ -59,6 +59,14 @@
                         <div class="user-menu-text-sub">
                             {{ userData.email }}
                         </div>
+                        <div
+                            class="user-menu-text-sub"
+                            *ngIf="userData.roles.length"
+                        >
+                            <span *ngFor="let role of userData.roles">
+                                {{ role }}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <mat-divider></mat-divider>
