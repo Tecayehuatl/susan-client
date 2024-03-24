@@ -90,7 +90,11 @@
                     matIconSuffix
                     [for]="picker"
                 ></mat-datepicker-toggle>
-                <mat-datepicker #picker startView="multi-year" disabled="false"></mat-datepicker>
+                <mat-datepicker
+                    #picker
+                    startView="multi-year"
+                    disabled="false"
+                ></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Teléfono 2</mat-label>
@@ -107,7 +111,6 @@
             <mat-form-field>
                 <mat-label>Contraseña</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Contraseña"
                     tabindex="8"
@@ -116,7 +119,11 @@
                 />
             </mat-form-field>
             <mat-slide-toggle tabindex="10" formControlName="is_active">
-                {{ userForm.get('is_active')?.value === true ? 'ACTIVO' : 'DESACTIVADO' }}
+                {{
+                    userForm.get('is_active')?.value === true
+                        ? 'ACTIVO'
+                        : 'DESACTIVADO'
+                }}
             </mat-slide-toggle>
         </section>
     </form>
