@@ -3,7 +3,11 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Study } from '../dashboard/studies/studies.component';
-import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import {
+    ActivatedRouteSnapshot,
+    ResolveFn,
+    RouterStateSnapshot,
+} from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -11,7 +15,7 @@ import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular
 export class StudiesService {
     constructor(private http: HttpClient) {}
 
-    getStudies(): Observable<Study[]>{
+    getStudies(): Observable<Study[]> {
         return this.http.get<Study[]>(`${environment.baseUrl}/studies`);
     }
 
@@ -36,7 +40,7 @@ export class StudiesService {
         );
     }
 
-    deleteStudy(id: string) {
+    deleteStudy(id: number) {
         return this.http.delete(`${environment.baseUrl}/studies/${id}`);
     }
 }

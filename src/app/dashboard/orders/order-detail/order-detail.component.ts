@@ -55,6 +55,7 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
     viewContainerRef!: ViewContainerRef;
     studiesFormArray!: FormArray;
     discountsFormArray!: FormArray;
+    orderStudies!: Study[];
 
     @ViewChild(AdHostDirective, { static: true }) adHost!: AdHostDirective;
     @ViewChild(MatSidenav) sidenav!: MatSidenav;
@@ -73,14 +74,13 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
 
         // Assign the data to the data source for the table to render
         this.orderDetail = this.route.snapshot.data['orderDetail'];
+        this.orderStudies = this.orderDetail.order_studies || [];
 
         this.studiesFormArray = this.transformStudiesInFormArray(
-            this.orderDetail.order_studies || []
+            this.orderStudies
         );
 
-        this.dataSource = new MatTableDataSource(
-            this.orderDetail.order_studies
-        );
+        this.dataSource = new MatTableDataSource(this.orderStudies);
     }
 
     ngOnInit(): void {
@@ -338,7 +338,7 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
 
     openAndGeneratePdfOrderQuote(id: string): void {
         console.log('Generating PDF...');
-        window.open(`https://localhost:3000/orders/${id}/pdf`);
+        window.open(`http://localhost:3000/orders/${id}/pdf`);
         // const dialogRef = this.dialog.open(OrderQuotePdfComponent, {
         //     minWidth: '800px',
         //     data: {
@@ -350,19 +350,56 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         // });
     }
 
-    openChangeStudyStatusDialog(studyId: string): void {
+    openChangeStudyStatusDialog(
+        orderId: string,
+        studyId: string,
+        status: boolean
+    ): void {
         // TODO: Call the right service to change the workProgress of each study
-        // this.orderQuoteService
-        //     .updateOrder(order, orderId)
-        //     .subscribe(() => {
-        //         this._snackBar.open(`ORDEN ACTUALIZADA`, 'CERRAR');
-        //     });
-        this._snackBar.open(`ESTUDIO ACTUALIZADO`, 'CERRAR');
+        this.orderQuoteService
+            .updateOrderStudyStatus(orderId, studyId, { inProgress: !status })
+            .subscribe((studyUpdated) => {
+                console.log('response, ', studyUpdated);
+                this._snackBar.open(`ESTUDIO ACTUALIZADO`, 'CERRAR');
+                // TODO: Update the row, specifically the inProgress status with the response
+
+                this.orderStudies = this.updateStudy(studyUpdated);
+                this.dataSource = new MatTableDataSource(this.orderStudies);
+                this.getOrderDatailData(orderId);
+                // TODO: Optimize this with a conditional iterating each element and when all inProgress are in false
+                // let allStudiesFinished = true;
+
+                // for (let index = 0; index < this.orderStudies.length; index++) {
+                //     const element = this.orderStudies[index];
+                //     if (element.inProgress === true) {
+                //         allStudiesFinished = false;
+                //     }
+                // }
+
+                // console.log('all', allStudiesFinished);
+                // if (allStudiesFinished) this.getOrderDatailData(orderId);
+            });
     }
 
     getOrderDatailData(orderId: string): void {
         this.patientService.getOrderDetail(orderId).subscribe((data) => {
             this.orderDetail = data;
         });
+    }
+
+    updateStudy(study: Study): Study[] {
+        const _studies: Study[] = [];
+        this.orderStudies.map((_study) => {
+            if (_study.order_study_id === study.order_study_id) {
+                _studies.push({
+                    ..._study,
+                    inProgress: study.inProgress,
+                });
+            } else {
+                _studies.push(_study);
+            }
+        });
+
+        return _studies;
     }
 }

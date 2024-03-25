@@ -148,13 +148,14 @@ export class StudiesComponent implements AfterViewInit {
 }
 
 export interface Study {
-    study_id: string;
+    order_study_id: number;
+    study_id: number;
     name: string;
     alias: string;
     price: number;
     grandTotal: number;
     discountPercentage: number;
-    progressStatus: boolean;
+    inProgress: boolean;
     deliveryDays: number;
     conditions: string;
     notes: string;

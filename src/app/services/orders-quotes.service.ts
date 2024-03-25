@@ -42,6 +42,17 @@ export class OrdersQuotesService {
         );
     }
 
+    updateOrderStudyStatus(
+        orderId: string,
+        studyId: string,
+        order: any
+    ): Observable<any> {
+        return this.http.patch<any>(
+            `${environment.baseUrl}/orders/${orderId}/studies/${studyId}`,
+            order
+        );
+    }
+
     deleteOrder(id: string) {
         return this.http.delete(`${environment.baseUrl}/orders/${id}`);
     }
