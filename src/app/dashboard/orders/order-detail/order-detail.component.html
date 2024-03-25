@@ -436,7 +436,7 @@
                                     >
                                         <button
                                             class="no-wrap"
-                                            mat-flat-button
+                                            mat-stroked-button
                                             [color]="
                                                 row.inProgress === true
                                                     ? 'warn'
@@ -444,15 +444,27 @@
                                             "
                                             (click)="
                                                 openChangeStudyStatusDialog(
-                                                    row.study_id.toString()
+                                                    orderDetail.order_id || '',
+                                                    row.study_id.toString(),
+                                                    row.inProgress
                                                 )
                                             "
                                         >
                                             {{
                                                 row.inProgress === true
                                                     ? 'Completar'
-                                                    : 'No completado'
+                                                    : 'Completado'
                                             }}
+                                            <mat-icon
+                                                *ngIf="row.inProgress === true"
+                                            >
+                                                cancel
+                                            </mat-icon>
+                                            <mat-icon
+                                                *ngIf="row.inProgress === false"
+                                            >
+                                                task_alt
+                                            </mat-icon>
                                         </button>
                                     </ng-container>
                                 </td>
