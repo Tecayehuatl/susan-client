@@ -62,6 +62,17 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-form-field>
+                <mat-label>Roles del usuario</mat-label>
+                <mat-select multiple formControlName="roles">
+                    <mat-option
+                        *ngFor="let rol of userRoles | keyvalue"
+                        [value]="rol.value"
+                    >
+                        {{ rol.key | uppercase }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </section>
         <section class="grid-item">
             <mat-form-field>

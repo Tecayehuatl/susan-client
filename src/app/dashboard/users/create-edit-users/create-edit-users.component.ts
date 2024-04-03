@@ -16,6 +16,7 @@ export class CreateEditUsersComponent implements OnInit {
     userForm!: FormGroup;
     minDate!: Date;
     maxDate!: Date;
+    userRoles = UserRole;
 
     constructor(
         public dialogRef: MatDialogRef<CreateEditUsersComponent>,
@@ -45,6 +46,7 @@ export class CreateEditUsersComponent implements OnInit {
             password: [''],
             date_birth: ['', Validators.required],
             is_active: [true],
+            roles: [[], Validators.required],
         });
     }
 
@@ -64,6 +66,7 @@ export class CreateEditUsersComponent implements OnInit {
                 email: data.email,
                 date_birth: data.date_birth,
                 is_active: data.is_active,
+                roles: data.active_roles,
             });
         } else {
             this.mode = 'create';
@@ -99,6 +102,13 @@ export class CreateEditUsersComponent implements OnInit {
                 });
         }
     }
+}
+
+enum UserRole {
+    SUPER = 'super',
+    ADMIN = 'admin',
+    CASHIER = 'cashier',
+    VIEWER = 'viewer',
 }
 
 export interface DialogData {
