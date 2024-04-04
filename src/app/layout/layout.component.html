@@ -62,7 +62,7 @@
                         </div>
                         <div
                             class="user-menu-text-sub"
-                            *ngIf="userData.roles.length"
+                            *ngIf="userData.roles?.length"
                         >
                             <span *ngFor="let role of userData.roles">
                                 {{ role }}
