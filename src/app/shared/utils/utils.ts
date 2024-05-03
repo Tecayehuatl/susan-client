@@ -50,7 +50,6 @@ export function transformPrices(_labStudies: Study[], ...args: any[]): number {
     const _discounts: number[] = args[0] || [];
     const _operationType: string = args[1] || undefined;
     let _totalBaseDiscounts = 0;
-    let _totalDiscounts = 0;
 
     /**
      * 1.- Getting the total
