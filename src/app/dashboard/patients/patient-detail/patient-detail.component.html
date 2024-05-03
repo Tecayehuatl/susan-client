@@ -120,7 +120,9 @@
             </section>
             <section class="patient-container-orders">
                 <mat-tab-group>
-                    <mat-tab label="ORDENES">
+                    <mat-tab
+                        label="ORDENES ({{ patientAllOrders.length }})"
+                    >
                         <section class="mat-tab-container">
                             <app-orders
                                 title="Ordenes"
@@ -131,7 +133,9 @@
                             ></app-orders>
                         </section>
                     </mat-tab>
-                    <mat-tab label="COTIZACIONES">
+                    <mat-tab
+                        label="COTIZACIONES ({{ patientAllQuotes.length }})"
+                    >
                         <section class="mat-tab-container">
                             <app-orders
                                 title="Cotizaciones"

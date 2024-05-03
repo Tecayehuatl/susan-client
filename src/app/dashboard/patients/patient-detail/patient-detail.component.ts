@@ -20,9 +20,11 @@ export class PatientDetailComponent implements OnInit {
     paymentMethods: PaymentMethod[] = [];
     doctors: Doctor[] = [];
     patient!: Patient;
+
     patientAllOrdersQuotes!: Order[];
     patientAllOrders!: Order[];
     patientAllQuotes!: Order[];
+
     @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
 
     constructor(
@@ -38,14 +40,7 @@ export class PatientDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // 1: order
-        this.patientAllOrders = this.patientAllOrdersQuotes.filter(
-            (order) => order.order_type_id === 1
-        );
-        // 2: quote
-        this.patientAllQuotes = this.patientAllOrdersQuotes.filter(
-            (order) => order.order_type_id === 2
-        );
+        this.filterOrdersAndQuotes(this.patientAllOrdersQuotes);
     }
 
     openCreateOrderQuote(): void {
@@ -72,20 +67,13 @@ export class PatientDetailComponent implements OnInit {
                 balance: response.balance,
             } as Order;
 
-            // 1: Stands for order
-            if (newItemAdded.order_type_id == 1) {
-                this.patientAllOrders = [
-                    newItemAdded,
-                    ...this.patientAllOrders,
-                ];
-            }
-            // 2: Stands for quote
-            if (newItemAdded.order_type_id == 2) {
-                this.patientAllQuotes = [
-                    newItemAdded,
-                    ...this.patientAllQuotes,
-                ];
-            }
+            this.patientAllOrdersQuotes = [
+                ...this.patientAllOrdersQuotes,
+                newItemAdded,
+            ];
+
+            this.filterOrdersAndQuotes(this.patientAllOrdersQuotes);
+
             // Moving to the order or quote
             this.tabGroup.selectedIndex = newItemAdded.order_type_id - 1;
 
@@ -93,7 +81,34 @@ export class PatientDetailComponent implements OnInit {
         });
     }
 
-    setNewincomingOrdersQuotes(newOrderQuotes: Order[]): void {
-        this.patientAllOrders = newOrderQuotes;
+    setNewincomingOrdersQuotes(elementRemoved: Order): void {
+        // console.log("elementRemoved");
+        // console.log(elementRemoved);
+        // console.log("patientAllOrdersQuotes");
+        // console.log(this.patientAllOrdersQuotes);
+
+        /**
+         * 1.- Remove the elementRemoved from patientAllOrdersQuotes
+         * 2.- Call the filterOrdersAndQuotes function with patientAllOrdersQuotes as argument
+         */
+
+        debugger;
+        // NOS QUEDAMOS DEBUGGEANDO ESTE ISSUE, VER QUE PASA CON LOS ELIMINADOS Y QUE FILTRE BIEN
+        const _patientAllQuotes = this.patientAllOrdersQuotes;
+        const filteredData = _patientAllQuotes.filter(element => element.order_id !== elementRemoved.order_id);
+        console.log("_patientAllQuotes filtered");
+        console.log(filteredData);
+        this.filterOrdersAndQuotes(filteredData);
+    }
+
+    filterOrdersAndQuotes(allOrdersAndQuotes: Order[]): void {
+        // 1: order
+        this.patientAllOrders = allOrdersAndQuotes.filter(
+            (order) => order.order_type_id === 1
+        );
+        // 2: quote
+        this.patientAllQuotes = allOrdersAndQuotes.filter(
+            (order) => order.order_type_id === 2
+        );
     }
 }
