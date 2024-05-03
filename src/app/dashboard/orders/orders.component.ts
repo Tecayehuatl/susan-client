@@ -41,8 +41,8 @@ export class OrdersComponent {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     }
-    @Output() setNewincomingOrdersQuotes: EventEmitter<Order[]> =
-        new EventEmitter<Order[]>();
+    @Output() setNewincomingOrdersQuotes: EventEmitter<Order> =
+        new EventEmitter<Order>();
 
     dataSource: MatTableDataSource<any> = new MatTableDataSource(
         this.sortedOrdersQuotes
@@ -90,23 +90,26 @@ export class OrdersComponent {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result === true) {
-                this.orderQuoteService.deleteOrder(orderId).subscribe(() => {
-                    this.removeAt(index);
-                    this._snackBar.open(`ORDEN BORRADA`, 'CERRAR');
-                });
+                this.removeAt(index);
+                // this.orderQuoteService.deleteOrder(orderId).subscribe(() => {
+                //     this.removeAt(index);
+                //     this._snackBar.open(`ORDEN BORRADA`, 'CERRAR');
+                // });
             }
         });
     }
 
     removeAt(index: number): void {
-        const data = this.dataSource.data;
-        data.splice(
+        const currentTableDataSource = this.dataSource.data;
+
+        const elementoEliminado = currentTableDataSource.splice(
             this.paginator.pageIndex * this.paginator.pageSize + index,
             1
-        );
-        this.dataSource.data = data;
+        )[0];
+
+        this.dataSource.data = currentTableDataSource;
         // Notifying to the parent that one item has been removed
-        this.setNewincomingOrdersQuotes.emit(data);
+        this.setNewincomingOrdersQuotes.emit(elementoEliminado);
     }
 
     sortDataEvent(sort: Sort): void {
