@@ -47,48 +47,13 @@
                                             let discount of discountsOptionsList
                                         "
                                     >
-                                        {{ discount.name }} -
-                                        <!-- {{ discount?.discountPercentage }}% -->
-                                        {{
-                                            discountControl.value[
-                                                'discountPercentage'
-                                            ]
-                                        }}%
+                                        <em>{{ discount.name }}</em>
+                                        -
+                                        <strong>
+                                            {{ discount.discountPercentage }}%
+                                        </strong>
                                     </mat-option>
-                                    <!-- TODO: the discount_id 999 is harcoded, is for a custom discount -->
-                                    <!-- <mat-option
-                                        autocomplete="disabled"
-                                        value="0"
-                                        (click)="
-                                            selectDiscount(index, {
-                                                discount_id: -1,
-                                                name: 'custom',
-                                                discountPercentage: 0,
-                                                isActive: true
-                                            })
-                                        "
-                                    >
-                                        * PERSONALIZADO
-                                    </mat-option> -->
                                 </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div>
-                            <mat-form-field
-                                *ngIf="
-                                    discountControl.value['name']?.toLowerCase() === 'personalizado'
-                                "
-                            >
-                            <mat-label>Descuento especializado:</mat-label>
-                                <input
-                                    formControlName="discountPercentage"
-                                    matInput
-                                    placeholder="% de descuento"
-                                    tabindex=""
-                                    autocomplete="disabled"
-                                    suffix=" %"
-                                    mask="separator.2"
-                                />
                             </mat-form-field>
                         </div>
                     </div>
@@ -107,9 +72,7 @@
                     class="no-discounts"
                     *ngIf="discountsArrayControl.controls.length === 0"
                 >
-                    <p>
-                        No hay descuentos agregados :(
-                    </p>
+                    <p>No hay descuentos agregados :(</p>
                 </div>
             </ul>
         </ng-container>
