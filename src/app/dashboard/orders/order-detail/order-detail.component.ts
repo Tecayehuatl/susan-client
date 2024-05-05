@@ -366,18 +366,7 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
                 this.orderStudies = this.updateStudy(studyUpdated);
                 this.dataSource = new MatTableDataSource(this.orderStudies);
                 this.getOrderDatailData(orderId);
-                // TODO: Optimize this with a conditional iterating each element and when all inProgress are in false
-                // let allStudiesFinished = true;
-
-                // for (let index = 0; index < this.orderStudies.length; index++) {
-                //     const element = this.orderStudies[index];
-                //     if (element.inProgress === true) {
-                //         allStudiesFinished = false;
-                //     }
-                // }
-
-                // console.log('all', allStudiesFinished);
-                // if (allStudiesFinished) this.getOrderDatailData(orderId);
+                //TODO: Verify why the service is returning sometimes the same value with no change, example: if I change the status of a single study, there're times where the services is not returning the opposite value, just returns the same value. It works for now.
             });
     }
 
