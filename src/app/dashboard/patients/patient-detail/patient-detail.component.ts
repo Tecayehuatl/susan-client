@@ -82,23 +82,12 @@ export class PatientDetailComponent implements OnInit {
     }
 
     setNewincomingOrdersQuotes(elementRemoved: Order): void {
-        // console.log("elementRemoved");
-        // console.log(elementRemoved);
-        // console.log("patientAllOrdersQuotes");
-        // console.log(this.patientAllOrdersQuotes);
+        const filteredData = this.patientAllOrdersQuotes.filter(
+            (element) => element.order_id !== elementRemoved.order_id
+        );
 
-        /**
-         * 1.- Remove the elementRemoved from patientAllOrdersQuotes
-         * 2.- Call the filterOrdersAndQuotes function with patientAllOrdersQuotes as argument
-         */
-
-        debugger;
-        // NOS QUEDAMOS DEBUGGEANDO ESTE ISSUE, VER QUE PASA CON LOS ELIMINADOS Y QUE FILTRE BIEN
-        const _patientAllQuotes = this.patientAllOrdersQuotes;
-        const filteredData = _patientAllQuotes.filter(element => element.order_id !== elementRemoved.order_id);
-        console.log("_patientAllQuotes filtered");
-        console.log(filteredData);
-        this.filterOrdersAndQuotes(filteredData);
+        this.patientAllOrdersQuotes = filteredData;
+        this.filterOrdersAndQuotes(this.patientAllOrdersQuotes);
     }
 
     filterOrdersAndQuotes(allOrdersAndQuotes: Order[]): void {

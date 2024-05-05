@@ -90,11 +90,10 @@ export class OrdersComponent {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result === true) {
-                this.removeAt(index);
-                // this.orderQuoteService.deleteOrder(orderId).subscribe(() => {
-                //     this.removeAt(index);
-                //     this._snackBar.open(`ORDEN BORRADA`, 'CERRAR');
-                // });
+                this.orderQuoteService.deleteOrder(orderId).subscribe(() => {
+                    this.removeAt(index);
+                    this._snackBar.open(`ORDEN BORRADA`, 'CERRAR');
+                });
             }
         });
     }
