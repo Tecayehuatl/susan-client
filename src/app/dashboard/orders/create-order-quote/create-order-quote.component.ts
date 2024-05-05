@@ -259,7 +259,9 @@ export class CreateOrderQuoteComponent implements OnInit {
         this.discountsService
             .getDiscounts()
             .subscribe((discounts: Discount[]) => {
-                this.discounts = discounts;
+                this.discounts = discounts.filter(
+                    (discount) => discount.isActive
+                );
             });
     }
 
