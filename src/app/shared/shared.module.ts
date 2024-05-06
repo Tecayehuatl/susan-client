@@ -19,6 +19,7 @@ import { NotesComponent } from './components/notes/notes.component';
 import { CreateEditPaymentsComponent } from './components/payments/create-edit-payments/create-edit-payments.component';
 import { CreateEditNotesComponent } from './components/notes/create-edit-notes/create-edit-notes.component';
 import { LabelComponent } from './components/label/label.component';
+import { ToUppercaseDirective } from './directives/to-uppercase.directive';
 
 const imports = [
     AdHostDirective,
@@ -33,6 +34,7 @@ const imports = [
     CreateEditPaymentsComponent,
     LabelComponent,
     CreateEditNotesComponent,
+    ToUppercaseDirective,
 ];
 
 @NgModule({
