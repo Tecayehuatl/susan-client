@@ -13,23 +13,23 @@
             <mat-form-field>
                 <mat-label>Nombre(s)</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Nombre(s)"
                     tabindex="1"
                     autocomplete="disabled"
                     formControlName="first_name"
+                    appToUppercase
                 />
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Apellido Materno</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Apellido Materno"
                     tabindex="3"
                     autocomplete="disabled"
                     formControlName="last_name"
+                    appToUppercase
                 />
             </mat-form-field>
             <mat-form-field>
@@ -69,12 +69,12 @@
             <mat-form-field>
                 <mat-label>Apellido Paterno</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Apellido Paterno"
                     tabindex="2"
                     autocomplete="disabled"
                     formControlName="middle_name"
+                    appToUppercase
                 />
             </mat-form-field>
             <mat-form-field>
@@ -107,6 +107,7 @@
                     tabindex="8"
                     autocomplete="disabled"
                     formControlName="email"
+                    appToUppercase
                 />
             </mat-form-field>
         </section>
