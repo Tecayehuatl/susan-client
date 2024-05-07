@@ -13,29 +13,28 @@
             <mat-form-field>
                 <mat-label>Nombre</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Nombre"
                     tabindex="1"
                     autocomplete="disabled"
                     formControlName="first_name"
+                    appToUppercase
                 />
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Apellido materno</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Apellido materno"
                     tabindex="3"
                     autocomplete="disabled"
                     formControlName="last_name"
+                    appToUppercase
                 />
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Teléfono 2</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Teléfono 2"
                     tabindex="5"
@@ -47,12 +46,13 @@
             <mat-form-field>
                 <mat-label>Email</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Email"
                     tabindex="7"
                     autocomplete="disabled"
                     formControlName="email"
+                    appToUppercase
+                    appDynamicValidator
                 />
             </mat-form-field>
         </section>
@@ -60,18 +60,17 @@
             <mat-form-field>
                 <mat-label>Apellido paterno</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Apellido paterno"
                     tabindex="2"
                     autocomplete="disabled"
                     formControlName="middle_name"
+                    appToUppercase
                 />
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Teléfono 1</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Teléfono 1"
                     tabindex="4"
@@ -83,12 +82,12 @@
             <mat-form-field>
                 <mat-label>Cédula profesional</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Cédula profesional"
                     tabindex="6"
                     autocomplete="disabled"
                     formControlName="cedula"
+                    appToUppercase
                 />
             </mat-form-field>
         </section>

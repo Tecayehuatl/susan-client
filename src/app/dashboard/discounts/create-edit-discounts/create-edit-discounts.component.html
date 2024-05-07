@@ -13,23 +13,23 @@
             <mat-form-field>
                 <mat-label>Nombre del descuento</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Nombre del descuento"
                     tabindex="1"
                     autocomplete="disabled"
                     formControlName="name"
+                    appToUppercase
                 />
             </mat-form-field>
             <mat-slide-toggle tabindex="3" formControlName="isActive">
-                ¿Iniciar activo? {{ discountsForm.get('isActive')?.value ? 'Sí' : 'No' }}
+                ¿Iniciar activo?
+                {{ discountsForm.get('isActive')?.value ? 'Sí' : 'No' }}
             </mat-slide-toggle>
         </section>
         <section class="grid-item">
             <mat-form-field>
                 <mat-label>Porcentaje de descuento</mat-label>
                 <input
-                    class="uppercase"
                     matInput
                     placeholder="Porcentaje de descuento"
                     tabindex="2"
