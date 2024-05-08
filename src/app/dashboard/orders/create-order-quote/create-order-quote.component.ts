@@ -139,7 +139,8 @@ export class CreateOrderQuoteComponent implements OnInit {
         this.orderForm = this.fb.group({
             formArray: this.fb.array([
                 this.fb.group({
-                    orderType: ['', Validators.required],
+                    // Set default as order
+                    orderType: ['1', Validators.required],
                     creationDate: [
                         { disabled: true, value: new Date() },
                         Validators.required,
