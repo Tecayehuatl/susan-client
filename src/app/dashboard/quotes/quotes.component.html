@@ -214,6 +214,15 @@
                         {{ row.order_id }}
                     </td>
                 </ng-container>
+                <!-- created at Column -->
+                <ng-container matColumnDef="created_at">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Fecha de creación
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.created_at | date : 'longDate' | uppercase }}
+                    </td>
+                </ng-container>
                 <!-- Full Name name Column -->
                 <ng-container matColumnDef="patientName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -255,15 +264,6 @@
                                 | date : 'longDate'
                                 | uppercase
                         }}
-                    </td>
-                </ng-container>
-                <!-- created at Column -->
-                <ng-container matColumnDef="created_at">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                        Fecha de creación
-                    </th>
-                    <td mat-cell *matCellDef="let row">
-                        {{ row.created_at | date : 'longDate' | uppercase }}
                     </td>
                 </ng-container>
                 <!-- branch office creation Column -->

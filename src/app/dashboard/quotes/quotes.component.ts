@@ -23,11 +23,11 @@ export class QuotesComponent implements OnInit {
     title = 'PACIENTES';
     displayedColumns: string[] = [
         'order_id',
+        'created_at',
         'patientName',
         'age',
         'email',
         'date_birth',
-        'created_at',
         'branch_office',
         'doctorName',
         'grandTotal',
