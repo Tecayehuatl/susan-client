@@ -85,6 +85,12 @@ export interface Order {
     order_type_id: number;
     delivery_days?: number;
 
+    total?: number;
+    subtotal?: number;
+    discount?: number;
+    sales_tax?: number;
+    grand_total?: number;
+
     order_status_id: number;
     payment_status_id?: number;
     delivery_status_id?: number;

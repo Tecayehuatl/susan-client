@@ -484,35 +484,113 @@
                         ></mat-paginator>
                     </mat-card>
                     <section class="studies__item studies__item--summary">
-                        <section class="summary">
-                            <app-order-summary
-                                [studiesForm]="studiesFormArray"
-                                [discountsForm]="discountsFormArray"
-                            ></app-order-summary>
+                        <section class="discounts">
+                            <mat-card>
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        Descuentos aplicados
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <ol>
+                                        <li
+                                            *ngFor="
+                                                let discount of orderDetail.order_discounts
+                                            "
+                                        >
+                                            {{ discount.name }}
+                                            - {{ discount.discountPercentage }}%
+                                        </li>
+                                        <em
+                                            *ngIf="
+                                                orderDetail.order_discounts
+                                                    ?.length === 0
+                                            "
+                                        >
+                                            Sin descuentos agregados :(
+                                        </em>
+                                    </ol>
+                                </mat-card-content>
+                            </mat-card>
                         </section>
-                        <mat-card class="discounts">
-                            <h4>Descuentos aplicados</h4>
-                            <div>
-                                <ol>
-                                    <li
-                                        *ngFor="
-                                            let discount of orderDetail.order_discounts
-                                        "
-                                    >
-                                        {{ discount.name }}
-                                        - {{ discount.discountPercentage }}%
-                                    </li>
-                                    <em
-                                        *ngIf="
-                                            orderDetail.order_discounts
-                                                ?.length === 0
-                                        "
-                                    >
-                                        No se agregaron descuentos :(
-                                    </em>
-                                </ol>
-                            </div>
-                        </mat-card>
+                        <!-- Summary of the order -->
+                        <section>
+                            <mat-card>
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        Resúmen de la orden
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <p class="summary-text">
+                                        <span class="summary-text-container">
+                                            <span class="summary-text-left">
+                                                Total
+                                            </span>
+                                            <!-- TODO: Remove the || 0 conditoin, modify the interface -->
+                                            <span class="summary-text-right">
+                                                {{ orderDetail.total || 0 | mask
+                                                    : 'separator.2'
+                                                    : { thousandSeparator: ',', prefix: '$', }
+                                                }}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="summary-text">
+                                        <span class="summary-text-container">
+                                            <span class="summary-text-left">
+                                                Subtotal
+                                            </span>
+                                            <span class="summary-text-right">
+                                                {{ orderDetail.subtotal || 0 | mask
+                                                    : 'separator.2'
+                                                    : { thousandSeparator: ',', prefix: '$', }
+                                                }}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="summary-text">
+                                        <span class="summary-text-container">
+                                            <span class="summary-text-left">
+                                                Descuentos
+                                            </span>
+                                            <span class="summary-text-right">
+                                                {{ orderDetail.discount || 0 | mask
+                                                    : 'separator.2'
+                                                    : { thousandSeparator: ',', prefix: '$', }
+                                                }}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="summary-text">
+                                        <span class="summary-text-container">
+                                            <span class="summary-text-left">
+                                                I.V.A.
+                                            </span>
+                                            <span class="summary-text-right">
+                                                {{ orderDetail.sales_tax || 0 | mask
+                                                    : 'separator.2'
+                                                    : { thousandSeparator: ',', prefix: '$', }
+                                                }}
+                                            </span>
+                                        </span>
+                                    </p>
+                                    <p class="summary-text summary-text--alt-1">
+                                        <span class="summary-text-container">
+                                            <span class="summary-text-left">
+                                                Total a pagar
+                                            </span>
+                                            <span class="summary-text-right">
+                                                {{ orderDetail.grand_total || 0 | mask
+                                                    : 'separator.2'
+                                                    : { thousandSeparator: ',', prefix: '$', }
+                                                }}
+                                            </span>
+                                        </span>
+                                    </p>
+                                </mat-card-content>
+                            </mat-card>
+                        </section>
                     </section>
                 </div>
             </mat-card>
