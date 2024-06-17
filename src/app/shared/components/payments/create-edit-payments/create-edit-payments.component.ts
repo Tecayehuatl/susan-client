@@ -41,10 +41,7 @@ export class CreateEditPaymentsComponent {
         payments: this._fb.array([
             this._fb.group({
                 payment_id: [null, Validators.required],
-                total_transaction: [
-                    null,
-                    [Validators.required, Validators.min(1)],
-                ],
+                total_transaction: [null, [Validators.required]],
                 cash_received: [null],
                 change_due: [null],
             }),

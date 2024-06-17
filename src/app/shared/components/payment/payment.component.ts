@@ -63,15 +63,11 @@ export class PaymentComponent implements OnInit {
 
         this.paymentIdControl.valueChanges.subscribe((value) => {
             if (value && value === 1) {
-                this.cashReceivedControl.setValidators([
-                    Validators.required,
-                    Validators.min(1),
-                ]);
+                this.cashReceivedControl.setValidators([Validators.required]);
                 this.cashReceivedControl.updateValueAndValidity();
             } else {
                 this.cashReceivedControl.removeValidators([
                     Validators.required,
-                    Validators.min(1),
                 ]);
                 this.cashReceivedControl.setValue(null);
                 this.changeDueControl.setValue(null);
