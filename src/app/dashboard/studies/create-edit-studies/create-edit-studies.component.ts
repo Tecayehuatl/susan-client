@@ -54,6 +54,8 @@ export class CreateEditStudiesComponent implements OnInit {
             deliveryDays: [null, Validators.required],
             conditions: ['', Validators.required],
             notes: [''],
+            //TODO: Use some dynamic thing
+            studieType: ['ÁREA CLÍNICAL'],
         });
 
         this.priceControl?.valueChanges.subscribe((value) => {
