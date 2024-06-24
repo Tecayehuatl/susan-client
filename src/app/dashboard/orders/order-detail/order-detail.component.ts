@@ -292,15 +292,21 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
                     delivery_status_id: 1,
                 };
                 const orderId = this.orderDetail.order_id || '';
-                this.orderQuoteService
-                    .updateOrder(order, orderId)
-                    .subscribe(() => {
+                this.orderQuoteService.updateOrder(order, orderId).subscribe({
+                    next: (result) => {
                         this._snackBar.open(
                             `ORDEN MARCADA COMO ENTREGADA`,
                             'CERRAR'
                         );
                         this.getOrderDatailData(orderId);
-                    });
+                    },
+                    error: (error) => {
+                        this._snackBar.open(
+                            `ERROR: Hubo un error al procesar su petición, verifique la acción a ejecutar.`,
+                            'CERRAR'
+                        );
+                    },
+                });
             }
         });
     }
