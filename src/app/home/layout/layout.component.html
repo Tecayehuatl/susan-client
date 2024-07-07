@@ -20,59 +20,6 @@
             </div>
         </div>
     </header>
-    <section class="hero">
-        <div class="hero-container">
-            <h1 class="hero-title">
-                ¡Si cuidas de tu salud, cuidas a los que mas amas!
-            </h1>
-            <div class="hero-button-container">
-                <button class="hero-button">Cotiza tus estudios</button>
-            </div>
-            <div class="hero-image-container">
-                <img
-                    class="hero-image"
-                    src="../../../assets/images/trabajadores-salud-1.png"
-                    alt="Personal de medicina"
-                />
-            </div>
-        </div>
-    </section>
-    <div class="spacer"></div>
-    <section id="about-us" class="about-us">
-        <div
-            class="about-us-descriptions"
-            *ngFor="let description of descriptions"
-        >
-            <h2 class="about-us__title"></h2>
-            <div>
-                <h3>{{ description.title }}</h3>
-                <p>{{ description.description }}</p>
-            </div>
-        </div>
-        <div class="about-us-descriptions">
-            <h2 class="about-us__title about-us__title--alt1"></h2>
-            <div class="about-us-values-container">
-                <div class="about-us__value">
-                    <p class="about-us__value__title">lorem</p>
-                </div>
-            </div>
-        </div>
-        <div class="about-us-image-container">
-            <img
-                src="../../../assets/images/trabajadores-salud-2.png"
-                alt="Trabajadores de la salud"
-            />
-        </div>
-    </section>
-    <section id="locate-me" class="location">
-        <div class="location-container">
-            <h2 class="location__title"></h2>
-            <a>¿Cómo llegar?</a>
-            <div class="location-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d796.3903711642275!2d-98.30550621479846!3d19.16681314757739!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc55e2665a131%3A0x2b72c16be54b4d63!2sBiotecsa%20An%C3%A1lisis%20Cl%C3%ADnicos!5e0!3m2!1ses-419!2smx!4v1720328276129!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-    </section>
     <main class="main">
         <router-outlet></router-outlet>
     </main>
@@ -112,6 +59,12 @@
         </section>
     </footer>
     <div class="whatsapp">
-        <div class="whatsapp-container"></div>
+        <div class="whatsapp-container">
+            <img
+                class="whatsapp__logo"
+                src="../../../assets/images/whatsapp-icon.png"
+                alt="Whatsapp logo"
+            />
+        </div>
     </div>
 </section>

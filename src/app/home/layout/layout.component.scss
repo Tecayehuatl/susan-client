@@ -92,3 +92,21 @@
         }
     }
 }
+
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    &-container {
+        cursor: pointer;
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+        overflow: hidden;
+    }
+
+    &__logo {
+        width: 100%;
+    }
+}
