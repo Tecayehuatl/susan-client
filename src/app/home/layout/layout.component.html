@@ -24,47 +24,59 @@
         <router-outlet></router-outlet>
     </main>
     <footer class="footer">
-        <section class="footer-logo-menu">
-            <div class="footer-logo-container">
-                <img
-                    class="footer-logo"
-                    src="../../../assets/images/biotecsa-logo-white.png"
-                    alt="Laboratorios Biotecsa logo"
-                />
-            </div>
-            <div class="footer-menu-container" style="border: 1px dottet red;">
-                <ul class="footer-menu__list">
-                    <li
-                        class="footer-menu__list__item"
-                        *ngFor="let item of footerMenu"
+        <section class="footer-container">
+            <section class="footer-logo-menu">
+                <div class="footer-logo-container">
+                    <img
+                        class="footer-logo"
+                        src="../../../assets/images/biotecsa-logo-white.png"
+                        alt="Laboratorios Biotecsa logo"
+                    />
+                </div>
+                <div class="footer-menu-container">
+                    <ul class="footer-menu__list">
+                        <li
+                            class="footer-menu__list__item"
+                            *ngFor="let item of footerMenu"
+                        >
+                            {{ item.name }}
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="footer-social">
+                <div class="footer-social-container">
+                    <a
+                        href="https://www.facebook.com/BiotecsaLab"
+                        target="_blank"
                     >
-                        {{ item.name }}
-                    </li>
-                </ul>
-            </div>
-        </section>
-        <section class="footer-social">
-            <div class="footer-social-container">
-                <img
-                    class="footer-social__logo"
-                    src="../../../assets/images/facebook-logo.png"
-                    alt=""
-                />
-            </div>
-        </section>
-        <section class="footer-info">
-            Creado por:
-            <a class="footer-info__link" href="">Enrique Tecayehuatl</a>
-            - &reg; {{ currentYear }}
+                        <img
+                            class="footer-social__logo"
+                            src="../../../assets/images/facebook-logo.png"
+                            alt=""
+                        />
+                    </a>
+                </div>
+            </section>
+            <section class="footer-info">
+                Creado por:
+                <a class="footer-info__link" href="">Enrique Tecayehuatl</a>
+                - &reg; {{ currentYear }}
+            </section>
         </section>
     </footer>
     <div class="whatsapp">
         <div class="whatsapp-container">
-            <img
-                class="whatsapp__logo"
-                src="../../../assets/images/whatsapp-icon.png"
-                alt="Whatsapp logo"
-            />
+            <a
+                href="https://wa.me/525517298887?text=%C2%A1Hola%2C%20me%20gustar%C3%ADa%20una%20cotizaci%C3%B3n%21"
+                target="_blank"
+            >
+                <img
+                    class="whatsapp__logo"
+                    src="../../../assets/images/whatsapp-icon.png"
+                    alt="Whatsapp logo"
+                />
+            </a>
         </div>
     </div>
 </section>

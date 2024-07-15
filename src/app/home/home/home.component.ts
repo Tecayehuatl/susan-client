@@ -18,4 +18,31 @@ export class HomeComponent {
                 'Laboratorios Biotecsa busca ser un laboratorio clínico líder reconocido en su región para el 2024, aplicando esquemas de calidad en el servicio, eficiencia y capacitación continua, cumpliendo las leyes, reglas y regulaciones aplicables además de ofrecer tecnología de vanguardia para otorgar resultados confiables.',
         },
     ];
+
+    public companyValues = [
+        {
+            name: 'Confidencialidad',
+        },
+        {
+            name: 'Compromiso ',
+        },
+        {
+            name: 'Empatía ',
+        },
+        {
+            name: 'Ética profesional ',
+        },
+        {
+            name: 'Honestidad ',
+        },
+        {
+            name: 'Imparcialidad ',
+        },
+        {
+            name: 'Integridad ',
+        },
+        {
+            name: 'Responsabilidad',
+        },
+    ];
 }

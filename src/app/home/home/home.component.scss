@@ -1,18 +1,17 @@
 @import 'colors';
 
 .hero {
-    border: 1px dotted rgb(119, 0, 255);
-    min-height: 750px;
-    position: relative;
-    max-width: 1280px;
+    box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
+    max-width: 1280px;
+    min-height: 750px;
+    position: relative;
 
     &-container {
-        border: 1px dotted green;
-        max-width: 615px;
-        margin-top: 160px;
         margin-left: 150px;
+        margin-top: 160px;
+        max-width: 615px;
     }
 
     &-image-container {
@@ -27,11 +26,10 @@
     }
 
     &-title {
-        font-family: 'LEMON MILK Pro';
         color: $brand-third;
         font-weight: bolder;
         line-height: 1.5;
-        font-size: 48px;
+        font-size: 52px;
         margin-bottom: 30px;
     }
 }
@@ -40,4 +38,99 @@
     background-color: $brand-main;
     height: 80px;
     width: 100%;
+}
+
+.about-us {
+    margin-bottom: 100px;
+    position: relative;
+
+    &-container {
+        box-sizing: border-box;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1280px;
+    }
+
+    &__title {
+        color: $brand-secondary;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 1.5;
+
+        &--alt-1 {
+            text-align: right;
+        }
+    }
+
+    &__subtitle {
+        color: $brand-third;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    &-values {
+        box-sizing: border-box;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1280px;
+
+        &-container {
+            align-content: stretch;
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            height: 322px;
+            justify-content: flex-end;
+            margin-left: auto;
+            max-width: 650px;
+        }
+
+        &__value {
+            color: $gray-soft;
+            display: grid;
+            height: 160px;
+            place-items: center;
+            text-align: center;
+            width: 160px;
+
+            &:nth-child(odd)  {
+                background-color: $brand-main;
+            }
+
+            &:nth-child(even)  {
+                background-color: $brand-third;
+            }
+        }
+    }
+
+    &-worker {
+        position: absolute;
+        bottom: 0;
+        left: 100px;
+
+        &__image {
+            display: block;
+        }
+    }
+}
+
+.location {
+    box-sizing: border-box;
+    margin-bottom: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1280px;
+
+    &-container {
+
+    }
+
+    &__title {
+        color: $brand-secondary;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
 }
