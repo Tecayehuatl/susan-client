@@ -23,7 +23,7 @@ import { getStudiesResolver } from '../services/studies.service';
 
 const routes: Routes = [
     {
-        path: 'dashboard',
+        path: '',
         component: LayoutComponent,
         children: [
             {

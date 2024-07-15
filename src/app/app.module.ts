@@ -13,15 +13,18 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { SharedModule } from './shared/shared.module';
+import { LoginComponent } from './login/login.component';
 
 registerLocaleData(localeEs, 'es-MX');
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, LoginComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         AppRoutingModule,
+        SharedModule,
     ],
     providers: [
         {
