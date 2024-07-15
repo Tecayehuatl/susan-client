@@ -4,10 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from './shared/shared.module';
-import { LayoutModule } from './layout/layout.module';
-import { LoginComponent } from './login/login.component';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
@@ -17,6 +13,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { SharedModule } from './shared/shared.module';
+import { LoginComponent } from './login/login.component';
 
 registerLocaleData(localeEs, 'es-MX');
 @NgModule({
@@ -24,11 +22,9 @@ registerLocaleData(localeEs, 'es-MX');
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        SharedModule,
         HttpClientModule,
         AppRoutingModule,
-        LayoutModule,
-        DashboardModule,
+        SharedModule,
     ],
     providers: [
         {

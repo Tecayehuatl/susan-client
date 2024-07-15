@@ -55,7 +55,7 @@ $susan-client-theme: mat.define-light-theme((
   --gray-soft: #f6f5f5;
 }
 
-html, body { height: 100%; }
+html, body { height: 100%; font-size: 14px; }
 body { margin: 0; font-family: "LEMON MILK Pro"; }
 h1 {
   font-size: 26px;

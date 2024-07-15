@@ -19,6 +19,7 @@ import { CreateOrderQuoteComponent } from './orders/create-order-quote/create-or
 import { DiscountsComponent } from './discounts/discounts.component';
 import { CreateEditDiscountsComponent } from './discounts/create-edit-discounts/create-edit-discounts.component';
 import { QuotesComponent } from './quotes/quotes.component';
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,6 @@ import { QuotesComponent } from './quotes/quotes.component';
         UsersComponent,
         QuotesComponent,
     ],
-    imports: [DashboardRoutingModule, SharedModule],
+    imports: [DashboardRoutingModule, LayoutModule, SharedModule],
 })
 export class DashboardModule {}
