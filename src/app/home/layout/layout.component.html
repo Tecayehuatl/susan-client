@@ -14,7 +14,16 @@
                         class="header-menu-list__item"
                         *ngFor="let item of menu"
                     >
-                        {{ item.name }}
+                        <ng-container *ngIf="item.hash">
+                            <a class="anchor" href="{{ item.url }}">
+                                {{ item.name }}
+                            </a>
+                        </ng-container>
+                        <ng-container *ngIf="!item.hash">
+                            <a class="anchor" [routerLink]="item.url">
+                                {{ item.name }}
+                            </a>
+                        </ng-container>
                     </li>
                 </ul>
             </div>
@@ -39,7 +48,16 @@
                             class="footer-menu__list__item"
                             *ngFor="let item of footerMenu"
                         >
-                            {{ item.name }}
+                            <ng-container *ngIf="item.hash">
+                                <a class="anchor" href="{{ item.url }}">
+                                    {{ item.name }}
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="!item.hash">
+                                <a class="anchor" [routerLink]="item.url">
+                                    {{ item.name }}
+                                </a>
+                            </ng-container>
                         </li>
                     </ul>
                 </div>
@@ -60,7 +78,13 @@
             </section>
             <section class="footer-info">
                 Creado por:
-                <a class="footer-info__link" href="">Enrique Tecayehuatl</a>
+                <a
+                    class="footer-info__link"
+                    href="https://tecayehuatl.com"
+                    target="_blank"
+                >
+                    Enrique Tecayehuatl
+                </a>
                 - &reg; {{ currentYear }}
             </section>
         </section>

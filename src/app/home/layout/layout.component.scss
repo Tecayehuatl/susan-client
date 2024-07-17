@@ -25,14 +25,26 @@
         display: flex;
         justify-content: flex-start;
         list-style: none;
+        gap: 30px;
         margin: 0;
         padding: 0;
 
         &__item {
-            margin-left: 55px;
+            .anchor {
+                color: $brand-third;
+                padding: 16px 24px;
+                text-decoration: none;
 
-            &:first-child {
-                margin-left: 82px;
+                &:link, &:visited, &:active {
+                    color: $brand-third;
+                    text-decoration: none;
+                }
+
+                &:hover {
+                    background-color: rgba($brand-main, 0.75);
+                    border-radius: 4px;
+                    color: $white;
+                }
             }
         }
     }
@@ -55,6 +67,7 @@
         justify-content: flex-start;
         align-items: center;
         margin-bottom: 18px;
+        gap: 40px;
     }
 
     &-logo {
@@ -71,10 +84,15 @@
         padding: 0;
 
         &__item {
-            margin-left: 55px;
+            .anchor {
+                color: $white;
+                padding: 16px 24px;
+                text-decoration: underline;
 
-            &:first-child {
-                margin-left: 82px;
+                &:link, &:visited, &:active {
+                    color: $white;
+                    text-decoration: underline;
+                }
             }
         }
     }
