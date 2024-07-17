@@ -2,135 +2,124 @@
 
 .hero {
     box-sizing: border-box;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1280px;
-    min-height: 750px;
-    position: relative;
 
     &-container {
-        margin-left: 150px;
-        margin-top: 160px;
-        max-width: 615px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 1280px;
+      min-height: 600px;
+      position: relative;
     }
 
     &-image-container {
-        position: absolute;
-        bottom: 0;
-        right: 0;
+      bottom: 0;
+      position: absolute;
+      right: 0;
+
+        &__image {
+          display: block;
+          width: 440px;
+        }
     }
 
-    &-image {
-        display: block;
-        width: 440px;
-    }
-
-    &-title {
-        color: $brand-third;
-        font-weight: bolder;
-        line-height: 1.5;
-        font-size: 52px;
-        margin-bottom: 30px;
+    &__title {
+      color: $brand-third;
+      font-size: 52px;
+      font-weight: bolder;
+      line-height: 1.5;
+      margin-bottom: 30px;
+      margin-top: 160px;
+      max-width: 770px;
     }
 }
 
 .separator {
-    background-color: $brand-main;
-    height: 80px;
-    width: 100%;
+  background-color: $brand-main;
+  height: 80px;
+  margin-bottom: 48px;
+  width: 100%;
 }
 
 .about-us {
-    margin-bottom: 100px;
-    position: relative;
-
-    &-container {
-        box-sizing: border-box;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 1280px;
-    }
+  box-sizing: border-box;
+  margin-bottom: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+  position: relative;
 
     &__title {
-        color: $brand-secondary;
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 1.5;
+      color: $brand-secondary;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.5;
 
         &--alt-1 {
-            text-align: right;
+          text-align: right;
         }
     }
 
     &__subtitle {
-        color: $brand-third;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 1.5;
+      color: $brand-third;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.5;
     }
 
     &-values {
-        box-sizing: border-box;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 1280px;
-
         &-container {
-            align-content: stretch;
-            align-items: center;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0;
-            height: 322px;
-            justify-content: flex-end;
-            margin-left: auto;
-            max-width: 650px;
+          align-content: stretch;
+          align-items: center;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0;
+          height: 322px;
+          justify-content: flex-end;
+          margin-left: auto;
+          max-width: 650px;
         }
 
         &__value {
-            color: $gray-soft;
-            display: grid;
-            height: 160px;
-            place-items: center;
-            text-align: center;
-            width: 160px;
+          color: $gray-soft;
+          display: grid;
+          height: 160px;
+          place-items: center;
+          text-align: center;
+          width: 160px;
 
-            &:nth-child(odd)  {
-                background-color: $brand-main;
-            }
+          &:nth-child(odd)  {
+            background-color: $brand-main;
+          }
 
-            &:nth-child(even)  {
-                background-color: $brand-third;
-            }
+          &:nth-child(even)  {
+            background-color: $brand-third;
+          }
         }
     }
 
     &-worker {
-        position: absolute;
-        bottom: 0;
-        left: 100px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
 
         &__image {
-            display: block;
+          display: block;
+          width: 250px;
         }
     }
 }
 
 .location {
-    box-sizing: border-box;
-    margin-bottom: 100px;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1280px;
-
-    &-container {
-
-    }
+  box-sizing: border-box;
+  margin-bottom: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
 
     &__title {
-        color: $brand-secondary;
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 1.5;
+      color: $brand-secondary;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.5;
     }
 }
