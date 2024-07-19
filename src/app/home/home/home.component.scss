@@ -123,3 +123,79 @@
       line-height: 1.5;
     }
 }
+
+// Graceful degradation technique, order matters
+@media screen and (width <= 1399px) {
+}
+
+@media screen and (width <= 991px) {
+    .hero {
+
+        &-container {
+            min-height: 500px;
+            margin: 0;
+            max-width: 100%;
+            padding: 0 30px;
+        }
+
+        &__title {
+            margin: 0;
+            line-height: 1.3;
+            margin-bottom: 38px;
+            position: relative;
+            z-index: 2;
+        }
+
+        &-image {
+            &-container {
+                &__image {
+                    width: 230px;
+                }
+            }
+        }
+    }
+
+    .separator {
+        height: 40px;
+    }
+
+    .about-us {
+        min-width: 100%;
+
+        &-container {
+            max-width: 100%;
+            padding: 0 30px;
+        }
+        &__title {
+            &--alt-1 {
+                text-align: left;
+            }
+        }
+
+        &-values {
+            padding: 0 30px;
+
+            &-container {
+                height: auto;
+                justify-content: center;
+                max-width: 100%;
+            }
+        }
+
+        &-worker {
+            display: none;
+            left: 0;
+        }
+    }
+
+    .location {
+        margin-bottom: 60px;
+        min-width: 100%;
+        padding: 0 30px;
+
+        .iframe {
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+}
