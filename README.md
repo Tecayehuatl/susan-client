@@ -1,4 +1,6 @@
-# SusanClient
+# Laboratorios Biotecsa
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6e6cd321-1a1c-49f0-96a2-797918ccbd3c/deploy-status)](https://app.netlify.com/sites/laboratorios-biotecsa/deploys)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.1.
 

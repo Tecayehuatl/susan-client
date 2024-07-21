@@ -15,6 +15,7 @@ import localeEs from '@angular/common/locales/es';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './login/login.component';
+import { GtagModule } from 'angular-gtag';
 
 registerLocaleData(localeEs, 'es-MX');
 @NgModule({
@@ -22,6 +23,10 @@ registerLocaleData(localeEs, 'es-MX');
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        GtagModule.forRoot({
+            trackingId: 'G-KYWE5KB7RB',
+            trackPageviews: true,
+        }),
         HttpClientModule,
         AppRoutingModule,
         SharedModule,
