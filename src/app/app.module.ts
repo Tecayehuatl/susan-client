@@ -16,6 +16,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { GtagModule } from 'angular-gtag';
+import { environment } from 'src/environments/environment';
 
 registerLocaleData(localeEs, 'es-MX');
 @NgModule({
@@ -24,7 +25,7 @@ registerLocaleData(localeEs, 'es-MX');
         BrowserModule,
         BrowserAnimationsModule,
         GtagModule.forRoot({
-            trackingId: 'G-KYWE5KB7RB',
+            trackingId: environment.gtag,
             trackPageviews: true,
         }),
         HttpClientModule,
