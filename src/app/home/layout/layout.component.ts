@@ -42,7 +42,7 @@ export class LayoutComponent {
         },
         {
             name: 'Aviso de privacidad',
-            url: 'privacy-statement',
+            url: 'privacy-policy',
         },
     ];
 
