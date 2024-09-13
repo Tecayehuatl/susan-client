@@ -1,31 +1,35 @@
 <section class="layout">
     <header class="header">
-        <div class="header-logo-container">
-            <img
-                class="header-logo__logo"
-                src="../../../assets/images/biotecsa-logo.png"
-                alt="Logo Laboratorios Biotecsa"
-            />
-        </div>
-        <div class="header-menu-container">
-            <div class="header-menu">
-                <ul class="header-menu-list">
-                    <li
-                        class="header-menu-list__item"
-                        *ngFor="let item of menu"
-                    >
-                        <ng-container *ngIf="item.hash">
-                            <a class="anchor" href="{{ item.url }}">
-                                {{ item.name }}
-                            </a>
-                        </ng-container>
-                        <ng-container *ngIf="!item.hash">
-                            <a class="anchor" [routerLink]="item.url">
-                                {{ item.name }}
-                            </a>
-                        </ng-container>
-                    </li>
-                </ul>
+        <div class="header-container">
+            <div class="header-logo-container">
+                <a routerLink="/">
+                    <img
+                        class="header-logo__logo"
+                        src="../../../assets/images/biotecsa-logo.png"
+                        alt="Logo Laboratorios Biotecsa"
+                    />
+                </a>
+            </div>
+            <div class="header-menu-container">
+                <div class="header-menu">
+                    <ul class="header-menu-list">
+                        <li
+                            class="header-menu-list__item"
+                            *ngFor="let item of menu"
+                        >
+                            <ng-container *ngIf="item.hash">
+                                <a class="anchor" href="{{ item.url }}">
+                                    {{ item.name }}
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="!item.hash">
+                                <a class="anchor" [routerLink]="item.url">
+                                    {{ item.name }}
+                                </a>
+                            </ng-container>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </header>
@@ -36,11 +40,13 @@
         <section class="footer-container">
             <section class="footer-logo-menu">
                 <div class="footer-logo-container">
-                    <img
-                        class="footer-logo"
-                        src="../../../assets/images/biotecsa-logo-white.png"
-                        alt="Laboratorios Biotecsa logo"
-                    />
+                    <a routerLink="/">
+                        <img
+                            class="footer-logo"
+                            src="../../../assets/images/biotecsa-logo-white.png"
+                            alt="Laboratorios Biotecsa logo"
+                        />
+                    </a>
                 </div>
                 <div class="footer-menu-container">
                     <ul class="footer-menu__list">
@@ -65,27 +71,21 @@
             <section class="footer-social">
                 <div class="footer-social-container">
                     <a
+                        class="footer-social__link"
                         href="https://www.facebook.com/BiotecsaLab"
                         target="_blank"
-                    >
-                        <img
-                            class="footer-social__logo"
-                            src="../../../assets/images/facebook-logo.png"
-                            alt=""
-                        />
-                    </a>
+                    ></a>
                 </div>
             </section>
             <section class="footer-info">
-                Creado por:
+                {{ currentYear }} Laboratorios Biotecsa &reg;. Creado por
                 <a
                     class="footer-info__link"
                     href="https://tecayehuatl.com"
                     target="_blank"
                 >
-                    Enrique Tecayehuatl
+                    E. Tecayehuatl
                 </a>
-                - &reg; {{ currentYear }}
             </section>
         </section>
     </footer>

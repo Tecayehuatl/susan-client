@@ -1,0 +1,39 @@
+@import 'colors';
+
+.policy {
+    min-height: 100vh;
+
+    &-container {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1280px;
+        padding: 40px 30px;
+        position: relative;
+    }
+
+    .title {
+        color: $brand-secondary;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    .subtitle {
+        color: $brand-main;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    .text {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.5;
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    strong {
+        color: $brand-secondary;
+    }
+}

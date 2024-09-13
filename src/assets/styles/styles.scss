@@ -53,6 +53,8 @@ $susan-client-theme: mat.define-light-theme((
   --brand-third: #373634;
   --white: #ffffff;
   --gray-soft: #f6f5f5;
+  --facebook-icon: url('../images/svg/facebook-icon.svg');
+  --whatsapp-icon: url('../images/svg/whatsapp-icon.svg');
 }
 
 html, body { height: 100%; font-size: 14px; }
