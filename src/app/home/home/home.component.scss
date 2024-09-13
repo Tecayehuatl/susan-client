@@ -8,6 +8,7 @@
       margin-right: auto;
       max-width: 1280px;
       min-height: 600px;
+      padding: 0 30px;
       position: relative;
     }
 
@@ -135,7 +136,6 @@
             min-height: 500px;
             margin: 0;
             max-width: 100%;
-            padding: 0 30px;
         }
 
         &__title {
@@ -179,6 +179,7 @@
                 height: auto;
                 justify-content: center;
                 max-width: 100%;
+                gap: 5px;
             }
         }
 
