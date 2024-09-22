@@ -144,6 +144,8 @@ export class PatientsComponent implements OnInit, AfterViewInit {
                     `PACIENTE: ${formValues.first_name} CREADA`,
                     'CERRAR'
                 );
+                const patient = formValues as Patient;
+                this.openCreateEditPatientDialog(patient, null, 'single');
             } else if (formValues && mode === 'edit') {
                 // Updating the local datasource
                 const data = this.dataSource.data;
