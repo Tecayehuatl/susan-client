@@ -13,6 +13,7 @@
   &-img {
     box-sizing: border-box;
     display: block;
+    margin-top: 20px;
     margin-bottom: 40px;
     padding-left: 16px;
     padding-right: 16px;
@@ -20,7 +21,7 @@
   }
 
   &-section {
-    height: calc(100vh - 112px);
+    height: calc(100vh - 132px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
