@@ -8,12 +8,11 @@
     <form class="login-right" [formGroup]="loginForm">
         <section class="login-form">
             <mat-form-field>
-                <mat-label>Nombre del usuario</mat-label>
+                <mat-label>Correo del usuario</mat-label>
                 <input
                     matInput
                     placeholder="Nombre del usuario"
                     tabindex="1"
-                    autocomplete="disabled"
                     formControlName="email"
                 />
             </mat-form-field>
@@ -31,10 +30,16 @@
                 <button
                     mat-flat-button
                     color="primary"
-                    [disabled]="!loginForm.valid"
+                    [disabled]="!loginForm.valid || isLoading"
                     (click)="onSubmit()"
                 >
-                    Iniciar sesión
+                    <span *ngIf="!isLoading">Iniciar sesión</span>
+                    <mat-icon *ngIf="isLoading">
+                        <mat-spinner
+                            color="primary"
+                            diameter="16"
+                        ></mat-spinner>
+                    </mat-icon>
                 </button>
             </div>
             <div class="mt-2" *ngIf="error">* Error: {{ error | json }}</div>

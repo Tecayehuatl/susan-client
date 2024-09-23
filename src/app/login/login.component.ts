@@ -12,6 +12,7 @@ import { first } from 'rxjs';
 export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
     error = '';
+    isLoading = false;
 
     constructor(
         private fb: FormBuilder,
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = this.fb.group({
-            email: ['', Validators.required],
+            email: ['', [Validators.email, Validators.required]],
             password: ['', Validators.required],
         });
     }
@@ -35,6 +36,8 @@ export class LoginComponent implements OnInit {
             return;
         }
 
+        this.isLoading = true;
+
         this.authenticationService
             .login(
                 this.formControls['email'].value,
@@ -43,9 +46,11 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
+                    this.isLoading = false;
                     this.router.navigate(['/dashboard']);
                 },
                 error: (error) => {
+                    this.isLoading = false;
                     this.error = error;
                 },
             });
