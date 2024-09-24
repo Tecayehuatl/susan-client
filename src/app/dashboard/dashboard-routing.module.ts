@@ -20,6 +20,8 @@ import { DiscountsComponent } from './discounts/discounts.component';
 import { getDiscountslResolver } from '../services/discounts.service';
 import { QuotesComponent } from './quotes/quotes.component';
 import { getStudiesResolver } from '../services/studies.service';
+import { roleGuard } from '../shared/guards/role.guard';
+import { UserRole } from './users/create-edit-users/create-edit-users.component';
 
 const routes: Routes = [
     {
@@ -34,6 +36,16 @@ const routes: Routes = [
             {
                 path: 'patients',
                 component: PatientsComponent,
+                canActivate: [roleGuard],
+                data: {
+                    roles: [
+                        UserRole.ADMIN,
+                        UserRole.SUPER,
+                        UserRole.CASHIER,
+                        UserRole.OPERATOR,
+                        UserRole.VIEWER,
+                    ],
+                },
             },
             {
                 path: 'patients/:patientId',
@@ -44,6 +56,16 @@ const routes: Routes = [
                     patientAllOrdersQuotes: getAllOrdersQuotesPatientResolver,
                 },
                 component: PatientDetailComponent,
+                canActivate: [roleGuard],
+                data: {
+                    roles: [
+                        UserRole.ADMIN,
+                        UserRole.SUPER,
+                        UserRole.CASHIER,
+                        UserRole.OPERATOR,
+                        UserRole.VIEWER,
+                    ],
+                },
             },
             {
                 path: 'patients/:patientId/:orderId',
@@ -51,6 +73,16 @@ const routes: Routes = [
                     orderDetail: getOrderDetailResolver,
                 },
                 component: OrderDetailComponent,
+                canActivate: [roleGuard],
+                data: {
+                    roles: [
+                        UserRole.ADMIN,
+                        UserRole.SUPER,
+                        UserRole.CASHIER,
+                        UserRole.OPERATOR,
+                        UserRole.VIEWER,
+                    ],
+                },
             },
             {
                 path: 'quotes',
@@ -61,27 +93,57 @@ const routes: Routes = [
                     branchOffices: getBranchOfficesResolver,
                     paymentMethods: getPaymentMethodsResolver,
                 },
+                canActivate: [roleGuard],
+                data: {
+                    roles: [
+                        UserRole.ADMIN,
+                        UserRole.SUPER,
+                        UserRole.CASHIER,
+                        UserRole.OPERATOR,
+                        UserRole.VIEWER,
+                    ],
+                },
             },
             {
                 path: 'branch-offices',
                 component: BranchOfficesComponent,
+                canActivate: [roleGuard],
+                data: {
+                    roles: [UserRole.ADMIN, UserRole.SUPER],
+                },
             },
             {
                 path: 'discounts',
                 component: DiscountsComponent,
+                canActivate: [roleGuard],
+                data: {
+                    roles: [UserRole.ADMIN, UserRole.SUPER],
+                },
             },
             {
                 path: 'doctors',
                 component: DoctorsComponent,
+                canActivate: [roleGuard],
+                data: {
+                    roles: [UserRole.ADMIN, UserRole.SUPER],
+                },
             },
             {
                 path: 'studies',
                 component: StudiesComponent,
+                canActivate: [roleGuard],
+                data: {
+                    roles: [UserRole.ADMIN, UserRole.SUPER],
+                },
             },
             {
                 path: 'users',
                 component: UsersComponent,
                 resolve: { branchOffices: getBranchOfficesResolver },
+                canActivate: [roleGuard],
+                data: {
+                    roles: [UserRole.ADMIN, UserRole.SUPER],
+                },
             },
         ],
     },

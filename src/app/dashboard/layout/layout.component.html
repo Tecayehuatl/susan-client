@@ -11,20 +11,27 @@
         </mat-list>
         <section class="sidenav-section">
             <mat-nav-list>
-                <a
-                    mat-list-item
-                    class="mat-list-item"
-                    [routerLink]="item.url"
-                    routerLinkActive="router-link-active"
-                    *ngFor="let item of menu"
-                >
-                    <span class="mat-list-item__container">
-                        <mat-icon>{{ item.icon }}</mat-icon>
-                        <span class="mat-list-item__text">
-                            {{ item.title }}
+                <ng-container *ngFor="let item of menu">
+                    <a
+                        mat-list-item
+                        class="mat-list-item"
+                        [routerLink]="item.url"
+                        routerLinkActive="router-link-active"
+                        *ngIf="
+                            roleService.hasAnyRole(
+                                userRoles,
+                                item.requiredRoles
+                            )
+                        "
+                    >
+                        <span class="mat-list-item__container">
+                            <mat-icon>{{ item.icon }}</mat-icon>
+                            <span class="mat-list-item__text">
+                                {{ item.title }}
+                            </span>
                         </span>
-                    </span>
-                </a>
+                    </a>
+                </ng-container>
             </mat-nav-list>
             <mat-nav-list>
                 <a

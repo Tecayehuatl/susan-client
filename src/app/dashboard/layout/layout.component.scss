@@ -69,8 +69,9 @@ mat-nav-list {
     margin: 8px;
 
     & .user-menu-icon {
-        background: rgba(#373634, 0.5);
+        background: var(--brand-main);
         border-radius: 50%;
+        border: 1px solid --brand-third;
         color: var(--white);
         display: grid;
         font-size: 16px;
