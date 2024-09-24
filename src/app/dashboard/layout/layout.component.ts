@@ -81,8 +81,6 @@ export class LayoutComponent {
         public roleService: RoleService,
     ) {
         this.userData = this.authService.userSystemData;
-        console.log('userData', this.userData);
-
         this.fullName =
             this.userData.first_name +
             ' ' +
