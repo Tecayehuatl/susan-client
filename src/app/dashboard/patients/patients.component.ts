@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class PatientsComponent implements OnInit, AfterViewInit {
     title = 'PACIENTES';
     displayedColumns: string[] = [
+        'numberElement',
         'patient_id',
         'fullName',
         'date_birth',
@@ -32,7 +33,7 @@ export class PatientsComponent implements OnInit, AfterViewInit {
         { name: 'Masculino', value: 'male' },
         { name: 'Femenino', value: 'female' },
     ];
-    filterPanelState = false;
+    filterPanelState = true;
     dataSource!: MatTableDataSource<Patient>;
     timer: any;
     searchForm!: FormGroup;

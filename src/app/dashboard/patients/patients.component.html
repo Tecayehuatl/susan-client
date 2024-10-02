@@ -13,7 +13,10 @@
     </div>
     <section>
         <mat-accordion>
-            <mat-expansion-panel (click)="filterPanelState = !filterPanelState">
+            <mat-expansion-panel
+                (click)="filterPanelState = !filterPanelState"
+                [expanded]="filterPanelState"
+            >
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon>filter_alt</mat-icon>
@@ -130,6 +133,13 @@
         <br />
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" matSort>
+                <!-- Num. element -->
+                <ng-container matColumnDef="numberElement">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                    <td mat-cell *matCellDef="let row; let i = index">
+                        {{ i + 1 }}
+                    </td>
+                </ng-container>
                 <!-- ID Column -->
                 <ng-container matColumnDef="patient_id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>

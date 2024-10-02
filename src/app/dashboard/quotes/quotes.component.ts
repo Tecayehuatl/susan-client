@@ -20,8 +20,9 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./quotes.component.scss'],
 })
 export class QuotesComponent implements OnInit {
-    title = 'PACIENTES';
+    title = 'ORDENES Y COTIZACIONES';
     displayedColumns: string[] = [
+        'numberElement',
         'order_id',
         'created_at',
         'patientName',
@@ -36,7 +37,7 @@ export class QuotesComponent implements OnInit {
         { name: 'Masculino', value: 'male' },
         { name: 'Femenino', value: 'female' },
     ];
-    filterPanelState = false;
+    filterPanelState = true;
     dataSource!: MatTableDataSource<Order>;
     timer: any;
     searchForm!: FormGroup;
