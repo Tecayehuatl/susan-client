@@ -25,7 +25,7 @@ export class CreateEditUsersComponent implements OnInit {
         private usersService: UsersService
     ) {
         const currentYear = new Date().getFullYear();
-        this.minDate = new Date(currentYear - 110, 0, 1);
+        this.minDate = new Date(1900, 0, 1);
         this.maxDate = new Date(currentYear, 11, 31);
     }
 
