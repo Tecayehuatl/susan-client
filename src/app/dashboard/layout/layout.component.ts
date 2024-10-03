@@ -29,7 +29,7 @@ export class LayoutComponent {
             requiredRoles: [UserRole.SUPER, UserRole.ADMIN, UserRole.OPERATOR],
         },
         {
-            title: 'Ordenes y cotizaciones',
+            title: 'Ordenes',
             url: 'quotes',
             icon: 'list_alt',
             requiredRoles: [

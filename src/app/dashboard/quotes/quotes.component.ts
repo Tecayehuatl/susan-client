@@ -20,7 +20,7 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./quotes.component.scss'],
 })
 export class QuotesComponent implements OnInit {
-    title = 'ORDENES Y COTIZACIONES';
+    title = 'BÚSQUEDA DE ORDENES';
     displayedColumns: string[] = [
         'numberElement',
         'order_id',

@@ -123,13 +123,12 @@
             </section>
             <section class="patient-container-orders">
                 <mat-tab-group>
-                    <mat-tab
-                        label="ORDENES ({{ patientAllOrders.length }})"
-                    >
+                    <mat-tab label="ORDENES ({{ patientAllOrders.length }})">
                         <section class="mat-tab-container">
                             <app-orders
                                 title="Ordenes"
                                 [incomingOrdersQuotes]="patientAllOrders"
+                                (notifyAddOrderEmitter)="openCreateOrderQuote()"
                                 (setNewincomingOrdersQuotes)="
                                     setNewincomingOrdersQuotes($event)
                                 "
@@ -143,6 +142,7 @@
                             <app-orders
                                 title="Cotizaciones"
                                 [incomingOrdersQuotes]="patientAllQuotes"
+                                (notifyAddOrderEmitter)="openCreateOrderQuote()"
                                 (setNewincomingOrdersQuotes)="
                                     setNewincomingOrdersQuotes($event)
                                 "
