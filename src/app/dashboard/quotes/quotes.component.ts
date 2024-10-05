@@ -37,7 +37,7 @@ export class QuotesComponent implements OnInit {
         { name: 'Masculino', value: 'male' },
         { name: 'Femenino', value: 'female' },
     ];
-    filterPanelState = true;
+    isPanelDisplayed = true;
     dataSource!: MatTableDataSource<Order>;
     timer: any;
     searchForm!: FormGroup;

@@ -33,7 +33,7 @@ export class PatientsComponent implements OnInit, AfterViewInit {
         { name: 'Masculino', value: 'male' },
         { name: 'Femenino', value: 'female' },
     ];
-    filterPanelState = true;
+    isPanelDisplayed = true;
     dataSource!: MatTableDataSource<Patient>;
     timer: any;
     searchForm!: FormGroup;
@@ -215,5 +215,6 @@ export interface Patient {
     phone2: string;
     email: string;
     gender: string;
+    created_at?: Date;
     updated_at?: Date;
 }

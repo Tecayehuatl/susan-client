@@ -17,6 +17,10 @@ export class CreateEditUsersComponent implements OnInit {
     minDate!: Date;
     maxDate!: Date;
     userRoles = UserRole;
+    genders = [
+        { name: 'Masculino', value: 'male' },
+        { name: 'Femenino', value: 'female' },
+    ];
 
     constructor(
         public dialogRef: MatDialogRef<CreateEditUsersComponent>,
@@ -43,6 +47,7 @@ export class CreateEditUsersComponent implements OnInit {
             phone1: [''],
             phone2: [''],
             email: ['', [Validators.required]],
+            gender: ['', [Validators.required]],
             password: [''],
             date_birth: ['', Validators.required],
             is_active: [true],
@@ -64,6 +69,7 @@ export class CreateEditUsersComponent implements OnInit {
                 phone1: data.phone1,
                 phone2: data.phone2,
                 email: data.email,
+                gender: data.gender,
                 date_birth: data.date_birth,
                 is_active: data.is_active,
                 roles: data.active_roles,

@@ -9,14 +9,13 @@
     </div>
     <section>
         <mat-accordion>
-            <mat-expansion-panel
-                (click)="filterPanelState = !filterPanelState"
-                [expanded]="filterPanelState"
-            >
-                <mat-expansion-panel-header>
+            <mat-expansion-panel [expanded]="isPanelDisplayed">
+                <mat-expansion-panel-header
+                    (click)="isPanelDisplayed = !isPanelDisplayed"
+                >
                     <mat-panel-title>
                         <mat-icon>filter_alt</mat-icon>
-                        {{ filterPanelState ? 'Ocultar' : 'Mostrar' }} filtros
+                        {{ isPanelDisplayed ? 'Ocultar' : 'Mostrar' }} filtros
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div [formGroup]="searchForm">
