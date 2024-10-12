@@ -43,6 +43,7 @@ export class OrdersComponent {
     }
     @Output() setNewincomingOrdersQuotes: EventEmitter<Order> =
         new EventEmitter<Order>();
+    @Output() notifyAddOrderEmitter: EventEmitter<void> = new EventEmitter<void>();
 
     dataSource: MatTableDataSource<any> = new MatTableDataSource(
         this.sortedOrdersQuotes
@@ -163,5 +164,9 @@ export class OrdersComponent {
 
     compare(a: number | string, b: number | string, isAsc: boolean) {
         return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
+
+    notifyAddOrder(): void {
+        this.notifyAddOrderEmitter.emit();
     }
 }

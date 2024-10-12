@@ -17,6 +17,10 @@ export class CreateEditUsersComponent implements OnInit {
     minDate!: Date;
     maxDate!: Date;
     userRoles = UserRole;
+    genders = [
+        { name: 'Masculino', value: 'male' },
+        { name: 'Femenino', value: 'female' },
+    ];
 
     constructor(
         public dialogRef: MatDialogRef<CreateEditUsersComponent>,
@@ -25,7 +29,7 @@ export class CreateEditUsersComponent implements OnInit {
         private usersService: UsersService
     ) {
         const currentYear = new Date().getFullYear();
-        this.minDate = new Date(currentYear - 110, 0, 1);
+        this.minDate = new Date(1900, 0, 1);
         this.maxDate = new Date(currentYear, 11, 31);
     }
 
@@ -42,7 +46,8 @@ export class CreateEditUsersComponent implements OnInit {
             last_name: ['', Validators.required],
             phone1: [''],
             phone2: [''],
-            email: [''],
+            email: ['', [Validators.required]],
+            gender: ['', [Validators.required]],
             password: [''],
             date_birth: ['', Validators.required],
             is_active: [true],
@@ -64,6 +69,7 @@ export class CreateEditUsersComponent implements OnInit {
                 phone1: data.phone1,
                 phone2: data.phone2,
                 email: data.email,
+                gender: data.gender,
                 date_birth: data.date_birth,
                 is_active: data.is_active,
                 roles: data.active_roles,
@@ -104,9 +110,10 @@ export class CreateEditUsersComponent implements OnInit {
     }
 }
 
-enum UserRole {
+export enum UserRole {
     SUPER = 'super',
     ADMIN = 'admin',
+    OPERATOR = 'operator',
     CASHIER = 'cashier',
     VIEWER = 'viewer',
 }

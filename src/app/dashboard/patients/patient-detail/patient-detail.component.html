@@ -97,7 +97,10 @@
             </div>
             <div class="patient-text-wrapper">
                 <p class="patient-text">FECHA DE CREACIÓN</p>
-                <p class="patient-text patient-text--value">06 ENERO 2022</p>
+                <!-- TODO: Pendiente de cambiar a su fecha de creación y no de última modificación, ver sequelize como se puede lograr esto -->
+                <p class="patient-text patient-text--value">
+                    {{ patient.created_at | date : 'medium' | uppercase }}
+                </p>
             </div>
             <div class="patient-text-wrapper">
                 <p class="patient-text">FECHA DE ÚLTIMA MODIFICACIÓN</p>
@@ -120,13 +123,12 @@
             </section>
             <section class="patient-container-orders">
                 <mat-tab-group>
-                    <mat-tab
-                        label="ORDENES ({{ patientAllOrders.length }})"
-                    >
+                    <mat-tab label="ORDENES ({{ patientAllOrders.length }})">
                         <section class="mat-tab-container">
                             <app-orders
                                 title="Ordenes"
                                 [incomingOrdersQuotes]="patientAllOrders"
+                                (notifyAddOrderEmitter)="openCreateOrderQuote()"
                                 (setNewincomingOrdersQuotes)="
                                     setNewincomingOrdersQuotes($event)
                                 "
@@ -140,6 +142,7 @@
                             <app-orders
                                 title="Cotizaciones"
                                 [incomingOrdersQuotes]="patientAllQuotes"
+                                (notifyAddOrderEmitter)="openCreateOrderQuote()"
                                 (setNewincomingOrdersQuotes)="
                                     setNewincomingOrdersQuotes($event)
                                 "

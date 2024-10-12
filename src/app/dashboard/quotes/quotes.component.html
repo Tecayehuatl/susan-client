@@ -9,14 +9,13 @@
     </div>
     <section>
         <mat-accordion>
-            <mat-expansion-panel
-                expanded
-                (click)="filterPanelState = !filterPanelState"
-            >
-                <mat-expansion-panel-header>
+            <mat-expansion-panel [expanded]="isPanelDisplayed">
+                <mat-expansion-panel-header
+                    (click)="isPanelDisplayed = !isPanelDisplayed"
+                >
                     <mat-panel-title>
                         <mat-icon>filter_alt</mat-icon>
-                        {{ filterPanelState ? 'Ocultar' : 'Mostrar' }} filtros
+                        {{ isPanelDisplayed ? 'Ocultar' : 'Mostrar' }} filtros
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div [formGroup]="searchForm">
@@ -205,6 +204,13 @@
         <!-- Results table -->
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" matSort>
+                <!-- Num. element -->
+                <ng-container matColumnDef="numberElement">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                    <td mat-cell *matCellDef="let row; let i = index">
+                        {{ i + 1 }}
+                    </td>
+                </ng-container>
                 <!-- ID Order Column -->
                 <ng-container matColumnDef="order_id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>

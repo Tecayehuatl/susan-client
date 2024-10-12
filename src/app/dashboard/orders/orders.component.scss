@@ -2,12 +2,30 @@ table {
     width: 100%;
 }
 
-.mat-cell {
-    .table-error-message {
-        color: var(--brand-secondary);
-        font-size: 20px;
-        font-weight: bold;
-        padding: 15px;
+.no-data-row {
+    width: 100% !important;
+
+    .mat-cell {
+        text-align: center;
+        width: 100%;
+
+        .table-error-message {
+            color: rgba(55, 54, 52, 0.4);
+            display: grid;
+            font-size: 20px;
+            font-weight: bold;
+            height: 300px;
+            padding: 20px;
+            place-items: center;
+        }
+
+        .empty {
+            &-icon {
+                height: 80px;
+                font-size: 72px;
+                width: 80px;
+            }
+        }
     }
 }
 

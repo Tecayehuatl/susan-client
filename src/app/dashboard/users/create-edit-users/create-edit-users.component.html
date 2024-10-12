@@ -29,25 +29,25 @@
                 />
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Teléfono 1</mat-label>
-                <input
-                    matInput
-                    placeholder="Teléfono 1"
-                    tabindex="5"
-                    autocomplete="disabled"
-                    formControlName="phone1"
-                    mask="(000) 000 00 00"
-                />
+                <mat-label>Sexo</mat-label>
+                <mat-select formControlName="gender">
+                    <mat-option
+                        *ngFor="let gender of genders"
+                        [value]="gender.value"
+                    >
+                        {{ gender.name | uppercase }}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Email</mat-label>
+                <mat-label>Teléfono 2</mat-label>
                 <input
                     matInput
-                    placeholder="Email"
-                    tabindex="7"
+                    placeholder="Teléfono 2"
+                    tabindex="6"
                     autocomplete="disabled"
-                    formControlName="email"
-                    appDynamicValidator
+                    formControlName="phone2"
+                    mask="(000) 000 00 00"
                 />
             </mat-form-field>
             <mat-form-field>
@@ -108,14 +108,25 @@
                 ></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Teléfono 2</mat-label>
+                <mat-label>Teléfono 1</mat-label>
                 <input
                     matInput
-                    placeholder="Teléfono 2"
-                    tabindex="6"
+                    placeholder="Teléfono 1"
+                    tabindex="5"
                     autocomplete="disabled"
-                    formControlName="phone2"
+                    formControlName="phone1"
                     mask="(000) 000 00 00"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input
+                    matInput
+                    placeholder="Email"
+                    tabindex="7"
+                    autocomplete="disabled"
+                    formControlName="email"
+                    appDynamicValidator
                 />
             </mat-form-field>
             <mat-form-field>
