@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    baseUrl: 'https://susan-server.onrender.com',
+    baseUrl: 'http://localhost:3000',
     gtag: 'G-KYWE5KB7RB',
 };
 

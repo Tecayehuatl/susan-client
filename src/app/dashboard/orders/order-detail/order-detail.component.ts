@@ -31,6 +31,7 @@ import { Study } from '../../studies/studies.component';
 import { NotesComponent } from 'src/app/shared/components/notes/notes.component';
 import { PaymentHistoricalTransactionsComponent } from 'src/app/shared/components/payment-historical-transactions/payment-historical-transactions.component';
 import { AdHostDirective } from 'src/app/shared/directives/ad-host.directive';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-order-detail',
@@ -344,16 +345,7 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
 
     openAndGeneratePdfOrderQuote(id: string): void {
         console.log('Generating PDF...');
-        window.open(`http://localhost:3000/orders/${id}/pdf`);
-        // const dialogRef = this.dialog.open(OrderQuotePdfComponent, {
-        //     minWidth: '800px',
-        //     data: {
-        //         actions: {
-        //             main: 'COMPLETAR ORDEN',
-        //             secondary: 'CANCELAR',
-        //         },
-        //     },
-        // });
+        window.open(`${environment.baseUrl}/orders/${id}/pdf`);
     }
 
     openChangeStudyStatusDialog(
