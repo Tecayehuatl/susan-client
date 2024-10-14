@@ -12,8 +12,6 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
     const requiredRoles: UserRole[] = route.data['roles']; // Access roles from route data
     const userData: UserRole[] = authService.userSystemData.roles as UserRole[];
 
-    console.log('requiredRoles', requiredRoles);
-
     // Check if the user has the required role(s)
     if (roleService.hasAnyRole(userData, requiredRoles)) {
         return true;
