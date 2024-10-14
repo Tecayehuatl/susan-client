@@ -199,7 +199,12 @@
                             </span>
                         </section>
                         <!-- <section class="card-detail-text-container">
-                            <p class="card-detail-text">
+                            <p
+                                class="card-detail-text"
+                                (click)="
+                                    getBarcodeLabel(orderDetail.order_id || '')
+                                "
+                            >
                                 IMPRIMIR ETIQUETAS DE TUBOS
                             </p>
                         </section> -->
