@@ -10,6 +10,13 @@
     min-height: 100vh;
   }
 
+  &-anchor-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+  }
+
   &-img {
     box-sizing: border-box;
     display: block;
@@ -45,17 +52,25 @@ mat-nav-list {
       margin-left: 10px;
     }
   }
+
+  .isActive {
+        background-color: rgba(0, 0, 0,0.3);
+    }
 }
 
 
 .toolbar {
   display: flex;
   justify-content: space-between;
+
+  &-title {
+    color: var(--brand-main);
+  }
 }
 
 .main {
   background-color: $gray-soft;
-  padding: 10px;
+  padding: 10px 30px;
   height: calc(100vh - 84px);
 }
 
