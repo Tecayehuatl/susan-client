@@ -3,24 +3,27 @@
     height: 100vh;
 
     &-left {
+        align-content: center;
         background-color: var(--brand-main);
-        width: 40%;
         display: grid;
         justify-content: center;
-        align-content: center;
+        width: 40%;
     }
 
     &-right {
-        padding: 10px;
-        width: 60%;
+        align-content: center;
         display: grid;
         justify-content: center;
-        align-content: center;
-
+        padding: 10px;
+        width: 60%;
     }
 
     &-image {
-        width: 400px;
+        width: 100%;
+
+        &-container {
+            width: 400px;
+        }
     }
 
     &-form {
@@ -35,10 +38,59 @@
             width: 100%;
         }
     }
-
 }
 
 mat-form-field {
     width: 100%;
     margin-bottom: 20px;
 }
+
+@media screen and (width <= 1200px) { }
+
+@media screen and (width <= 992px) {
+    .login {
+        &-image {
+            &-container {
+                width: auto;
+            }
+        }
+
+        &-form {
+            width: auto;
+        }
+    }
+}
+
+@media screen and (width <= 768px) {
+    .login {
+        flex-direction: column;
+
+        &-left {
+            height: 100px;
+            width: 100%;
+        }
+
+        &-right {
+            display: grid;
+            height: 100%;
+            place-items: center;
+            width: auto;
+        }
+
+        &-image {
+            width: 100%;
+
+            &-container {
+                height: 100%;
+                width: 250px;
+            }
+        }
+
+        &-form {
+            padding: 20px;
+            width: auto;
+        }
+    }
+}
+
+@media screen and (width <= 576px) { }

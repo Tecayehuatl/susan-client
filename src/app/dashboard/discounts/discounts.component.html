@@ -1,5 +1,5 @@
 <section>
-    <h1>{{ title }}</h1>
+    <h1 class="title">{{ title }}</h1>
     <mat-divider class="divider"></mat-divider>
     <div class="container-actions">
         <button
@@ -98,6 +98,7 @@
                 </tr>
             </table>
             <mat-paginator
+                pageSize="25"
                 [pageSizeOptions]="[5, 10, 25, 100]"
                 aria-label="Select page of users"
             ></mat-paginator>

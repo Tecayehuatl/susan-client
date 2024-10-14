@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav class="sidenav" opened mode="side">
         <mat-list>
-            <a routerLink="/dashboard">
+            <a class="sidenav-anchor-container" routerLink="/dashboard">
                 <img
                     class="sidenav-img"
                     src="../../assets/images/Logo horizontal negativo - Biotecsa.png"
@@ -14,9 +14,10 @@
                 <ng-container *ngFor="let item of menu">
                     <a
                         mat-list-item
+                        role="listitem"
                         class="mat-list-item"
                         [routerLink]="item.url"
-                        routerLinkActive="router-link-active"
+                        [ngClass]="{ isActive: item.isActiveUrl }"
                         *ngIf="
                             roleService.hasAnyRole(
                                 userRoles,
@@ -49,7 +50,7 @@
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content">
         <mat-toolbar class="toolbar">
-            <span>Laboratorios Biotecsa</span>
+            <span class="toolbar-title">Laboratorios Biotecsa</span>
             <button
                 mat-icon-button
                 aria-label="User menu with menu icon"
@@ -82,7 +83,7 @@
                 <mat-divider></mat-divider>
                 <button mat-menu-item (click)="authService.logout()">
                     <mat-icon>logout</mat-icon>
-                    <span>Salir</span>
+                    <span>Cerrar sesión</span>
                 </button>
             </mat-menu>
         </mat-toolbar>

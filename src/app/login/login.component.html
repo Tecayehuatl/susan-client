@@ -1,9 +1,12 @@
 <section class="login">
     <section class="login-left">
-        <img
-            class="login-image"
-            src="../../assets/images/biotecsa-logo-white.png" alt="Biotecsa logo - login"
-        />
+        <div class="login-image-container">
+            <img
+                class="login-image"
+                src="../../assets/images/biotecsa-logo-white.png"
+                alt="Biotecsa logo"
+            />
+        </div>
     </section>
     <form class="login-right" [formGroup]="loginForm">
         <section class="login-form">
@@ -13,18 +16,32 @@
                     matInput
                     placeholder="Nombre del usuario"
                     tabindex="1"
+                    autocomplete="email"
                     formControlName="email"
                 />
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Contraseña</mat-label>
                 <input
+                    [type]="toggleViewPassword ? 'password' : 'text'"
                     matInput
                     placeholder="Contraseña"
-                    tabindex="1"
                     autocomplete="disabled"
                     formControlName="password"
                 />
+                <button
+                    mat-icon-button
+                    matSuffix
+                    (click)="toggleViewPassword = !toggleViewPassword"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="toggleViewPassword"
+                >
+                    <mat-icon>
+                        {{
+                            toggleViewPassword ? 'visibility_off' : 'visibility'
+                        }}
+                    </mat-icon>
+                </button>
             </mat-form-field>
             <div class="login-action">
                 <button

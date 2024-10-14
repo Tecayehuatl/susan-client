@@ -14,8 +14,6 @@ export class RoleService {
 
     // Check if user has one of multiple roles
     hasAnyRole(userRoles: UserRole[], roles: UserRole[]): boolean {
-        console.log(roles);
-
         return roles.some((r: UserRole) => userRoles.includes(r));
     }
 }
