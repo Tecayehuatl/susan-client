@@ -68,3 +68,7 @@ table {
     display: flex;
     align-items: center;
 }
+
+.patients-table {
+    overflow-x: auto;
+}

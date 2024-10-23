@@ -9,6 +9,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatientsService } from 'src/app/services/patients.service';
 import { GenericModalComponent } from 'src/app/shared/components/generic-modal/generic-modal.component';
 import { Router } from '@angular/router';
+import { RoleService } from 'src/app/services/role.service';
+import { AuthService, UserSystem } from 'src/app/services/auth.service';
+import { UserRole } from '../users/create-edit-users/create-edit-users.component';
 
 @Component({
     selector: 'app-patients',
@@ -20,6 +23,8 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     displayedColumns: string[] = [
         'numberElement',
         'patient_id',
+        'created_at',
+        'updated_at',
         'fullName',
         'date_birth',
         'age',
@@ -37,6 +42,9 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     dataSource!: MatTableDataSource<Patient>;
     timer: any;
     searchForm!: FormGroup;
+    userData!: UserSystem;
+    userRoles: UserRole[] = [];
+    requiredRoles: UserRole[] = [UserRole.SUPER, UserRole.ADMIN];
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -46,8 +54,13 @@ export class PatientsComponent implements OnInit, AfterViewInit {
         private dialog: MatDialog,
         private _snackBar: MatSnackBar,
         private patientsService: PatientsService,
+        public rolesService: RoleService,
+        public authService: AuthService,
         private router: Router
-    ) {}
+    ) {
+        this.userData = this.authService.userSystemData;
+        this.userRoles = this.userData.roles as UserRole[];
+    }
 
     ngOnInit(): void {
         this.searchForm = this.fb.group({
