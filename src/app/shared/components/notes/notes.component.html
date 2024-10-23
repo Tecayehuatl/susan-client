@@ -12,9 +12,6 @@
                         [historicInfoItem]="note"
                         (deleteEmmiter)="deleteNoteFromOrder(note.id, orderId)"
                     ></app-historic-info>
-                    <pre>
-                        {{ notesTransformed | json }}
-                    </pre>
                 </ng-container>
             </div>
             <ng-template #noNotes>
