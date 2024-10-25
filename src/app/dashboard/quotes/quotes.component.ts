@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
     Order,
     OrdersQuotesService,
@@ -24,14 +24,14 @@ export class QuotesComponent implements OnInit {
     displayedColumns: string[] = [
         'numberElement',
         'order_id',
+        'order_type',
         'created_at',
         'patientName',
         'age',
         'email',
-        'date_birth',
-        'branch_office',
         'doctorName',
         'grandTotal',
+        'notes',
     ];
     genders = [
         { name: 'Masculino', value: 'male' },
@@ -77,6 +77,7 @@ export class QuotesComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private route: ActivatedRoute,
+        private router: Router,
         private ordersQuotesService: OrdersQuotesService
     ) {
         this.doctors = this.route.snapshot.data['doctors'];
@@ -120,38 +121,6 @@ export class QuotesComponent implements OnInit {
         });
 
         this.getQuotes();
-
-        // this.order
-        //     .get('created_at')
-        //     ?.get('from')
-        //     ?.valueChanges.subscribe((changes) => {
-        //         const currentValue = this.order
-        //             .get('created_at')
-        //             ?.get('from')?.value;
-        //         debugger;
-        //         if (currentValue !== changes) {
-        //             this.setDateRange(
-        //                 changes,
-        //                 this.order.get('created_at')?.get('to')?.value
-        //             );
-        //         }
-        //     });
-
-        // this.order
-        //     .get('created_at')
-        //     ?.get('to')
-        //     ?.valueChanges.subscribe((changes) => {
-        //         const currentValue = this.order
-        //             .get('created_at')
-        //             ?.get('to')?.value;
-        //         debugger;
-        //         if (currentValue !== changes) {
-        //             this.setDateRange(
-        //                 this.order.get('created_at')?.get('from')?.value,
-        //                 changes
-        //             );
-        //         }
-        //     });
     }
 
     getQuotes(params: object = {}): void {
@@ -251,6 +220,12 @@ export class QuotesComponent implements OnInit {
     resetFormFilters(): void {
         this.searchForm.reset();
         this.searchPatients();
+    }
+
+    navigateTo(patientId: string, orderId: string): void {
+        this.router.navigateByUrl(
+            `/dashboard/patients/${patientId}/${orderId}`
+        );
     }
 }
 

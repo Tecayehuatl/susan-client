@@ -79,11 +79,13 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     }
 
     getPatients(): void {
-        this.patientsService.getPatients().subscribe(({ data }) => {
-            // Assign the data to the data source for the table to render
-            this.dataSource = new MatTableDataSource(data as Patient[]);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+        this.patientsService.getPatients().subscribe({
+            next: ({ data }) => {
+                // Assign the data to the data source for the table to render
+                this.dataSource = new MatTableDataSource(data as Patient[]);
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+            },
         });
     }
 
