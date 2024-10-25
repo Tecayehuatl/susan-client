@@ -199,7 +199,7 @@
         <br />
         <br />
         <!-- Results table -->
-        <div class="mat-elevation-z8">
+        <div class="quotes-table mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" matSort>
                 <!-- Num. element -->
                 <ng-container matColumnDef="numberElement">
@@ -217,13 +217,22 @@
                         {{ row.order_id }}
                     </td>
                 </ng-container>
+                <!-- Order type Column -->
+                <ng-container matColumnDef="order_type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Tipo
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{ row.order_type_id === 1 ? 'Orden' : 'Cotización' }}
+                    </td>
+                </ng-container>
                 <!-- created at Column -->
                 <ng-container matColumnDef="created_at">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
                         Fecha de creación
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        {{ row.created_at | date : 'longDate' | uppercase }}
+                        {{ row.created_at | date : 'medium' | uppercase }}
                     </td>
                 </ng-container>
                 <!-- Full Name name Column -->
@@ -255,29 +264,6 @@
                         {{ row.patient?.email ? row.patient.email : '-' }}
                     </td>
                 </ng-container>
-                <!-- Date birth Column -->
-                <ng-container matColumnDef="date_birth">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                        Fecha de nacimiento
-                    </th>
-                    <td mat-cell *matCellDef="let row">
-                        <!-- COMMENT: The utc-6 and es-mx arguments are optionals, in the app.module the locale id was set, you can delete as wish -->
-                        {{
-                            row.patient?.date_birth
-                                | date : 'longDate'
-                                | uppercase
-                        }}
-                    </td>
-                </ng-container>
-                <!-- branch office creation Column -->
-                <ng-container matColumnDef="branch_office">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                        Sucursal de creación
-                    </th>
-                    <td mat-cell *matCellDef="let row">
-                        {{ row.branch_office.name }}
-                    </td>
-                </ng-container>
                 <!-- Doctor name column -->
                 <ng-container matColumnDef="doctorName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -289,13 +275,27 @@
                         {{ row.doctor?.last_name }}
                     </td>
                 </ng-container>
-                <!-- Delete Detail -->
+                <!-- Grand total column -->
                 <ng-container matColumnDef="grandTotal">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
                         Total estudios
                     </th>
                     <td mat-cell *matCellDef="let row; let i = index">
                         {{ row.grand_total | mask : 'separator.2' : { thousandSeparator: ',', prefix: '$', } }}
+                    </td>
+                </ng-container>
+                <!-- Notes -->
+                <ng-container matColumnDef="notes">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Notas
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <span
+                            [matBadge]="row.order_notes?.length"
+                            matBadgeOverlap="false"
+                            matBadgeColor="warn"
+                            *ngIf="row.order_notes?.length"
+                        ></span>
                     </td>
                 </ng-container>
 
@@ -307,6 +307,7 @@
                         columns: displayedColumns;
                         let i = index
                     "
+                    (click)="navigateTo(row.patient_id, row.order_id)"
                 ></tr>
                 <!-- Row shown when there is no matching data. -->
                 <tr class="mat-row" *matNoDataRow>
