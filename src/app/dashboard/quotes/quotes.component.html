@@ -246,6 +246,57 @@
                         {{ row.patient?.last_name }}
                     </td>
                 </ng-container>
+                <!-- General status Column -->
+                <ng-container matColumnDef="generalStatus">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Estatus general
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <app-label
+                            type="generalOrderStatus"
+                            [value]="row.order_status_id"
+                        >
+                            {{
+                                row.order_status_id
+                                    | getOrderStatus : 'generalOrderStatus'
+                            }}
+                        </app-label>
+                    </td>
+                </ng-container>
+                <!-- Payment status Column -->
+                <ng-container matColumnDef="paymentStatus">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Estatus de pago
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <app-label
+                            type="paymentStatus"
+                            [value]="row.payment_status_id"
+                        >
+                            {{
+                                row.payment_status_id
+                                    | getOrderStatus : 'paymentStatus'
+                            }}
+                        </app-label>
+                    </td>
+                </ng-container>
+                <!-- Deliver status column -->
+                <ng-container matColumnDef="deliverStatus">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Estatus de entrega
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <app-label
+                            type="deliveryStatus"
+                            [value]="row.delivery_status_id"
+                        >
+                            {{
+                                row.delivery_status_id
+                                    | getOrderStatus : 'deliveryStatus'
+                            }}
+                        </app-label>
+                    </td>
+                </ng-container>
                 <!-- Age Column -->
                 <ng-container matColumnDef="age">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
