@@ -4,9 +4,13 @@ import {
     Payment,
 } from 'src/app/services/orders-quotes.service';
 import { HistoricInfoItem } from '../historic-info/historic-info.component';
-import { CreateEditPaymentsComponent } from '../payments/create-edit-payments/create-edit-payments.component';
+import {
+    CreateEditPaymentsComponent,
+    paymentTypes,
+} from '../payments/create-edit-payments/create-edit-payments.component';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GetPaymentTypeTextPipe } from '../../pipes/get-payment-type-text.pipe';
 
 @Component({
     selector: 'app-payment-historical-transactions',
@@ -31,6 +35,7 @@ export class PaymentHistoricalTransactionsComponent {
 
     constructor(
         public orderQuoteService: OrdersQuotesService,
+        private getPaymentTypeTextPipe: GetPaymentTypeTextPipe,
         public dialog: MatDialog,
         private _snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: any
@@ -38,17 +43,31 @@ export class PaymentHistoricalTransactionsComponent {
 
     transformPayments(payments: Payment[]): HistoricInfoItem[] {
         console.log(payments);
-
         const transformed: HistoricInfoItem[] = payments.map(
-            (payment: Payment, index: number) => ({
-                id: payment.order_payment_id?.toString(),
-                title: `Pago ${index + 1}`,
-                subtitle: `Total: ${payment.total_transaction}`,
-                description: `Dinero recibido: ${payment?.cash_received}, Cambio dado: ${payment?.change_due}`,
-                isDeleteActionIncluded: true,
-            })
+            (payment: Payment, index: number) => {
+                let descripttion: string;
+                if (payment.payment_id !== paymentTypes.CASH) {
+                    descripttion = `Forma de pago: ${this.getPaymentTypeText(
+                        payment.payment_id
+                    )}`;
+                } else {
+                    descripttion = `Forma de pago: Efectivo, Dinero recibido: ${payment?.cash_received}, Cambio dado: ${payment?.change_due}`;
+                }
+
+                return {
+                    id: payment.order_payment_id?.toString(),
+                    title: `Pago ${index + 1}`,
+                    subtitle: `Total: ${payment.total_transaction}`,
+                    description: descripttion,
+                    isDeleteActionIncluded: true,
+                };
+            }
         );
         return transformed;
+    }
+
+    getPaymentTypeText(paymentId: number): string {
+        return this.getPaymentTypeTextPipe.transform(paymentId);
     }
 
     openAddPaymentDialog(): void {

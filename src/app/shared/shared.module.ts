@@ -21,6 +21,7 @@ import { CreateEditNotesComponent } from './components/notes/create-edit-notes/c
 import { LabelComponent } from './components/label/label.component';
 import { ToUppercaseDirective } from './directives/to-uppercase.directive';
 import { DynamicValidatorDirective } from './directives/dynamic-validator.directive';
+import { GetPaymentTypeTextPipe } from './pipes/get-payment-type-text.pipe';
 
 const imports = [
     AdHostDirective,
@@ -36,6 +37,7 @@ const imports = [
     LabelComponent,
     CreateEditNotesComponent,
     ToUppercaseDirective,
+    GetPaymentTypeTextPipe,
     DynamicValidatorDirective,
 ];
 
@@ -64,6 +66,8 @@ const imports = [
         provideNgxMask(),
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
+        // In providers because we used in literal string
+        GetPaymentTypeTextPipe,
     ],
 })
 export class SharedModule {}

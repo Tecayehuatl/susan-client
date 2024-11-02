@@ -343,6 +343,10 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         });
     }
 
+    getBarcodeLabel(id: string): void {
+        window.open(`${environment.baseUrl}/orders/${id}/barcode-label-pdf`);
+    }
+
     openAndGeneratePdfOrderQuote(id: string): void {
         console.log('Generating PDF...');
         window.open(`${environment.baseUrl}/orders/${id}/pdf`);

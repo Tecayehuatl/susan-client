@@ -159,8 +159,9 @@
                     </section>
                     <section class="card-detail-col">
                         <section class="card-detail-text-container">
-                            <span class="card-detail-text underline cursor">
+                            <span class="card-detail-text cursor">
                                 <a
+                                    class="link"
                                     (click)="
                                         renderDynamicComponent(
                                             'historicPayment'
@@ -172,6 +173,7 @@
                                     matBadgeOverlap="false"
                                     matBadgeColor="primary"
                                 >
+                                    <mat-icon>payments</mat-icon>
                                     VER PAGOS REALIZADOS
                                 </a>
                             </span>
@@ -187,32 +189,33 @@
                             </a>
                         </section> -->
                         <section class="card-detail-text-container">
-                            <span class="card-detail-text underline cursor">
+                            <span class="card-detail-text cursor">
                                 <a
+                                    class="link"
                                     (click)="renderDynamicComponent('notes')"
                                     [matBadge]="orderDetail.order_notes?.length"
                                     matBadgeOverlap="false"
                                     matBadgeColor="primary"
                                 >
+                                    <mat-icon>notes</mat-icon>
                                     VER NOTAS
                                 </a>
                             </span>
                         </section>
-                        <!-- <section class="card-detail-text-container">
+                        <section class="card-detail-text-container cursor">
                             <p
-                                class="card-detail-text"
+                                class="card-detail-text link"
                                 (click)="
                                     getBarcodeLabel(orderDetail.order_id || '')
                                 "
                             >
+                                <mat-icon>qr_code</mat-icon>
                                 IMPRIMIR ETIQUETAS DE TUBOS
                             </p>
-                        </section> -->
-                        <section
-                            class="card-detail-text-container underline cursor"
-                        >
+                        </section>
+                        <section class="card-detail-text-container cursor">
                             <p
-                                class="card-detail-text"
+                                class="card-detail-text link"
                                 (click)="
                                     openAndGeneratePdfOrderQuote(
                                         orderDetail.order_id || ''

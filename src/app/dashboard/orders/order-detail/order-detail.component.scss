@@ -134,3 +134,10 @@ mat-sidenav {
 .no-wrap {
     white-space: nowrap;
 }
+
+.link {
+    align-items: center;
+    display: flex;
+    gap: 5px;
+    justify-content: flex-start;
+}

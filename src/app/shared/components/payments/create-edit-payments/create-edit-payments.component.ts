@@ -3,6 +3,15 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrdersQuotesService } from 'src/app/services/orders-quotes.service';
 
+export enum paymentTypes {
+    CASH = 1,
+    CREDIT_CARD = 2,
+    DEBIT_CARD = 3,
+    FOOD_VOUCHER = 4,
+    CHECK = 5,
+    BANK_TRANSACTION = 6,
+}
+
 @Component({
     selector: 'app-create-edit-payments',
     templateUrl: './create-edit-payments.component.html',
@@ -11,6 +20,10 @@ import { OrdersQuotesService } from 'src/app/services/orders-quotes.service';
 export class CreateEditPaymentsComponent {
     // TODO: Make this payment methods dynamic
     paymentMethods = [
+        {
+            payment_id: 5,
+            name: 'Cheque',
+        },
         {
             payment_id: 1,
             name: 'Efectivo',
@@ -24,16 +37,12 @@ export class CreateEditPaymentsComponent {
             name: 'Tarjeta de Débito',
         },
         {
-            payment_id: 4,
-            name: 'Vales de Despensa',
-        },
-        {
-            payment_id: 5,
-            name: 'Cheque',
-        },
-        {
             payment_id: 6,
             name: 'Transferencia Bancaria',
+        },
+        {
+            payment_id: 4,
+            name: 'Vales de Despensa',
         },
     ];
 
