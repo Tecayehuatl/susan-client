@@ -117,8 +117,8 @@ export interface OrderNote {
 }
 
 export interface Payment {
-    payment_type_id: number;
     order_payment_id?: number;
+    payment_id: number;
     total_transaction: string;
     change_due: string | number;
     cash_received: string | number;
