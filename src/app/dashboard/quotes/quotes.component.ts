@@ -48,6 +48,17 @@ export class QuotesComponent implements OnInit {
 
     doctors: Doctor[] = [];
     studies: Study[] = [];
+    // TODO: Create an enum for this or consume it from services
+    orderTypes: any[] = [
+        {
+            name: 'Orden',
+            value: 1,
+        },
+        {
+            name: 'Cotización',
+            value: 2,
+        },
+    ];
     branchOffices: BranchOffice[] = [];
     paymentMethods: PaymentMethod[] = [];
     ageList = this.generateNumberList(1, 120);
@@ -112,6 +123,7 @@ export class QuotesComponent implements OnInit {
             }),
 
             order: this.fb.group({
+                order_type_id: [],
                 created_at: this.fb.group({
                     from: null,
                     to: null,
