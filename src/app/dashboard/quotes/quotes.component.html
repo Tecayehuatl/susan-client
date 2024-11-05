@@ -130,7 +130,7 @@
                         <!-- Date creation -->
                         <mat-grid-tile>
                             <mat-form-field [formGroupName]="'order'">
-                                <mat-label>Enter a date range</mat-label>
+                                <mat-label>Selecciona un rango</mat-label>
                                 <mat-date-range-input
                                     [formGroupName]="'created_at'"
                                     [rangePicker]="picker"
@@ -191,6 +191,23 @@
                                     />
                                 </mat-form-field>
                             </ng-container>
+                        </mat-grid-tile>
+                        <mat-grid-tile [formGroupName]="'order'">
+                            <mat-form-field>
+                                <mat-label>Tipo de orden</mat-label>
+                                <mat-select
+                                    formControlName="order_type_id"
+                                    multiple
+                                    (selectionChange)="searchPatients()"
+                                >
+                                    <mat-option
+                                        *ngFor="let type of orderTypes"
+                                        [value]="type.value"
+                                    >
+                                        {{ type.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
                         </mat-grid-tile>
                     </mat-grid-list>
                 </div>
