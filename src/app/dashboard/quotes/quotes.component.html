@@ -279,6 +279,9 @@
                                     | getOrderStatus : 'generalOrderStatus'
                             }}
                         </app-label>
+                        <app-label *ngIf="row.order_type_id === 2">
+                            Cotización
+                        </app-label>
                     </td>
                 </ng-container>
                 <!-- Payment status Column -->
