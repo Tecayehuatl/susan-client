@@ -272,6 +272,7 @@
                         <app-label
                             type="generalOrderStatus"
                             [value]="row.order_status_id"
+                            *ngIf="row.order_type_id === 1"
                         >
                             {{
                                 row.order_status_id
@@ -289,6 +290,7 @@
                         <app-label
                             type="paymentStatus"
                             [value]="row.payment_status_id"
+                            *ngIf="row.order_type_id === 1"
                         >
                             {{
                                 row.payment_status_id
@@ -306,6 +308,7 @@
                         <app-label
                             type="deliveryStatus"
                             [value]="row.delivery_status_id"
+                            *ngIf="row.order_type_id === 1"
                         >
                             {{
                                 row.delivery_status_id

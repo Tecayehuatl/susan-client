@@ -80,6 +80,7 @@
                                 <app-label
                                     type="generalOrderStatus"
                                     [value]="orderDetail.order_status_id"
+                                    *ngIf="orderDetail.order_type_id === 1"
                                 >
                                     {{
                                         orderDetail.order_status_id
@@ -102,6 +103,7 @@
                                 <app-label
                                     type="paymentStatus"
                                     [value]="orderDetail.payment_status_id"
+                                    *ngIf="orderDetail.order_type_id === 1"
                                 >
                                     {{
                                         orderDetail.payment_status_id
@@ -123,6 +125,7 @@
                                 <app-label
                                     type="deliveryStatus"
                                     [value]="orderDetail.delivery_status_id"
+                                    *ngIf="orderDetail.order_type_id === 1"
                                 >
                                     {{
                                         orderDetail.delivery_status_id
@@ -158,7 +161,10 @@
                         </section>
                     </section>
                     <section class="card-detail-col">
-                        <section class="card-detail-text-container">
+                        <section
+                            class="card-detail-text-container"
+                            *ngIf="orderDetail.order_type_id === 1"
+                        >
                             <span class="card-detail-text cursor">
                                 <a
                                     class="link"
@@ -249,7 +255,10 @@
                                 {{ orderDetail.user?.last_name }}
                             </p>
                         </section>
-                        <section class="card-detail-text-container">
+                        <section
+                            class="card-detail-text-container"
+                            *ngIf="orderDetail.order_type_id === 1"
+                        >
                             <ng-container
                                 [ngSwitch]="orderDetail.order_status_id"
                             >
@@ -434,7 +443,11 @@
                                     *matHeaderCellDef
                                     mat-sort-header
                                 >
-                                    Cambiar estado del estudio
+                                    <span
+                                        *ngIf="orderDetail.order_type_id === 1"
+                                    >
+                                        Cambiar estado del estudio
+                                    </span>
                                 </th>
                                 <td mat-cell *matCellDef="let row">
                                     <ng-container
@@ -456,6 +469,9 @@
                                                     row.study_id.toString(),
                                                     row.inProgress
                                                 )
+                                            "
+                                            *ngIf="
+                                                orderDetail.order_type_id === 1
                                             "
                                         >
                                             {{
