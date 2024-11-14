@@ -112,7 +112,7 @@ export class PatientsComponent implements OnInit, AfterViewInit {
                 if (this.searchForm.get(controlName)?.value) {
                     const controlValue =
                         this.searchForm.get(controlName)?.value;
-                    queryObject[controlName] = controlValue;
+                    queryObject[controlName] = controlValue.trim();
                 }
             });
             queryObjectEncoded = encodeURIComponent(
