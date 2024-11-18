@@ -25,11 +25,34 @@ import { Doctor } from '../../doctors/doctors.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { CreateEditDoctorsComponent } from '../../doctors/create-edit-doctors/create-edit-doctors.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import {
+    animate,
+    state,
+    style,
+    transition,
+    trigger,
+} from '@angular/animations';
 
 @Component({
     selector: 'app-create-order-quote',
     templateUrl: './create-order-quote.component.html',
     styleUrls: ['./create-order-quote.component.scss'],
+    animations: [
+        trigger('fadeInOut', [
+            state('void', style({ opacity: 0 })), // Initial state when element is not in the DOM
+            transition(':enter', [
+                // Animation for entering
+                style({ opacity: 0 }), // Start state
+                animate('300ms ease-in', style({ opacity: 1 })), // End state
+            ]),
+            transition(':leave', [
+                // Animation for leaving
+                animate('300ms ease-out', style({ opacity: 0 })), // Start to end state
+            ]),
+        ]),
+    ],
 })
 export class CreateOrderQuoteComponent implements OnInit {
     displayedColumns: string[] = [
@@ -56,6 +79,9 @@ export class CreateOrderQuoteComponent implements OnInit {
     discounts: Discount[] = [];
     paymentMethods: PaymentMethod[] = [];
     doctors: Doctor[] = [];
+    selectedDoctor = new FormControl('');
+    doctorControlStandAlone = new FormControl<string | Doctor>('');
+    doctorFilteredOptions!: Observable<Doctor[]>;
 
     isSkippedPayment = false;
 
@@ -133,6 +159,36 @@ export class CreateOrderQuoteComponent implements OnInit {
                 this.disablePaymentValidators(false);
             }
         });
+
+        this.doctorFilteredOptions =
+            this.doctorControlStandAlone.valueChanges.pipe(
+                startWith(''),
+                map((value) => {
+                    const name =
+                        typeof value === 'string' ? value : value?.first_name;
+                    return name
+                        ? this._filterDoctors(name as string)
+                        : this.doctors.slice();
+                })
+            );
+    }
+
+    displayFn(user: Doctor): string {
+        return user && user.first_name
+            ? `${user.first_name} ${user.middle_name} ${user.last_name}`
+            : '';
+    }
+
+    private _filterDoctors(value: string): Doctor[] {
+        const filterValue = value.toLowerCase();
+        return this.doctors.filter((doctor) => {
+            const query = `${doctor.first_name} ${doctor?.middle_name} ${doctor?.last_name} ${doctor?.cedula}`;
+            return query.toLowerCase().includes(filterValue);
+        });
+    }
+
+    selectDoctor(id: string): void {
+        this.doctorControl.patchValue(id);
     }
 
     createForm(): void {
@@ -359,12 +415,8 @@ export class CreateOrderQuoteComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
             if (formValues && mode === 'create') {
-                // Updating the local datasource
                 this.doctors = [formValues, ...this.doctors];
-                this._snackBar.open(
-                    `DOCTOR: ${formValues.first_name} CREADA`,
-                    'CERRAR'
-                );
+                this._snackBar.open('NUEVO DOCTOR AGREGADO', 'CERRAR');
             }
         });
     }
