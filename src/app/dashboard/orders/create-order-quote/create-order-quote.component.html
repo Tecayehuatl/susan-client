@@ -102,14 +102,14 @@
             >
                 <section mat-dialog-content>
                     <section>
-                        <h3>1.- Seleccione el nombre del médico</h3>
+                        <h3>1.- Búsque el nombre del médico</h3>
                         <button
                             mat-button
                             color="primary"
                             (click)="openCreateEditDoctorDialog()"
                         >
                             <mat-icon>add</mat-icon>
-                            Agregar médico
+                            Agregar nuevo médico
                         </button>
                         <mat-icon
                             matTooltip="Aquí se crea un nuevo médico sin salir de la sección de creación de orden u cotización"
@@ -118,7 +118,35 @@
                         </mat-icon>
                         <br />
                         <br />
-                        <mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Nombre del médico</mat-label>
+                            <input
+                                type="text"
+                                matInput
+                                [formControl]="doctorControlStandAlone"
+                                [matAutocomplete]="custom"
+                            />
+                            <mat-autocomplete
+                                #custom="matAutocomplete"
+                                [displayWith]="displayFn"
+                            >
+                                <mat-option
+                                    *ngFor="
+                                        let doctor of doctorFilteredOptions
+                                            | async
+                                    "
+                                    (onSelectionChange)="
+                                        selectDoctor(doctor.doctor_id)
+                                    "
+                                    [value]="doctor"
+                                >
+                                    {{ doctor.first_name | uppercase }}
+                                    {{ doctor.middle_name | uppercase }}
+                                    {{ doctor.last_name | uppercase }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <!-- <mat-form-field>
                             <mat-label>Seleccione al médico</mat-label>
                             <mat-select formControlName="doctorId">
                                 <mat-option
@@ -132,11 +160,15 @@
                                     {{ doctor.cedula }}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
                     </section>
                     <mat-divider></mat-divider>
-                    <section formArrayName="studies">
-                        <h3>2.- Seleccione los estudios a realizar</h3>
+                    <section
+                        formArrayName="studies"
+                        @fadeInOut
+                        *ngIf="doctorControl.value"
+                    >
+                        <h3>2.- Seleccione los estudios</h3>
                         <mat-form-field>
                             <mat-label>Búsqueda de estudios</mat-label>
                             <input
@@ -146,10 +178,12 @@
                                 placeholder="Buscar estudios por ID, Nombre, correo electrónico o teléfono"
                                 [formControl]="searchStudiesControl"
                                 #input
-                                [matAutocomplete]="auto"
+                                [matAutocomplete]="studiesAutocomplete"
                             />
                             <mat-icon matSuffix>search</mat-icon>
-                            <mat-autocomplete #auto="matAutocomplete">
+                            <mat-autocomplete
+                                #studiesAutocomplete="matAutocomplete"
+                            >
                                 <mat-option
                                     class="study-search__item"
                                     *ngFor="let option of studiesFiltered"
@@ -382,7 +416,11 @@
                             </table>
                         </div>
                     </section>
-                    <section class="row-custom">
+                    <section
+                        class="row-custom"
+                        @fadeInOut
+                        *ngIf="studiesFormArray.length > 0"
+                    >
                         <!-- Descuentos agregados: -->
                         <section class="child">
                             <app-discounts-inner-component
