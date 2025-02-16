@@ -159,4 +159,5 @@ export interface Study {
     deliveryDays: number;
     conditions: string;
     notes: string;
+    studyType: number;
 }

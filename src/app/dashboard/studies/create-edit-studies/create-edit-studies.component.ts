@@ -19,6 +19,72 @@ export class CreateEditStudiesComponent implements OnInit {
     mode!: 'create' | 'edit';
     title!: string;
     studyForm!: FormGroup;
+    labStudyTypes = [
+        {
+            value: 1,
+            key: 'Química clinica',
+        },
+        {
+            value: 2,
+            key: 'Coproparasitología',
+        },
+        {
+            value: 3,
+            key: 'Química sanguínea',
+        },
+        {
+            value: 4,
+            key: 'Inmunología',
+        },
+        {
+            value: 5,
+            key: 'Serología',
+        },
+        {
+            value: 6,
+            key: 'Toxicología',
+        },
+        {
+            value: 7,
+            key: 'Hematología',
+        },
+        {
+            value: 8,
+            key: 'Uroanálisis',
+        },
+        {
+            value: 9,
+            key: 'Coagulación',
+        },
+        {
+            value: 10,
+            key: 'Endocrinología',
+        },
+        {
+            value: 11,
+            key: 'Genética',
+        },
+        {
+            value: 12,
+            key: 'Virología',
+        },
+        {
+            value: 13,
+            key: 'Microbiología',
+        },
+        {
+            value: 14,
+            key: 'Patología',
+        },
+        {
+            value: 15,
+            key: 'Histopatología',
+        },
+        {
+            value: 16,
+            key: 'Otros',
+        },
+    ];
 
     get priceControl(): FormControl {
         return this.studyForm.get('price') as FormControl;
@@ -55,7 +121,7 @@ export class CreateEditStudiesComponent implements OnInit {
             conditions: ['', Validators.required],
             notes: [''],
             //TODO: Use some dynamic thing
-            studieType: ['ÁREA CLÍNICAL'],
+            studyType: [null],
         });
 
         this.priceControl?.valueChanges.subscribe((value) => {
@@ -90,6 +156,7 @@ export class CreateEditStudiesComponent implements OnInit {
                 deliveryDays: data.deliveryDays,
                 conditions: data.conditions,
                 notes: data.notes,
+                studyType: data.studyType,
             });
         } else {
             this.mode = 'create';

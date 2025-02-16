@@ -58,6 +58,17 @@
                     appToUppercase
                 ></textarea>
             </mat-form-field>
+            <mat-form-field>
+                <mat-label>Tipo de estudio</mat-label>
+                <mat-select formControlName="studyType">
+                    <mat-option
+                        *ngFor="let study of labStudyTypes"
+                        [value]="study.value"
+                    >
+                        {{ study.key | uppercase }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </section>
         <section class="grid-item">
             <mat-form-field>
