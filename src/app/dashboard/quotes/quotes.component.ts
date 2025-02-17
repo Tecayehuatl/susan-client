@@ -13,6 +13,7 @@ import { Study } from '../studies/studies.component';
 import { BranchOffice } from '../branch-offices/branch-offices.component';
 import { PaymentMethod } from 'src/app/services/payment-methods.service';
 import { DatePipe } from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-quotes',
@@ -62,6 +63,7 @@ export class QuotesComponent implements OnInit {
     branchOffices: BranchOffice[] = [];
     paymentMethods: PaymentMethod[] = [];
     ageList = this.generateNumberList(1, 120);
+    MOBILE_RESOLUTION = 820;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -92,12 +94,24 @@ export class QuotesComponent implements OnInit {
         private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private ordersQuotesService: OrdersQuotesService
+        private ordersQuotesService: OrdersQuotesService,
+        private breakpointObserver: BreakpointObserver
     ) {
         this.doctors = this.route.snapshot.data['doctors'];
         this.studies = this.route.snapshot.data['studies'];
         this.branchOffices = this.route.snapshot.data['branchOffices'];
         this.paymentMethods = this.route.snapshot.data['paymentMethods'];
+        this.breakpointObserver
+            .observe([`(max-width: ${this.MOBILE_RESOLUTION}px)`])
+            .subscribe((result) => {
+                if (
+                    result.breakpoints[
+                        `(max-width: ${this.MOBILE_RESOLUTION}px)`
+                    ]
+                ) {
+                    this.isPanelDisplayed = !result.matches;
+                }
+            });
     }
 
     ngOnInit(): void {
