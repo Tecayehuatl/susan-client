@@ -112,7 +112,7 @@ export class LayoutComponent implements OnInit {
         this.breakpointObserver
             .observe([
                 `(max-width: ${this.MOBILE_RESOLUTION}px)`,
-                `(min-width: ${this.MOBILE_RESOLUTION}px)`,
+                `(min-width: ${this.MOBILE_RESOLUTION + 1}px)`,
             ])
             .subscribe((result) => {
                 if (
@@ -121,10 +121,9 @@ export class LayoutComponent implements OnInit {
                     ]
                 ) {
                     this.isSmallScreen = result.matches;
-                }
-                if (
+                } else if (
                     result.breakpoints[
-                        `(min-width: ${this.MOBILE_RESOLUTION}px)`
+                        `(min-width: ${this.MOBILE_RESOLUTION + 1}px)`
                     ]
                 ) {
                     this.isSmallScreen = false;
