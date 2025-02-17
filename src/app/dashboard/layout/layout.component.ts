@@ -88,7 +88,7 @@ export class LayoutComponent implements OnInit {
     userRoles: UserRole[] = [];
     isSmallScreen = false;
     isMenuOpen = false;
-    MOBILE_RESOLUTION = 768;
+    MOBILE_RESOLUTION = 820;
 
     constructor(
         public authService: AuthService,
