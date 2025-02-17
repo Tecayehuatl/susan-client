@@ -3,7 +3,6 @@
         class="sidenav"
         [opened]="isMenuOpen"
         [mode]="isSmallScreen ? 'push' : 'side'"
-        (closedStart)="toggleMenu()"
     >
         <mat-list>
             <a class="sidenav-anchor-container" routerLink="/dashboard">
@@ -21,7 +20,7 @@
                         mat-list-item
                         role="listitem"
                         class="mat-list-item"
-                        [routerLink]="item.url"
+                        (click)="navigateTo(item.url)"
                         [ngClass]="{ isActive: item.isActiveUrl }"
                         *ngIf="
                             roleService.hasAnyRole(

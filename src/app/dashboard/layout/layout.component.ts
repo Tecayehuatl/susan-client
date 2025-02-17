@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService, UserSystem } from '../../services/auth.service';
 import { UserRole } from '../users/create-edit-users/create-edit-users.component';
 import { RoleService } from 'src/app/services/role.service';
-import { Router, Scroll } from '@angular/router';
+import { ActivatedRoute, Router, Scroll } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
@@ -94,6 +94,7 @@ export class LayoutComponent implements OnInit {
         public authService: AuthService,
         public roleService: RoleService,
         private router: Router,
+        private route: ActivatedRoute,
         private breakpointObserver: BreakpointObserver
     ) {
         this.userData = this.authService.userSystemData;
@@ -157,6 +158,11 @@ export class LayoutComponent implements OnInit {
                 menuItem.isActiveUrl = false;
             }
         });
+    }
+
+    navigateTo(url: string): void {
+        this.router.navigate([url], { relativeTo: this.route });
+        this.toggleMenu();
     }
 }
 
