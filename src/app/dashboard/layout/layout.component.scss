@@ -35,7 +35,6 @@
   }
 }
 
-
 mat-nav-list {
   .mat-list-item {
     align-items: center;
@@ -57,7 +56,6 @@ mat-nav-list {
         background-color: rgba(0, 0, 0,0.3);
     }
 }
-
 
 .toolbar {
   display: flex;
@@ -114,5 +112,26 @@ mat-nav-list {
         overflow: hidden;
         text-overflow: ellipsis;
         font-size: 12px;
+    }
+}
+
+.menu-list {
+    display: none;
+}
+
+// Graceful degradation technique, order matters
+@media screen and (width <= 1024px) {
+    .sidenav {
+        width: 170px;
+
+        &-anchor-container {
+            width: 160px;
+        }
+    }
+}
+
+@media screen and (width <= 768px) {
+    .menu-list {
+        display: block;
     }
 }
