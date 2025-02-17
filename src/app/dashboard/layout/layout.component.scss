@@ -121,13 +121,6 @@ mat-nav-list {
 
 // Graceful degradation technique, order matters
 @media screen and (width <= 1024px) {
-    .sidenav {
-        width: 170px;
-
-        &-anchor-container {
-            width: 160px;
-        }
-    }
 }
 
 @media screen and (width <= 820px) {
