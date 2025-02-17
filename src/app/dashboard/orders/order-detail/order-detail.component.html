@@ -203,7 +203,7 @@
                                     matBadgeOverlap="false"
                                     matBadgeColor="primary"
                                 >
-                                    <mat-icon>notes</mat-icon>
+                                    <mat-icon>speaker_notes</mat-icon>
                                     VER NOTAS
                                 </a>
                             </span>
@@ -230,6 +230,18 @@
                             >
                                 <mat-icon>print</mat-icon>
                                 IMPRIMIR COTIZACION U ORDEN
+                            </p>
+                        </section>
+                        <section
+                            class="card-detail-text-container cursor"
+                            *ngIf="orderDetail.order_type_id === 2"
+                        >
+                            <p
+                                class="card-detail-text link"
+                                (click)="convertQuoteToOrder()"
+                            >
+                                <mat-icon>sync_alt</mat-icon>
+                                CONVERTIR A ORDEN
                             </p>
                         </section>
                         <section class="card-detail-text-container">

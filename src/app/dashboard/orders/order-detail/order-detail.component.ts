@@ -348,8 +348,37 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
     }
 
     openAndGeneratePdfOrderQuote(id: string): void {
-        console.log('Generating PDF...');
         window.open(`${environment.baseUrl}/orders/${id}/pdf`);
+    }
+
+    convertQuoteToOrder(): void {
+        const dialogRef = this.dialog.open(GenericModalComponent, {
+            minWidth: '800px',
+            data: {
+                title: `CONVERTIR COTIZACIÓN A ORDEN`,
+                content: '',
+                actions: {
+                    main: 'CONVERTIR',
+                    secondary: 'CANCELAR',
+                },
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result === true) {
+                const order = {
+                    // Order code, consult database for future changes
+                    order_type_id: 1,
+                };
+                const orderId = this.orderDetail.order_id || '';
+                this.orderQuoteService
+                    .updateOrder(order, orderId)
+                    .subscribe(() => {
+                        this._snackBar.open(`ORDEN CAMBIADA`, 'CERRAR');
+                        this.getOrderDatailData(orderId);
+                    });
+            }
+        });
     }
 
     openChangeStudyStatusDialog(
