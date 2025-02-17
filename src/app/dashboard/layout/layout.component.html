@@ -1,5 +1,10 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav class="sidenav" opened mode="side">
+    <mat-sidenav
+        class="sidenav"
+        [opened]="isMenuOpen"
+        [mode]="isSmallScreen ? 'push' : 'side'"
+        (closedStart)="toggleMenu()"
+    >
         <mat-list>
             <a class="sidenav-anchor-container" routerLink="/dashboard">
                 <img
@@ -50,7 +55,17 @@
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content">
         <mat-toolbar class="toolbar">
-            <span class="toolbar-title">¡HOLA {{ userData.first_name | uppercase }} 👋!</span>
+            <button
+                class="menu-list"
+                mat-icon-button
+                aria-label="Menu list"
+                (click)="toggleMenu()"
+            >
+                <mat-icon>list</mat-icon>
+            </button>
+            <span class="toolbar-title">
+                ¡HOLA {{ userData.first_name | uppercase }} 👋!
+            </span>
             <button
                 mat-icon-button
                 aria-label="User menu with menu icon"

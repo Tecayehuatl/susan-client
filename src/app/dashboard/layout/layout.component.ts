@@ -3,6 +3,7 @@ import { AuthService, UserSystem } from '../../services/auth.service';
 import { UserRole } from '../users/create-edit-users/create-edit-users.component';
 import { RoleService } from 'src/app/services/role.service';
 import { Router, Scroll } from '@angular/router';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-layout',
@@ -85,11 +86,15 @@ export class LayoutComponent implements OnInit {
     shortName = '';
     fullName = '';
     userRoles: UserRole[] = [];
+    isSmallScreen = false;
+    isMenuOpen = false;
+    MOBILE_RESOLUTION = 768;
 
     constructor(
         public authService: AuthService,
         public roleService: RoleService,
-        private router: Router
+        private router: Router,
+        private breakpointObserver: BreakpointObserver
     ) {
         this.userData = this.authService.userSystemData;
         this.fullName =
@@ -104,6 +109,28 @@ export class LayoutComponent implements OnInit {
             this.userData.middle_name?.charAt(0)
         }`;
         this.userRoles = this.userData.roles as UserRole[];
+        this.breakpointObserver
+            .observe([
+                `(max-width: ${this.MOBILE_RESOLUTION}px)`,
+                `(min-width: ${this.MOBILE_RESOLUTION}px)`,
+            ])
+            .subscribe((result) => {
+                if (
+                    result.breakpoints[
+                        `(max-width: ${this.MOBILE_RESOLUTION}px)`
+                    ]
+                ) {
+                    this.isSmallScreen = result.matches;
+                }
+                if (
+                    result.breakpoints[
+                        `(min-width: ${this.MOBILE_RESOLUTION}px)`
+                    ]
+                ) {
+                    this.isSmallScreen = false;
+                    this.isMenuOpen = true;
+                }
+            });
     }
 
     ngOnInit() {
@@ -115,6 +142,12 @@ export class LayoutComponent implements OnInit {
                 this.setisActiveClass(moduleName);
             }
         });
+    }
+
+    toggleMenu(): void {
+        if (this.isSmallScreen) {
+            this.isMenuOpen = !this.isMenuOpen;
+        }
     }
 
     setisActiveClass(moduleName: string): void {
