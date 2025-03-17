@@ -3,6 +3,7 @@
         class="sidenav"
         [opened]="isMenuOpen"
         [mode]="isSmallScreen ? 'push' : 'side'"
+        (closed)="isMenuOpen = false"
     >
         <mat-list>
             <a class="sidenav-anchor-container" routerLink="/dashboard">

@@ -32,6 +32,10 @@ import { NotesComponent } from 'src/app/shared/components/notes/notes.component'
 import { PaymentHistoricalTransactionsComponent } from 'src/app/shared/components/payment-historical-transactions/payment-historical-transactions.component';
 import { AdHostDirective } from 'src/app/shared/directives/ad-host.directive';
 import { environment } from 'src/environments/environment';
+import { CreateEditDoctorsComponent } from '../../doctors/create-edit-doctors/create-edit-doctors.component';
+import { Doctor } from '../../doctors/doctors.component';
+import { map, Observable, startWith } from 'rxjs';
+import { DoctorsService } from 'src/app/services/doctors.service';
 
 @Component({
     selector: 'app-order-detail',
@@ -57,6 +61,10 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
     studiesFormArray!: FormArray;
     discountsFormArray!: FormArray;
     orderStudies!: Study[];
+    isEditDoctorOn = false;
+    doctors: Doctor[] = [];
+    doctorControlStandAlone = new FormControl<string | Doctor>('');
+    doctorFilteredOptions!: Observable<Doctor[]>;
 
     @ViewChild(AdHostDirective, { static: true }) adHost!: AdHostDirective;
     @ViewChild(MatSidenav) sidenav!: MatSidenav;
@@ -67,6 +75,7 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         private _fb: FormBuilder,
         private _snackBar: MatSnackBar,
         private dialog: MatDialog,
+        private doctorService: DoctorsService,
         private route: ActivatedRoute,
         private orderQuoteService: OrdersQuotesService,
         private patientService: PatientsService
@@ -88,6 +97,18 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         this.discountsFormArray = this.setDiscountsForm(
             this.orderDetail.order_discounts || []
         );
+
+        this.doctorFilteredOptions =
+            this.doctorControlStandAlone.valueChanges.pipe(
+                startWith(''),
+                map((value) => {
+                    const name =
+                        typeof value === 'string' ? value : value?.first_name;
+                    return name
+                        ? this._filterDoctors(name as string)
+                        : this.doctors.slice();
+                })
+            );
     }
 
     ngAfterViewInit() {
@@ -421,5 +442,54 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
         });
 
         return _studies;
+    }
+
+    public onEditDoctor(): void {
+        this.isEditDoctorOn = !this.isEditDoctorOn;
+        this.doctorService.getDoctors().subscribe({
+            next: (response) => {
+                this.doctors = response as Doctor[];
+            },
+        });
+    }
+
+    displayFn(user: Doctor): string {
+        return user && user.first_name
+            ? `${user.first_name} ${user.middle_name} ${user.last_name}`
+            : '';
+    }
+
+    selectDoctor(doctorId: number): void {
+        const order = {
+            doctor_id: doctorId,
+        };
+        const orderId = this.orderDetail.order_id || '';
+        this.orderQuoteService.updateOrder(order, orderId).subscribe((re) => {
+            this._snackBar.open(`DOCTOR ACTUALIZADO`, 'CERRAR');
+            this.getOrderDatailData(orderId);
+            this.isEditDoctorOn = !this.isEditDoctorOn;
+        });
+    }
+
+    openCreateEditDoctorDialog(): void {
+        const dialogRef = this.dialog.open(CreateEditDoctorsComponent, {
+            width: '1100px',
+            minHeight: '500px',
+        });
+
+        dialogRef.afterClosed().subscribe(({ formValues, mode }) => {
+            if (formValues && mode === 'create') {
+                this.doctors = [formValues, ...this.doctors];
+                this._snackBar.open('NUEVO DOCTOR AGREGADO', 'CERRAR');
+            }
+        });
+    }
+
+    private _filterDoctors(value: string): Doctor[] {
+        const filterValue = value.toLowerCase();
+        return this.doctors.filter((doctor) => {
+            const query = `${doctor.first_name} ${doctor?.middle_name} ${doctor?.last_name} ${doctor?.cedula}`;
+            return query.toLowerCase().includes(filterValue);
+        });
     }
 }
