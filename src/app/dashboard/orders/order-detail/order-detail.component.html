@@ -63,7 +63,53 @@
                                 {{ orderDetail.doctor?.first_name }}
                                 {{ orderDetail.doctor?.middle_name }}
                                 {{ orderDetail.doctor?.last_name }}
+                                <span class="cursor" (click)="onEditDoctor()">
+                                    <mat-icon>edit</mat-icon>
+                                </span>
                             </p>
+                            <section *ngIf="isEditDoctorOn">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Nombre del médico</mat-label>
+                                    <input
+                                        type="text"
+                                        matInput
+                                        [formControl]="doctorControlStandAlone"
+                                        [matAutocomplete]="custom"
+                                    />
+                                    <mat-autocomplete
+                                        #custom="matAutocomplete"
+                                        [displayWith]="displayFn"
+                                    >
+                                        <mat-option
+                                            *ngFor="
+                                                let doctor of doctorFilteredOptions
+                                                    | async
+                                            "
+                                            (onSelectionChange)="
+                                                selectDoctor(+doctor.doctor_id)
+                                            "
+                                            [value]="doctor"
+                                        >
+                                            {{ doctor.first_name | uppercase }}
+                                            {{ doctor.middle_name | uppercase }}
+                                            {{ doctor.last_name | uppercase }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                                <button
+                                    mat-button
+                                    color="primary"
+                                    (click)="openCreateEditDoctorDialog()"
+                                >
+                                    <mat-icon>add</mat-icon>
+                                    Agregar nuevo médico
+                                </button>
+                                <mat-icon
+                                    matTooltip="Aquí se crea un nuevo médico sin salir de la sección de creación de orden u cotización"
+                                >
+                                    info
+                                </mat-icon>
+                            </section>
                         </section>
                     </section>
                     <section class="card-detail-col">
